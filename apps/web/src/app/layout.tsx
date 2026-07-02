@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-const defaultTitle = 'NextJs App';
+const defaultTitle = 'BookMyTicket';
 
 export const metadata: Metadata = {
   title: {
