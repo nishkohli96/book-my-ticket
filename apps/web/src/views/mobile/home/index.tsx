@@ -34,7 +34,7 @@ export default function HomePageMobile() {
         <GradientButton
           text="Sign up for free"
           fullWidth
-          sx={{ mt: 4, mb: 2 }}
+          sx={{ mt: 4, mb: 2.5 }}
         />
         <OutlinedButton text="Browse events as guest" fullWidth />
       </Box>
