@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { AppBar as MuiAppBar, Box, Button, Toolbar } from '@mui/material';
-import { useColorScheme } from '@mui/material/styles';
 import { GradientButton, ThemeChangeButton } from '@/components';
 import LinkText from './LinkText';
 
@@ -18,9 +17,6 @@ const logoWidth = 270;
 const logoHeight = 54;
 
 export default function AppBar() {
-  const { mode } = useColorScheme();
-  const logoSrc = mode === 'dark' ? '/logo-dark.svg' : '/logo-light.svg';
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <MuiAppBar
@@ -51,18 +47,58 @@ export default function AppBar() {
                 flexShrink: 0
               }}
             >
-              <Image
-                src={logoSrc}
-                alt="BookMyTicket"
-                width={logoWidth}
-                height={logoHeight}
-                priority
-                style={{
-                  display: 'block',
+              <Box
+                sx={{
+                  position: 'relative',
                   height: logoHeight,
-                  width: logoWidth
+                  width: logoWidth,
+                  '.logo-light, .logo-dark': {
+                    position: 'absolute',
+                    inset: 0,
+                    height: logoHeight,
+                    width: logoWidth,
+                    objectFit: 'contain',
+                  },
+                  '.logo-light': {
+                    display: 'block',
+                  },
+                  '.logo-dark': {
+                    display: 'none',
+                  },
+                  'html[data-mui-color-scheme="dark"] & .logo-light': {
+                    display: 'none',
+                  },
+                  'html[data-mui-color-scheme="dark"] & .logo-dark': {
+                    display: 'block',
+                  },
                 }}
-              />
+              >
+                <Image
+                  className="logo-light"
+                  src="/logo-light.svg"
+                  alt="BookMyTicket"
+                  width={logoWidth}
+                  height={logoHeight}
+                  priority
+                  style={{
+                    height: logoHeight,
+                    width: logoWidth
+                  }}
+                />
+                <Image
+                  className="logo-dark"
+                  src="/logo-dark.svg"
+                  alt="BookMyTicket"
+                  aria-hidden
+                  width={logoWidth}
+                  height={logoHeight}
+                  priority
+                  style={{
+                    height: logoHeight,
+                    width: logoWidth
+                  }}
+                />
+              </Box>
             </Link>
           </Box>
           <Box

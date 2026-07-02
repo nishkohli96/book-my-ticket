@@ -1,7 +1,7 @@
-import { AppBar } from "@/components";
+import { AppBar } from '@/components';
 
 export default function HomePageDesktop() {
   return (
-		<AppBar />
-	);
+    <AppBar />
+  );
 }

@@ -9,41 +9,41 @@
  *  rerun or may still be based on the default color scheme,
  */
 
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import Button, { type ButtonProps } from '@mui/material/Button';
 
 type OutlinedButtonProps = ButtonProps & {
-	text: ReactNode;
+  text: ReactNode;
 };
 
 export default function OutlinedButton({
-	text,
-	sx: btnSx,
-	...btnProps
+  text,
+  sx: btnSx,
+  ...btnProps
 }: OutlinedButtonProps) {
-	return (
-		<Button
-			variant="outlined"
-			sx={[
-				{
-					borderWidth: '2px',
-					borderColor: 'var(--mui-palette-divider) !important',
-					borderRadius: '14px',
-					color: 'var(--mui-palette-text-primary)',
-					fontWeight: 600,
-					height: 48,
-					padding: '0 30px',
-					backgroundColor: 'transparent',
-					'&:hover': {
-						borderColor: 'var(--mui-palette-text-secondary)',
-						backgroundColor: 'rgba(var(--mui-palette-primary-mainChannel) / 0.04)',
-					},
-				},
-				...(Array.isArray(btnSx) ? btnSx : [btnSx])
-			]}
-			{...btnProps}
-		>
-			{text}
-		</Button>
-	);
+  return (
+    <Button
+      {...btnProps}
+      variant="outlined"
+      sx={[
+        {
+          borderWidth: '2px',
+          borderColor: 'var(--mui-palette-divider) !important',
+          borderRadius: '14px',
+          color: 'var(--mui-palette-text-primary)',
+          fontWeight: 600,
+          height: 48,
+          padding: '0 30px',
+          backgroundColor: 'transparent',
+          '&:hover': {
+            borderColor: 'var(--mui-palette-text-secondary)',
+            backgroundColor: 'rgba(var(--mui-palette-primary-mainChannel) / 0.04)',
+          },
+        },
+        ...(Array.isArray(btnSx) ? btnSx : [btnSx])
+      ]}
+    >
+      {text}
+    </Button>
+  );
 }

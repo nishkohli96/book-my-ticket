@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import Button, { type ButtonProps } from '@mui/material/Button';
 
 type GradientButtonProps = ButtonProps & {
@@ -14,8 +14,8 @@ export default function GradientButton({
 }: GradientButtonProps) {
   return (
     <Button
+      {...btnProps}
       variant="contained"
-			{...btnProps}
       sx={[
         {
           background: theme => theme.palette.gradients.brandPrimary,
@@ -23,7 +23,7 @@ export default function GradientButton({
           color: 'white',
           height: 48,
           padding: '0 30px',
-					fontWeight: 600,
+          fontWeight: 600,
         },
         ...(Array.isArray(btnSx) ? btnSx : [btnSx])
       ]}
