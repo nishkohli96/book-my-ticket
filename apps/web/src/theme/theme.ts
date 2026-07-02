@@ -6,25 +6,13 @@
 'use client';
 
 import { createTheme, type Theme } from '@mui/material/styles';
-import { Roboto } from 'next/font/google';
 import {
   LightThemePalette,
   DarkThemePalette,
   CommonColorPalette
 } from './palette';
 import { colorSchemeAttribute } from './constants';
-
-const roboto = Roboto({
-  weight: [
-    '300',
-    '400',
-    '500',
-    '700'
-  ],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-roboto'
-});
+import { plusJakartaSans } from './fonts';
 
 export const theme: Theme = createTheme({
   cssVariables: {
@@ -54,6 +42,19 @@ export const theme: Theme = createTheme({
     },
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    fontFamily: plusJakartaSans.style.fontFamily,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightBold: 700,
+    h1: { fontWeight: 800 },
+    h2: { fontWeight: 800 },
+    h3: { fontWeight: 700 },
+    h4: { fontWeight: 700 },
+    h5: { fontWeight: 700 },
+    h6: { fontWeight: 700 },
+    button: {
+      fontWeight: 700,
+      textTransform: 'none'
+    }
   },
 });

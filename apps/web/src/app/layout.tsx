@@ -1,25 +1,15 @@
 import { type ReactNode } from 'react';
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter';
 import { AppBar } from '@/components';
 import {
   AppThemeProvider,
   colorSchemeAttribute,
+  fontVariables,
   modeStorageKey
 } from '@/theme';
 import './globals.css';
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
 
 const defaultTitle = 'BookMyTicket';
 
@@ -39,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${fontVariables} antialiased`}
       >
         {/*
           Runs as a blocking script BEFORE React hydrates.
