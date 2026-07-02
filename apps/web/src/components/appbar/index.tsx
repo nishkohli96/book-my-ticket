@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { AppBar as MuiAppBar, Box, Button, Toolbar } from '@mui/material';
 import { useColorScheme } from '@mui/material/styles';
-import { GradientButton } from '@/components';
+import { GradientButton, ThemeChangeButton } from '@/components';
 import LinkText from './LinkText';
 
 const links = [
@@ -95,7 +95,13 @@ export default function AppBar() {
             >
               Log in
             </Button>
-            <GradientButton text="Sign Up" href="/signup" LinkComponent={Link} />
+            <GradientButton
+              text="Sign Up"
+              href="/signup"
+              sx={{ borderRadius: '12px' }}
+              LinkComponent={Link}
+            />
+            <ThemeChangeButton />
           </Box>
         </Toolbar>
       </MuiAppBar>

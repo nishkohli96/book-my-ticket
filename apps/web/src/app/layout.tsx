@@ -2,7 +2,6 @@ import { type ReactNode } from 'react';
 import type { Metadata } from 'next';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter';
-import { AppBar } from '@/components';
 import {
   AppThemeProvider,
   colorSchemeAttribute,
@@ -44,7 +43,6 @@ export default function RootLayout({
         />
         <AppRouterCacheProvider options={{ key: 'mui' }}>
           <AppThemeProvider>
-            <AppBar />
             {children}
           </AppThemeProvider>
         </AppRouterCacheProvider>
