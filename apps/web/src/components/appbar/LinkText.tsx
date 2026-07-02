@@ -20,11 +20,11 @@ export default function LinkText({ href, text }: LinkTextProps) {
     >
       <Typography
         variant="body1"
-        color="textSecondary"
         sx={{
           fontWeight: 600,
           lineHeight: 1,
           whiteSpace: 'nowrap',
+          color: theme => theme.palette.text.secondary,
           '&:hover': {
             color: 'primary.main'
           }

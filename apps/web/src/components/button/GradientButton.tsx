@@ -21,6 +21,7 @@ export default function GradientButton({
           color: 'white',
           height: 48,
           padding: '0 30px',
+					fontWeight: 600,
         },
         ...(Array.isArray(btnSx) ? btnSx : [btnSx])
       ]}
