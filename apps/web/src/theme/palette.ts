@@ -12,14 +12,15 @@ export const LightThemePalette = {
   warning: { main: '#D97706' },
   error: { main: '#DC2626' },
   // info: { main: '#03a9f4' },
-  // divider: '#9e9e9e',
+  divider: '#E2E8F0',
   background: {
     default: '#F8FAFC',
     paper: '#FFFFFF'
   },
   text: {
     primary: '#0F172A',
-    secondary: '#475569'
+    secondary: '#475569',
+    disabled: '#64748B'
   }
 };
 
@@ -30,14 +31,15 @@ export const DarkThemePalette = {
   warning: { main: '#FBBF24' },
   error: { main: '#FBBF24' },
   // info: { main: '#F87171' },
-  // divider: '#4c4c4c',
+  divider: '#1E293B',
   background: {
     default: '#0B1120',
     paper: '#111827'
   },
   text: {
     primary: '#F1F5F9',
-    secondary: '#94A3B8'
+    secondary: '#94A3B8',
+    disabled: '#64748B'
   }
 };
 

@@ -52,6 +52,8 @@ export const theme: Theme = createTheme({
     h4: { fontWeight: 700 },
     h5: { fontWeight: 700 },
     h6: { fontWeight: 700 },
+    body1: { fontWeight: 400, fontSize: '1rem' },
+    body2: { fontWeight: 400 },
     button: {
       fontWeight: 700,
       textTransform: 'none'

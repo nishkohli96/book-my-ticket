@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="72" viewBox="0 0 360 72" font-family="'Plus Jakarta Sans',sans-serif">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="56" y2="56" gradientUnits="userSpaceOnUse"><stop stop-color="#1D4ED8"></stop><stop offset="1" stop-color="#DB2777"></stop></linearGradient></defs>
+  <rect x="8" y="8" width="56" height="56" rx="16" fill="url(#g)"></rect>
+  <g transform="translate(36 36) scale(.72) translate(-24 -24)">
+    <path d="M17 11h14a4 4 0 0 1 4 4v3.2a3.2 3.2 0 0 0 0 6.4V32a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4v-7.4a3.2 3.2 0 0 0 0-6.4V15a4 4 0 0 1 4-4Z" fill="#fff" data-index="0"></path>
+    <path d="M24 14v20" stroke="#DB2777" stroke-width="2" stroke-linecap="round" stroke-dasharray="1.5 3.5" data-index="1"></path>
+  </g>
+  <text x="80" y="46" font-size="30" font-weight="800" letter-spacing="-.6" fill="#0F172A">Book<tspan fill="#DB2777">My</tspan>Ticket</text>
+</svg>
