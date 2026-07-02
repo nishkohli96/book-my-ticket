@@ -1,0 +1,39 @@
+# folders
+node_modules
+test
+.git
+.github
+.husky
+.next
+.turbo
+.vercel
+
+# production
+build
+dist
+logs
+*.tsbuildinfo
+
+# testing
+coverage
+.nyc_output
+
+# misc
+.env_sample
+.eslintrc
+.eslintrc.js
+.eslintignore
+.dockerignore
+.gitignore
+.prettierrc
+.prettierignore
+eslint.config.js
+eslint.config.mjs
+nodemon.json
+*.log
+*.md
+Dockerfile
+README.md
+
+# AI Agents
+.claude

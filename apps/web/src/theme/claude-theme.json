@@ -1,0 +1,102 @@
+{
+  "fonts": [
+    { "family": "Plus Jakarta Sans", "source": "Google Fonts", "role": "display + UI", "weights": [400, 500, 600, 700, 800] },
+    { "family": "JetBrains Mono", "source": "Google Fonts", "role": "labels / codes / timers", "weights": [400, 500, 600] }
+  ],
+  "colorTokens": {
+    "light": {
+      "primary": "#1D4ED8",
+      "secondary": "#DB2777",
+      "success": "#16A34A",
+      "warning": "#D97706",
+      "error": "#DC2626",
+      "background": "#F8FAFC",
+      "paper": "#FFFFFF",
+      "textPrimary": "#0F172A",
+      "textSecondary": "#475569",
+      "textMuted": "#64748B",
+      "textDisabled": "#94A3B8",
+      "border": "#E2E8F0",
+      "surfaceMuted": "#F1F5F9",
+      "primaryTint": "#EEF3FF",
+      "secondaryTint": "#FDF0F6",
+      "warningTint": "#FEF3C7",
+      "sliderTrack": "#CBD5E1"
+    },
+    "dark": {
+      "primary": "#60A5FA",
+      "secondary": "#F472B6",
+      "success": "#4ADE80",
+      "warning": "#FBBF24",
+      "error": "#F87171",
+      "background": "#0B1120",
+      "paper": "#111827",
+      "textPrimary": "#F1F5F9",
+      "textSecondary": "#94A3B8",
+      "textMuted": "#64748B",
+      "border": "#1E293B",
+      "borderStrong": "#334155",
+      "surfaceAlt": "#1A2436",
+      "navyDeep": "#1E3A8A"
+    },
+    "seatStates": {
+      "available": "#4ADE80",
+      "held": "#FBBF24",
+      "yourSeats": "#60A5FA",
+      "sold": "#334155"
+    },
+    "categoryAccents": {
+      "concert": "#DB2777",
+      "sports": "#1E3A8A",
+      "theater": "#9D174D",
+      "comedy": "#D97706"
+    },
+    "utility": {
+      "trafficRed": "#FB7185",
+      "trafficAmber": "#FBBF24",
+      "trafficGreen": "#34D399",
+      "warningTextDark": "#B45309",
+      "qrInk": "#0F172A",
+      "heroScrim": "rgba(11,17,32,0.85)",
+      "overlayBadge": "rgba(0,0,0,0.28)"
+    }
+  },
+  "gradients": {
+    "brandPrimary": "linear-gradient(135deg, #1D4ED8, #DB2777)",
+    "brandDark": "linear-gradient(135deg, #60A5FA, #F472B6)",
+    "hero": "linear-gradient(120deg, #1D4ED8, #DB2777)",
+    "cardConcert": "linear-gradient(135deg, #1D4ED8, #DB2777)",
+    "cardSports": "linear-gradient(135deg, #1E3A8A, #1D4ED8)",
+    "cardTheater": "linear-gradient(135deg, #9D174D, #DB2777)",
+    "cardComedy": "linear-gradient(135deg, #D97706, #DB2777)",
+    "cardSymphony": "linear-gradient(135deg, #1D4ED8, #60A5FA)",
+    "cardVenueDark": "linear-gradient(135deg, #0F172A, #1E3A8A)",
+    "venueFallback": "linear-gradient(160deg, #0F172A, #1E3A8A)",
+    "stageBar": "linear-gradient(to bottom, #334155, #1E293B)",
+    "heroScrim": "linear-gradient(to top, rgba(11,17,32,0.85), transparent 70%)"
+  },
+  "imageAssets": {
+    "note": "All artwork is inline SVG / CSS — no external raster files (.png/.jpg) are referenced.",
+    "brand": [
+      { "id": "logoMark", "type": "inline-svg", "desc": "Ticket-stub badge with perforation, gradient tile", "usage": "expanded logo, app bar" },
+      { "id": "favicon", "type": "inline-svg", "desc": "Monogram mark at 16/32/64px + mono variant", "usage": "favicon / browser tab" },
+      { "id": "appIcon", "type": "inline-svg", "desc": "Rounded-square launcher icon, dark gradient", "usage": "homescreen app icon" }
+    ],
+    "illustrations": [
+      { "id": "error404", "type": "inline-svg", "desc": "Friendly ticket face reading 404", "usage": "not-found state" },
+      { "id": "connectionLost", "type": "inline-svg", "desc": "Wi-Fi arcs with pink slash", "usage": "offline / connection error" },
+      { "id": "emptyState", "type": "inline-svg", "desc": "Dashed ticket + magnifier", "usage": "no results / empty list" }
+    ],
+    "fallbacks": [
+      { "id": "eventImageFallback", "type": "inline-svg", "desc": "Gradient + diagonal stripe pattern, ticket glyph", "aspect": "16:9" },
+      { "id": "venuePhotoFallback", "type": "inline-svg", "desc": "Navy gradient skyline + map pin", "aspect": "16:9" }
+    ],
+    "generated": [
+      { "id": "qrCode", "type": "css-matrix", "desc": "25×25 QR-style matrix with finder patterns", "usage": "booking confirmation ticket" }
+    ],
+    "icons": {
+      "type": "inline-svg",
+      "set": ["search", "map-pin", "calendar", "bell", "heart", "sun", "moon", "filter", "check", "lock", "clock", "credit-card", "camera", "user", "home", "ticket", "globe", "grid", "chevron", "logout", "alert"]
+    }
+  }
+}

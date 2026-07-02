@@ -1,0 +1,24 @@
+{
+  "name": "@book-my-ticket/root",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Nishant Kohli",
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "backend": "pnpm -F @book-my-ticket/backend dev",
+    "web": "pnpm -F @book-my-ticket/web dev",
+    "types": "pnpm -F @book-my-ticket/types lib:build",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "lint:fix": "turbo lint:fix",
+    "setup": "bash setup.sh"
+  },
+  "devDependencies": {
+    "turbo": "2.10.0"
+  },
+  "packageManager": "pnpm@11.9.0",
+  "license": "MIT"
+}

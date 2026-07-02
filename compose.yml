@@ -1,0 +1,15 @@
+services:
+  backend:
+    image: docker_username/express-server
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - '8000:8000'
+  web:
+    image: docker_username/express-server
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - '8000:8000'

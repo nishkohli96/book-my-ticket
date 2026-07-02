@@ -1,0 +1,38 @@
+{
+  "name": "@book-my-ticket/backend",
+  "version": "1.0.0",
+  "author": "Nishant Kohli",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "nodemon --exec 'ts-node -r tsconfig-paths/register src/index.ts'",
+    "build": "rimraf dist && tsc && tsc-alias",
+    "start": "pm2-runtime start ecosystem.config.js",
+    "start:node": "node dist/index.js",
+    "prod": "pnpm build && pnpm start",
+    "lint": "eslint --fix .",
+    "prepare": "husky || true"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "winston": "3.19.0"
+  },
+  "devDependencies": {
+    "@book-my-ticket/types": "workspace:*",
+    "@nish1896/eslint-flat-config": "^3.1.5",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.1.0",
+    "eslint": "^9.39.1",
+    "nodemon": "^3.1.14",
+    "rimraf": "^6.1.3",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.17",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^6.0.3"
+  }
+}
