@@ -6,38 +6,38 @@
  */
 
 export const LightThemePalette = {
-  primary: { main: '#007aba' },
-  secondary: { main: '#ba68c9' },
-  success: { main: '#4caf50' },
-  warning: { main: '#ffb74d' },
-  error: { main: '#ef5350' },
-  info: { main: '#03a9f4' },
-  divider: '#9e9e9e',
+  primary: { main: '#1D4ED8' },
+  secondary: { main: '#DB2777' },
+  success: { main: '#16A34A' },
+  warning: { main: '#D97706' },
+  error: { main: '#DC2626' },
+  // info: { main: '#03a9f4' },
+  // divider: '#9e9e9e',
   background: {
-    default: '#FFFFFF',
-    paper: '#e0dfdc'
+    default: '#F8FAFC',
+    paper: '#FFFFFF'
   },
   text: {
-    primary: '#121212',
-    secondary: '#4c4c4c'
+    primary: '#0F172A',
+    secondary: '#475569'
   }
 };
 
 export const DarkThemePalette = {
-  primary: { main: '#1976d2' },
-  secondary: { main: '#f50057' },
-  success: { main: '#4ad953' },
-  warning: { main: '#ffa726' },
-  error: { main: '#c62828' },
-  info: { main: '#80d8ff' },
-  divider: '#4c4c4c',
+  primary: { main: '#60A5FA' },
+  secondary: { main: '#F472B6' },
+  success: { main: '#4ADE80' },
+  warning: { main: '#FBBF24' },
+  error: { main: '#FBBF24' },
+  // info: { main: '#F87171' },
+  // divider: '#4c4c4c',
   background: {
-    default: '#1a1919',
-    paper: '#2b2b2b'
+    default: '#0B1120',
+    paper: '#111827'
   },
   text: {
-    primary: '#f8f7ff',
-    secondary: '#f6e4df'
+    primary: '#F1F5F9',
+    secondary: '#94A3B8'
   }
 };
 

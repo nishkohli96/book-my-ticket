@@ -3,9 +3,19 @@
  * export across other modules.
  */
 
-const env = process.env;
+function defEnvVariable(varName: string, defaultValue?: string): string {
+  const value = process.env[varName];
+  if (value) {
+    return value.trim();
+  }
+  if (defaultValue) {
+    return defaultValue.trim();
+  }
+  throw new Error(`Missing required environment variable: ${varName}`);
+}
 
 export const ENV_CONFIG = Object.freeze({
-  env: env.NODE_ENV ?? 'development',
-  port: env.PORT ?? 8000
+  env: defEnvVariable('NODE_ENV', 'development'),
+  port: defEnvVariable('PORT', '8000'),
+  ticketMasterApiKey: defEnvVariable('TICKETMASTER_API_KEY')
 });
