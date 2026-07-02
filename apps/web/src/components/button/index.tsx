@@ -1,28 +1,31 @@
-import Button, { ButtonProps } from '@mui/material/Button';
+import Button, { type ButtonProps } from '@mui/material/Button';
+import type { Theme } from '@mui/material/styles';
 
 type GradientButtonProps = ButtonProps & {
-	text: string;
-}
+  text: string;
+};
 
 export function GradientButton({
   text,
   sx: btnSx,
   ...btnProps
 }: GradientButtonProps) {
-	return (
-		<Button
-			variant="contained"
-			sx={{
-        ...btnSx,
-				background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-				border: 0,
-				color: 'white',
-				height: 48,
-				padding: '0 30px',
-			}}
-			{...btnProps}
-		>
-			{text}
-		</Button>
-	);
+  return (
+    <Button
+      variant="contained"
+      sx={[
+        {
+          background: (theme: Theme) => theme.palette.gradients.brandPrimary,
+          border: 0,
+          color: 'white',
+          height: 48,
+          padding: '0 30px',
+        },
+        ...(Array.isArray(btnSx) ? btnSx : [btnSx])
+      ]}
+      {...btnProps}
+    >
+      {text}
+    </Button>
+  );
 }

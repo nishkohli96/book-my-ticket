@@ -10,7 +10,7 @@
     "build": "next build --webpack",
     "start": "next start",
     "prod": "pnpm build && pnpm start",
-    "lint": "eslint --fix",
+    "lint": "eslint --fix .",
     "lint:check": "eslint",
     "prepare": "husky || true",
     "check-updates": "ncu --format group -u",
