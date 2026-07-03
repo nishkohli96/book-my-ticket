@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Box, Stack, Typography } from '@mui/material';
 import { SecondaryText, GradientButton, OutlinedButton } from '@/components';
 
@@ -96,7 +97,18 @@ export default function Content() {
             seconds.
           </SecondaryText>
           <Stack direction="row" spacing={2}>
-            <GradientButton sx={{ px: 3.5 }}>
+            <GradientButton
+              sx={{ px: 3.5 }}
+              endIcon={(
+                <Image
+                  src="/icons/right-arrow.svg"
+                  alt=""
+                  aria-hidden
+                  width={18}
+                  height={18}
+                />
+              )}
+            >
               Sign up free
             </GradientButton>
             <OutlinedButton sx={{ px: 3.5 }}>

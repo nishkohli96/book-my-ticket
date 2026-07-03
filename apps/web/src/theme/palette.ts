@@ -20,6 +20,10 @@ export const AppGradients = {
   heroScrim: 'linear-gradient(to top, rgba(11,17,32,0.85), transparent 70%)',
 };
 
+/**
+ * Primary, Secondary and Warning Tints are
+ * 16% opacity of their counterparts
+ */
 export const LightThemePalette = {
   primary: { main: '#1D4ED8' },
   secondary: { main: '#DB2777' },

@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { Grid, Box, Paper } from '@mui/material';
-import { alpha } from '@mui/material/styles';
 import { PrimaryText, DisabledText } from '@/components';
 
 const features = [
@@ -8,19 +7,19 @@ const features = [
     title: 'Live seat maps',
     description: 'See exactly which seats are open, held, or sold — refreshed in real time as others book.',
     icon: '/icons/seat-map.svg',
-    bgColor: '#16233F'// 'rgba(var(--mui-palette-primary-mainChannel) / 0.16)'
+    bgColor: 'var(--mui-palette-primaryTint)'
   },
   {
     title: 'Held while you decide',
     description: 'Your seats are reserved against a countdown, so no one grabs them mid-checkout.',
     icon: '/icons/clock.svg',
-    bgColor: 'rgba(var(--mui-palette-warning-mainChannel) / 0.16)'
+    bgColor: 'var(--mui-palette-warningTint)'
   },
   {
     title: 'Tickets on your phone',
     description: 'Instant QR tickets in My Bookings — scan at the gate, no printing, no waiting.',
     icon: '/icons/phone.svg',
-    bgColor: 'rgba(var(--mui-palette-secondary-mainChannel) / 0.16)'
+    bgColor: 'var(--mui-palette-secondaryTint)'
   }
 ];
 const iconSize = 22;
