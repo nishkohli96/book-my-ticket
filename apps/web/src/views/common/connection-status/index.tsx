@@ -4,9 +4,9 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Image from 'next/image';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import Typography from '@mui/material/Typography';
+import { GradientButton } from '@/components';
 
 type ConnectionStatusProps = {
   children: ReactNode;
@@ -15,6 +15,11 @@ type ConnectionStatusProps = {
 export default function ConnectionStatus({ children }: ConnectionStatusProps) {
   const [isOnline, setIsOnline] = useState(true);
   const [showReconnectToast, setShowReconnectToast] = useState(false);
+  /**
+   * wasOfflineRef ref is specifically for the reconnect toast behavior.
+   * If you show a success toast whenever isOnline === true, it can fire
+   * on first page load too, which is not what we want.
+   */
   const wasOfflineRef = useRef(false);
 
   useEffect(() => {
@@ -52,18 +57,15 @@ export default function ConnectionStatus({ children }: ConnectionStatusProps) {
       ) : (
         <Box
           component="main"
-          sx={(theme) => ({
+          sx={{
             minHeight: '100dvh',
             display: 'grid',
             placeItems: 'center',
             px: { xs: 3, md: 4 },
             py: 6,
             color: 'text.primary',
-            background:
-              theme.palette.mode === 'dark'
-                ? 'radial-gradient(circle at 50% 0%, rgba(96, 165, 250, 0.18), transparent 34%), #0B1120'
-                : 'radial-gradient(circle at 50% 0%, rgba(29, 78, 216, 0.12), transparent 34%), #F8FAFC',
-          })}
+            background: 'var(--mui-palette-background-default)'
+          }}
         >
           <Box
             sx={{
@@ -76,24 +78,17 @@ export default function ConnectionStatus({ children }: ConnectionStatusProps) {
             }}
           >
             <Box
-              sx={(theme) => ({
+              sx={{
                 width: { xs: 88, md: 104 },
                 height: { xs: 88, md: 104 },
                 mb: 3,
                 borderRadius: 5,
                 display: 'grid',
                 placeItems: 'center',
-                backgroundColor:
-                  theme.palette.mode === 'dark'
-                    ? 'rgba(255, 255, 255, 0.08)'
-                    : 'rgba(255, 255, 255, 0.78)',
-                border: `1px solid ${theme.palette.divider}`,
-                boxShadow:
-                  theme.palette.mode === 'dark'
-                    ? '0 20px 56px rgba(0, 0, 0, 0.34)'
-                    : '0 20px 56px rgba(15, 23, 42, 0.12)',
+                backgroundColor: 'var(--mui-palette-background-paper)',
+                border: `1px solid var(--mui-palette-divider)`,
                 backdropFilter: 'blur(16px)',
-              })}
+              }}
             >
               <Image
                 src="/icons/connection-lost.svg"
@@ -104,7 +99,6 @@ export default function ConnectionStatus({ children }: ConnectionStatusProps) {
                 priority
               />
             </Box>
-
             <Typography
               variant="h3"
               component="h1"
@@ -117,7 +111,6 @@ export default function ConnectionStatus({ children }: ConnectionStatusProps) {
             >
               Connection lost
             </Typography>
-
             <Typography
               variant="body1"
               sx={{
@@ -131,29 +124,16 @@ export default function ConnectionStatus({ children }: ConnectionStatusProps) {
               Check your internet connection. We will bring BookMyTicket back
               as soon as you are online.
             </Typography>
-
-            <Button
-              variant="contained"
-              onClick={handleRetry}
-              sx={(theme) => ({
-                minWidth: 132,
-                height: 46,
-                px: 3,
-                borderRadius: 2,
-                textTransform: 'none',
-                fontWeight: 800,
-                background: theme.palette.gradients.brandPrimary,
-              })}
-            >
+            <GradientButton sx={{ minWidth: 140, borderRadius: 2 }} onClick={handleRetry}>
               Retry
-            </Button>
+            </GradientButton>
           </Box>
         </Box>
       )}
-
       <Snackbar
         open={showReconnectToast}
         autoHideDuration={3200}
+        sx={{ minWidth: 280 }}
         onClose={() => setShowReconnectToast(false)}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       >

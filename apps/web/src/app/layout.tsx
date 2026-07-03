@@ -2,13 +2,13 @@ import { type ReactNode } from 'react';
 import type { Metadata } from 'next';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter';
-import ConnectionStatus from '@/components/connection-status';
 import {
   AppThemeProvider,
   colorSchemeAttribute,
   fontVariables,
   modeStorageKey
 } from '@/theme';
+import ConnectionStatus from '@/views/common/connection-status';
 import './globals.css';
 
 const defaultTitle = 'BookMyTicket';
