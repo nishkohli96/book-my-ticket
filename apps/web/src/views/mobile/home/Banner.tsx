@@ -2,6 +2,7 @@
 
 import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
+import { Body1 } from '@/components';
 
 export default function Banner() {
   return (
@@ -44,9 +45,9 @@ export default function Banner() {
       <Typography variant="h5" sx={{ fontWeight: 800, lineHeight: 1.2 }}>
         BookMyTicket
       </Typography>
-      <Typography variant="body1" sx={{ opacity: 0.9 }}>
+      <Body1>
         Live events, real time seats
-      </Typography>
+      </Body1>
     </Box>
   );
 }

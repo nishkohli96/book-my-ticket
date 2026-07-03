@@ -32,11 +32,14 @@ export default function HomePageMobile() {
           check out in seconds.
         </Typography>
         <GradientButton
-          text="Sign up for free"
           fullWidth
           sx={{ mt: 4, mb: 2.5 }}
-        />
-        <OutlinedButton text="Browse events as guest" fullWidth />
+        >
+          Sign up for free
+        </GradientButton>
+        <OutlinedButton fullWidth>
+          Browse events as guest
+        </OutlinedButton>
       </Box>
     </>
   );

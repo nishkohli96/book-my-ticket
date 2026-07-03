@@ -9,15 +9,12 @@
  *  rerun or may still be based on the default color scheme,
  */
 
-import { type ReactNode } from 'react';
 import Button, { type ButtonProps } from '@mui/material/Button';
 
-type OutlinedButtonProps = ButtonProps & {
-  text: ReactNode;
-};
+type OutlinedButtonProps = Omit<ButtonProps, 'variant'>;
 
 export default function OutlinedButton({
-  text,
+  children,
   sx: btnSx,
   ...btnProps
 }: OutlinedButtonProps) {
@@ -43,7 +40,7 @@ export default function OutlinedButton({
         ...(Array.isArray(btnSx) ? btnSx : [btnSx])
       ]}
     >
-      {text}
+      {children}
     </Button>
   );
 }

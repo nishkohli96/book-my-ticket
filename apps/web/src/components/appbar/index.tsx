@@ -132,11 +132,12 @@ export default function AppBar() {
               Log in
             </Button>
             <GradientButton
-              text="Sign Up"
               href="/signup"
               sx={{ borderRadius: '12px' }}
               LinkComponent={Link}
-            />
+            >
+              Sign Up
+            </GradientButton>
             <ThemeChangeButton />
           </Box>
         </Toolbar>

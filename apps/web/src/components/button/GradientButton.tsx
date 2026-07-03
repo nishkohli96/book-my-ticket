@@ -1,14 +1,11 @@
 'use client';
 
-import { type ReactNode } from 'react';
 import Button, { type ButtonProps } from '@mui/material/Button';
 
-type GradientButtonProps = ButtonProps & {
-  text: ReactNode;
-};
+type GradientButtonProps = Omit<ButtonProps, 'variant'>;
 
 export default function GradientButton({
-  text,
+  children,
   sx: btnSx,
   ...btnProps
 }: GradientButtonProps) {
@@ -28,7 +25,7 @@ export default function GradientButton({
         ...(Array.isArray(btnSx) ? btnSx : [btnSx])
       ]}
     >
-      {text}
+      {children}
     </Button>
   );
 }

@@ -4,6 +4,7 @@
 set -euo pipefail
 
 REQUIRED_PNPM_VERSION="11.9.0"
+REQUIRED_TURBO_VERSION="2.10.0"
 
 echo "🏁 Initiating Setup..."
 echo "🔍 Checking for global dependencies..."
@@ -36,6 +37,15 @@ if [ "$(pnpm -v 2>/dev/null || true)" != "$REQUIRED_PNPM_VERSION" ]; then
   npm install -g pnpm@$REQUIRED_PNPM_VERSION
 else
   echo "✅ pnpm@$REQUIRED_PNPM_VERSION already installed."
+fi
+
+# Check for Turbo
+echo "🔍 Checking for Turbo..."
+if [ "$(turbo --version 2>/dev/null || true)" != "$REQUIRED_TURBO_VERSION" ]; then
+  echo "📦 Installing turbo@$REQUIRED_TURBO_VERSION..."
+  npm install -g turbo@$REQUIRED_TURBO_VERSION
+else
+  echo "✅ turbo@$REQUIRED_TURBO_VERSION already installed."
 fi
 
 # Check for pm2
