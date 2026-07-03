@@ -9,7 +9,7 @@ import {
   varchar,
 } from 'drizzle-orm/pg-core';
 
-export const users = pgTable('users', {
+export const usersSchema = pgTable('users', {
   id: text('id').primaryKey(),
   name: text('name'),
   email: text('email').notNull(),
@@ -23,8 +23,8 @@ export const users = pgTable('users', {
   uniqueIndex('users_email_unique').on(table.email),
 ]);
 
-export const accounts = pgTable('accounts', {
-  userId: text('user_id').notNull().references(() => users.id, {
+export const accountsSchema = pgTable('accounts', {
+  userId: text('user_id').notNull().references(() => usersSchema.id, {
     onDelete: 'cascade',
   }),
   type: text('type').notNull(),
@@ -42,15 +42,15 @@ export const accounts = pgTable('accounts', {
   index('accounts_user_id_idx').on(table.userId),
 ]);
 
-export const sessions = pgTable('sessions', {
+export const sessionsSchema = pgTable('sessions', {
   sessionToken: text('session_token').primaryKey(),
-  userId: text('user_id').notNull().references(() => users.id, {
+  userId: text('user_id').notNull().references(() => usersSchema.id, {
     onDelete: 'cascade',
   }),
   expires: timestamp('expires', { mode: 'date' }).notNull(),
 });
 
-export const verificationTokens = pgTable('verification_tokens', {
+export const verificationTokensSchema = pgTable('verification_tokens', {
   identifier: text('identifier').notNull(),
   token: text('token').notNull(),
   expires: timestamp('expires', { mode: 'date' }).notNull(),

@@ -15,7 +15,7 @@ import {
   seatStatusEnum,
 } from './enums.js';
 
-export const events = pgTable('events', {
+export const eventsSchema = pgTable('events', {
   id: text('id').primaryKey(),
   slug: varchar('slug', { length: 200 }).notNull(),
   name: text('name').notNull(),
@@ -39,9 +39,9 @@ export const events = pgTable('events', {
   index('events_city_start_date_idx').on(table.city, table.startDate),
 ]);
 
-export const seats = pgTable('seats', {
+export const seatsSchema = pgTable('seats', {
   id: text('id').primaryKey(),
-  eventId: text('event_id').notNull().references(() => events.id, {
+  eventId: text('event_id').notNull().references(() => eventsSchema.id, {
     onDelete: 'cascade',
   }),
   section: varchar('section', { length: 20 }).notNull(),

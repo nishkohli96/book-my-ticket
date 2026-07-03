@@ -1,36 +1,61 @@
 import os from 'os';
-import { drizzle } from 'drizzle-orm/node-postgres';
+import { Pool } from 'pg';
+import { drizzle, type NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { ENV_CONFIG, isProductionEnv } from '@/constants';
 import { winstonLogger } from '@/middleware';
 
 const hostName = os.hostname();
-const { user, host, password, db, port } = ENV_CONFIG.postgres;
+const { user, host, password, db: database, port } = ENV_CONFIG.postgres;
 
-const postgresUrl = `postgres://${user}:${password}@${host}:${port}/${db}`;
+class PostgresDatabase {
+  private pool: Pool | null = null;
+  private drizzleDb: NodePgDatabase | null = null;
 
-export async function connectPostgresDB() {
-  try {
-    drizzle(postgresUrl);
-    winstonLogger.info(`[ ⚡️ ${hostName} ⚡️ ] - Connected to Postgres`);
-  } catch (error) {
-    winstonLogger.error('⚠ Error connecting to Postgres Database ⚠', error);
-    process.exit(1);
+  get db() {
+    if (!this.drizzleDb) {
+      throw new Error('Postgres is not connected. Call connectPostgresDB first.');
+    }
+    return this.drizzleDb;
   }
-}
 
-export async function disconnectPostgresDB() {
-  try {
+  async connect() {
+    if (this.pool && this.drizzleDb) {
+      return this.drizzleDb;
+    }
+
+    this.pool = new Pool({
+      user,
+      host,
+      password,
+      database,
+      port: Number(port),
+    });
+
+    const client = await this.pool.connect();
+    try {
+      await client.query('select 1');
+      this.drizzleDb = drizzle({ client: this.pool });
+      winstonLogger.info(`[ ⚡️ ${hostName} ⚡️ ] - Connected to Postgres`);
+      return this.drizzleDb;
+    } finally {
+      client.release();
+    }
+  }
+
+  async disconnect() {
+    if (!this.pool) {
+      return;
+    }
+    await this.pool.end();
+    this.pool = null;
+    this.drizzleDb = null;
     winstonLogger.info(
       `[ ⚡️ ${hostName} ⚡️ ] - Postgres Database connection closed successfully`
     );
-  } catch (error) {
-    winstonLogger.error(
-      '⚠ Error disconnecting from Postgres Database ⚠',
-      error
-    );
-    process.exit(1);
   }
 }
+
+export const postgresDatabase = new PostgresDatabase();
 
 /* Alter tables should not be allowed in "production" env. */
 export const shouldAlterTable = !isProductionEnv;

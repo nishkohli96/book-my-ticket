@@ -2,7 +2,7 @@ import 'dotenv/config';
 import os from 'os';
 import { createServer } from 'node:http';
 import { ENV_CONFIG } from '@/constants';
-import { connectPostgresDB, disconnectPostgresDB } from '@/db';
+import { postgresDatabase } from '@/db';
 import { winstonLogger } from '@/middleware';
 import app from './app';
 
@@ -11,7 +11,7 @@ const { port, env } = ENV_CONFIG;
 
 async function bootstrap() {
   try{
-    await connectPostgresDB();
+    await postgresDatabase.connect();
     const server = createServer(app);
     server.listen(port, () => {
       winstonLogger.info(
@@ -27,7 +27,7 @@ async function bootstrap() {
 async function handleExit(signal: string) {
   winstonLogger.info(`Received ${signal}`);
   try {
-    await disconnectPostgresDB();
+    await postgresDatabase.disconnect();
   } catch (error) {
     winstonLogger.error('Error while disconnecting from the database:', error);
   } finally {

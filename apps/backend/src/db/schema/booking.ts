@@ -9,16 +9,16 @@ import {
   varchar,
 } from 'drizzle-orm/pg-core';
 import { bookingStatusEnum } from './enums.js';
-import { events, seats } from './event.js';
-import { users } from './user.js';
+import { eventsSchema, seatsSchema } from './event.js';
+import { usersSchema } from './user.js';
 
-export const bookings = pgTable('bookings', {
+export const bookingsSchema = pgTable('bookings', {
   id: text('id').primaryKey(),
   bookingCode: varchar('booking_code', { length: 20 }).notNull(),
-  userId: text('user_id').notNull().references(() => users.id, {
+  userId: text('user_id').notNull().references(() => usersSchema.id, {
     onDelete: 'cascade',
   }),
-  eventId: text('event_id').notNull().references(() => events.id, {
+  eventId: text('event_id').notNull().references(() => eventsSchema.id, {
     onDelete: 'restrict',
   }),
   status: bookingStatusEnum('status').notNull().default('confirmed'),
@@ -34,11 +34,11 @@ export const bookings = pgTable('bookings', {
   index('bookings_event_id_idx').on(table.eventId),
 ]);
 
-export const bookingSeats = pgTable('booking_seats', {
-  bookingId: text('booking_id').notNull().references(() => bookings.id, {
+export const bookingSeatsSchema = pgTable('booking_seats', {
+  bookingId: text('booking_id').notNull().references(() => bookingsSchema.id, {
     onDelete: 'cascade',
   }),
-  seatId: text('seat_id').notNull().references(() => seats.id, {
+  seatId: text('seat_id').notNull().references(() => seatsSchema.id, {
     onDelete: 'restrict',
   }),
   price: numeric('price', { precision: 10, scale: 2 }).notNull(),
