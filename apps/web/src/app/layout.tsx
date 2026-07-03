@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 import type { Metadata } from 'next';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter';
+import ConnectionStatus from '@/components/connection-status';
 import {
   AppThemeProvider,
   colorSchemeAttribute,
@@ -43,7 +44,7 @@ export default function RootLayout({
         />
         <AppRouterCacheProvider options={{ key: 'mui' }}>
           <AppThemeProvider>
-            {children}
+            <ConnectionStatus>{children}</ConnectionStatus>
           </AppThemeProvider>
         </AppRouterCacheProvider>
       </body>
