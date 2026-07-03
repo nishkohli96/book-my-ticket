@@ -18,9 +18,15 @@ type AppGradients = {
 declare module '@mui/material/styles' {
   interface Palette {
     gradients: AppGradients;
+    primaryTint: string;
+    secondaryTint: string;
+    warningTint: string;
   }
 
   interface PaletteOptions {
     gradients?: AppGradients;
+    primaryTint?: string;
+    secondaryTint?: string;
+    warningTint?: string;
   }
 }

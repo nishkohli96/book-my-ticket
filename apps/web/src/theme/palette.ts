@@ -37,6 +37,9 @@ export const LightThemePalette = {
     secondary: '#475569',
     disabled: '#64748B',
   },
+  primaryTint: '#EEF3FF',
+  secondaryTint: '#FDF0F6',
+  warningTint: '#FEF3C7',
   gradients: AppGradients,
 };
 
@@ -57,6 +60,9 @@ export const DarkThemePalette = {
     secondary: '#94A3B8',
     disabled: '#64748B',
   },
+  primaryTint: '#60A5FA',
+  secondaryTint: '#D97706',
+  warningTint: '#F472B6',
   gradients: AppGradients,
 };
 
