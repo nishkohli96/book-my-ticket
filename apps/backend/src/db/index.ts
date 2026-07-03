@@ -10,7 +10,7 @@ const postgresUrl = `postgres://${user}:${password}@${host}:${port}/${db}`;
 
 export async function connectPostgresDB() {
   try {
-    drizzle(postgresUrl)
+    drizzle(postgresUrl);
     winstonLogger.info(`[ ⚡️ ${hostName} ⚡️ ] - Connected to Postgres`);
   } catch (error) {
     winstonLogger.error('⚠ Error connecting to Postgres Database ⚠', error);

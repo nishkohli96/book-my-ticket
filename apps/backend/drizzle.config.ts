@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import 'dotenv/config';
 import { defineConfig } from 'drizzle-kit';
 
@@ -5,7 +7,7 @@ const postgresUrl = `postgres://${process.env.POSTGRES_USERNAME}:${process.env.P
 
 export default defineConfig({
   out: './drizzle',
-  schema: './src/db/schema.ts',
+  schema: './src/db/schema/index.ts',
   dialect: 'postgresql',
   dbCredentials: {
     url: postgresUrl,
