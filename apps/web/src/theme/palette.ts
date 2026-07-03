@@ -60,9 +60,9 @@ export const DarkThemePalette = {
     secondary: '#94A3B8',
     disabled: '#64748B',
   },
-  primaryTint: '#60A5FA',
-  secondaryTint: '#D97706',
-  warningTint: '#F472B6',
+  primaryTint: '#16233F',
+  secondaryTint: '#2B1826',
+  warningTint: '#2B2311',
   gradients: AppGradients,
 };
 

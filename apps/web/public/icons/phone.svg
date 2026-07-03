@@ -1,12 +1,5 @@
-<svg width="2" height="2" viewBox="0 0 2 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_10_392)">
-<path d="M0.481278 0.192505H1.05878C1.14737 0.192505 1.2192 0.264326 1.2192 0.352922V1.18709C1.2192 1.27568 1.14737 1.3475 1.05878 1.3475H0.481278C0.392683 1.3475 0.320862 1.27568 0.320862 1.18709V0.352922C0.320862 0.264326 0.392683 0.192505 0.481278 0.192505V0.192505" stroke="#DB2777" stroke-width="0.128333"/>
-<path d="M0.577515 0.449158H0.962515M0.577515 0.705824H0.962515" stroke="#DB2777" stroke-width="0.128333" stroke-linecap="round"/>
-<path d="M0.667358 1.05875C0.667358 1.11542 0.713362 1.16142 0.770025 1.16142C0.826688 1.16142 0.872692 1.11542 0.872692 1.05875C0.872692 1.00209 0.826688 0.956085 0.770025 0.956085C0.713362 0.956085 0.667358 1.00209 0.667358 1.05875V1.05875" fill="#DB2777"/>
-</g>
-<defs>
-<clipPath id="clip0_10_392">
-<rect width="21.9545" height="21.9545" fill="white" transform="scale(0.0701452)"/>
-</clipPath>
-</defs>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="7" y="3.5" width="10" height="17" rx="2.5" stroke="#DB2777" stroke-width="2"/>
+  <path d="M10 8h4M10 12h4" stroke="#DB2777" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="12" cy="16.5" r="1.25" fill="#DB2777"/>
 </svg>

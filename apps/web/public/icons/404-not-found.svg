@@ -1,17 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="260" height="210" viewBox="0 0 260 210" font-family="&#39;Plus Jakarta Sans&#39;,sans-serif">
-  <ellipse cx="130" cy="188" rx="78" ry="12" fill="#1D4ED8" opacity=".08"></ellipse>
-  <circle cx="130" cy="95" r="78" fill="#EEF3FF"></circle>
-  <circle cx="70" cy="46" r="5" fill="#DB2777" opacity=".5"></circle>
-  <circle cx="196" cy="60" r="7" fill="#1D4ED8" opacity=".25"></circle>
-  <text x="196" y="52" font-size="22" font-weight="800" fill="#DB2777" opacity=".55">?</text>
-  <text x="60" y="150" font-size="18" font-weight="800" fill="#1D4ED8" opacity=".45">?</text>
-  <g transform="rotate(-7 130 100)">
-    <rect x="82" y="52" width="96" height="98" rx="18" fill="#fff" stroke="#C7D6FF" stroke-width="2"></rect>
-    <circle cx="82" cy="101" r="9" fill="#EEF3FF" stroke="#C7D6FF" stroke-width="2"></circle>
-    <circle cx="178" cy="101" r="9" fill="#EEF3FF" stroke="#C7D6FF" stroke-width="2"></circle>
-    <text x="130" y="88" text-anchor="middle" font-size="30" font-weight="800" fill="#1D4ED8">404</text>
-    <circle cx="114" cy="116" r="5.5" fill="#0F172A"></circle><circle cx="146" cy="116" r="5.5" fill="#0F172A"></circle>
-    <circle cx="115.5" cy="114" r="1.8" fill="#fff"></circle><circle cx="147.5" cy="114" r="1.8" fill="#fff"></circle>
-    <path d="M120 134 q10 -8 20 0" stroke="#0F172A" stroke-width="3" stroke-linecap="round" fill="none"></path>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="12" cy="11.5" r="8" fill="#EEF3FF"/>
+  <g transform="rotate(-6 12 12)">
+    <rect x="6.5" y="5.5" width="11" height="12" rx="2.4" fill="white" stroke="#C7D6FF" stroke-width="1.4"/>
+    <text x="12" y="10.8" text-anchor="middle" font-family="Arial, sans-serif" font-size="3.4" font-weight="800" fill="#1D4ED8">404</text>
+    <circle cx="9.6" cy="12.8" r=".75" fill="#0F172A"/>
+    <circle cx="14.4" cy="12.8" r=".75" fill="#0F172A"/>
+    <path d="M10.2 15.5q1.8-1.2 3.6 0" stroke="#0F172A" stroke-width=".9" stroke-linecap="round" fill="none"/>
   </g>
+  <circle cx="5.2" cy="5.2" r=".7" fill="#DB2777" opacity=".55"/>
+  <circle cx="18.8" cy="5.8" r=".8" fill="#1D4ED8" opacity=".28"/>
 </svg>
