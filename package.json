@@ -9,8 +9,13 @@
   },
   "scripts": {
     "backend": "pnpm -F @book-my-ticket/backend dev",
+    "backend:lint": "pnpm -F @book-my-ticket/backend lint",
+    "backend:build": "pnpm -F @book-my-ticket/backend build",
     "web": "pnpm -F @book-my-ticket/web dev",
+    "web:lint": "pnpm -F @book-my-ticket/web lint",
+    "web:build": "pnpm -F @book-my-ticket/web build",
     "types": "pnpm -F @book-my-ticket/types lib:build",
+    "types:lint": "pnpm -F @book-my-ticket/types lint",
     "build": "turbo build",
     "lint": "turbo lint",
     "lint:fix": "turbo lint:fix",
