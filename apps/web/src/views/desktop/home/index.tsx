@@ -1,11 +1,12 @@
 import { AppBar } from '@/components';
-import { HomePageContent } from './components';
+import { Content, Features } from './components';
 
 export default function HomePageDesktop() {
   return (
     <>
       <AppBar />
-      <HomePageContent />
+      <Content />
+      <Features />
     </>
   );
 }

@@ -1,9 +1,9 @@
 'use client';
 
 import { Box, Stack, Typography } from '@mui/material';
-import { Body1, GradientButton, OutlinedButton } from '@/components';
+import { SecondaryText, GradientButton, OutlinedButton } from '@/components';
 
-export default function HomePageContent() {
+export default function Content() {
   return (
     <Box
       component="section"
@@ -39,7 +39,6 @@ export default function HomePageContent() {
               gap: 1,
               px: 1.5,
               py: 0.75,
-              borderRadius: 999,
               backgroundColor: 'rgba(var(--mui-palette-primary-mainChannel) / 0.10)',
               color: 'var(--mui-palette-primary-main)',
               fontWeight: 800,
@@ -57,7 +56,6 @@ export default function HomePageContent() {
             />
             Live seat availability, updated by the second
           </Box>
-
           <Typography
             variant="h1"
             sx={{
@@ -76,7 +74,8 @@ export default function HomePageContent() {
               Book it before
             </Box>
             <Box component="span" sx={{ display: 'block' }}>
-              it&apos;s{' '}
+              it&apos;s
+              {' '}
               <Box
                 component="span"
                 sx={{
@@ -91,13 +90,11 @@ export default function HomePageContent() {
               </Box>
             </Box>
           </Typography>
-
-          <Body1 sx={{ maxWidth: 500, fontSize: 18 }}>
+          <SecondaryText sx={{ maxWidth: 500, fontSize: 18 }}>
             Concerts, sports, theater and comedy — pick seats on a live map,
             hold them against a countdown, and get tickets to your phone in
             seconds.
-          </Body1>
-
+          </SecondaryText>
           <Stack direction="row" spacing={2}>
             <GradientButton sx={{ px: 3.5 }}>
               Sign up free
