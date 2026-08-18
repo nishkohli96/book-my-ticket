@@ -37,8 +37,23 @@ const StyledRHFTextField = <T extends FieldValues>(
       renderError={error => (
         <StyledErrorMsg errorMessage={error?.message} />
       )}
-      variant="standard"
+      variant="outlined"
       showLabelAboveFormField
+      formLabelProps={{
+        sx: {
+          fontSize: 12,
+          fontWeight: 700,
+          letterSpacing: 0.5,
+          textTransform: 'uppercase',
+          color: 'text.secondary',
+          mb: 0.75,
+        },
+      }}
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          borderRadius: '12px',
+        },
+      }}
       {...rest}
     />
   );

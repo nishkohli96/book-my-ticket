@@ -1,10 +1,10 @@
 'use client';
 
-import { Grid, Link, Stack, Typography } from '@mui/material';
+import { Divider, Grid, Link, Stack, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import RHFCheckbox from '@nish1896/rhf-mui-components/mui/checkbox';
-import { GradientButton, SignInWithGoogleButton, StyledRHFTextField, StyledRHFPasswordInput } from '@/components';
+import { GradientButton, SecondaryText, SignInWithGoogleButton, StyledRHFTextField, StyledRHFPasswordInput } from '@/components';
 import { signUpSchema, type SignUpFormSchema } from './schema';
 
 export default function SignUpForm() {
@@ -22,33 +22,50 @@ export default function SignUpForm() {
       spacing={2.5}
       onSubmit={handleSubmit(onSubmit)}
     >
+      <Stack spacing={0.5}>
+        <Typography variant="h5" sx={{ fontWeight: 800 }}>
+          Create your account
+        </Typography>
+        <SecondaryText>
+          It only takes a minute
+        </SecondaryText>
+      </Stack>
+
+      <SignInWithGoogleButton fullWidth>
+        Continue with Google
+      </SignInWithGoogleButton>
+
+      <Divider sx={{ color: 'text.secondary', fontSize: 12, fontWeight: 700 }}>
+        OR
+      </Divider>
+
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 6 }}>
           <StyledRHFTextField
             fieldName="firstName"
             control={control}
-            label={"First name".toUpperCase()}
+            label="First name"
           />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
           <StyledRHFTextField
             fieldName="lastName"
             control={control}
-            label={"Last name".toUpperCase()}
+            label="Last name"
           />
         </Grid>
         <Grid size={12}>
           <StyledRHFTextField
             fieldName="email"
             control={control}
-            label={"Email".toUpperCase()}
+            label="Email"
           />
         </Grid>
         <Grid size={12}>
           <StyledRHFPasswordInput
             fieldName="password"
             control={control}
-            label={"Password".toUpperCase()}
+            label="Password"
           />
         </Grid>
         <Grid size={12}>
@@ -70,7 +87,6 @@ export default function SignUpForm() {
       <GradientButton type="submit" fullWidth>
         Create account
       </GradientButton>
-      <SignInWithGoogleButton />
     </Stack>
   );
 }
