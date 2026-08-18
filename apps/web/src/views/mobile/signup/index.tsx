@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { AppLink } from '@/components';
 import { MobileAuthShell } from '@/views/common/auth-shell';
 import SignUpForm from '@/views/common/signup';
 
@@ -13,7 +13,7 @@ export default function SignUpPageMobile() {
         <>
           Already have an account?
           {' '}
-          <Link href="/login">Log in</Link>
+          <AppLink href="/login">Log in</AppLink>
         </>
       )}
     >

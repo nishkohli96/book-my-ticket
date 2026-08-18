@@ -1,10 +1,17 @@
 'use client';
 
-import { Divider, Grid, Link, Stack, Typography } from '@mui/material';
+import { Divider, Grid, Stack, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import RHFCheckbox from '@nish1896/rhf-mui-components/mui/checkbox';
-import { GradientButton, SecondaryText, SignInWithGoogleButton, StyledRHFTextField, StyledRHFPasswordInput } from '@/components';
+import {
+  AppLink,
+  GradientButton,
+  SecondaryText,
+  SignInWithGoogleButton,
+  StyledRHFTextField,
+  StyledRHFPasswordInput,
+  StyledRHFCheckbox
+} from '@/components';
 import { signUpSchema, type SignUpFormSchema } from './schema';
 
 export default function SignUpForm() {
@@ -69,14 +76,14 @@ export default function SignUpForm() {
           />
         </Grid>
         <Grid size={12}>
-          <RHFCheckbox
+          <StyledRHFCheckbox
             fieldName="agreeTnC"
             control={control}
             label={(
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 I agree to the
                 {' '}
-                <Link href="/tnc">Terms</Link>
+                <AppLink href="/tnc">Terms</AppLink>
                 {' '}
                 and Privacy Policy
               </Typography>

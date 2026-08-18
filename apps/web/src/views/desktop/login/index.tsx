@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { AppLink } from '@/components';
 import { DesktopAuthShell } from '@/views/common/auth-shell';
 import LoginForm from '@/views/common/login';
 
@@ -13,7 +13,7 @@ export default function LoginPageDesktop() {
         <>
           New to BookMyTicket?
           {' '}
-          <Link href="/signup">Create an account</Link>
+          <AppLink href="/signup">Create an account</AppLink>
         </>
       )}
     >

@@ -23,7 +23,7 @@ export default function DesktopAuthShell({
         width: '100%',
         minHeight: '100vh',
         display: 'grid',
-        gridTemplateColumns: { md: '1fr 1fr' },
+        gridTemplateColumns: { md: '7fr 5fr' },
         overflow: 'hidden',
         backgroundColor: 'var(--mui-palette-background-paper)',
         boxShadow: '0 28px 70px rgba(15, 23, 42, 0.18)',
