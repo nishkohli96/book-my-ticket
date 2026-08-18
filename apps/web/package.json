@@ -2,28 +2,28 @@
   "name": "@book-my-ticket/web",
   "version": "1.0.0",
   "author": "Nishant Kohli",
-  "description": "Next.js v16 template with Material-UI, Docker, and Tailwind CSS",
+  "description": "Website for BookMyTicket",
   "private": true,
   "scripts": {
-    "set-up": "sh setup.sh",
-    "dev": "next dev -p 3000 --webpack",
-    "build": "next build --webpack",
+    "dev": "next dev",
+    "build": "next build",
     "start": "next start",
     "prod": "pnpm build && pnpm start",
     "lint": "eslint --fix .",
     "lint:check": "eslint",
     "prepare": "true",
-    "check-updates": "ncu --format group -u",
-    "install-updates": "pnpm check-updates && pnpm install"
+    "check-updates": "ncu --format group -u"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@hookform/resolvers": "^5.9.1",
     "@mui/icons-material": "^9.3.1",
     "@mui/material": "^9.3.1",
     "@mui/material-nextjs": "^9.3.0",
     "@nish1896/rhf-mui-components": "^5.0.1",
+    "joi": "^18.2.3",
     "next": "16.3.1",
     "next-auth": "5.0.0-beta.31",
     "react": "^19.2.8",
@@ -54,12 +54,5 @@
     ]
   },
   "packageManager": "pnpm@11.20.0",
-  "keywords": [
-    "nextjs",
-    "template",
-    "material-ui",
-    "tailwindcss",
-    "docker"
-  ],
   "license": "MIT"
 }
