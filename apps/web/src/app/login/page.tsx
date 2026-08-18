@@ -1,15 +1,15 @@
 import Box from '@mui/material/Box';
-import SignUpPageMobile from '@/views/mobile/signup';
-import SignUpPageDesktop from '@/views/desktop/signup';
+import LoginPageMobile from '@/views/mobile/login';
+import LoginPageDesktop from '@/views/desktop/login';
 
-export default function SignupPage() {
+export default function LoginPage() {
   return (
     <>
       <Box sx={{ display: { xs: 'block', md: 'none' } }}>
-        <SignUpPageMobile />
+        <LoginPageMobile />
       </Box>
       <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-        <SignUpPageDesktop />
+        <LoginPageDesktop />
       </Box>
     </>
   );
