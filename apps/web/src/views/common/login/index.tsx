@@ -2,13 +2,13 @@
 
 import { Stack } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { GradientButton, SignInWithGoogleButton, StyledRHFTextField, StyledRHFPasswordInput } from '@/components';
 import { loginSchema, type LoginFormValues } from './schema';
 
 export default function LoginForm() {
   const { control, handleSubmit } = useForm<LoginFormValues>({
-    resolver: joiResolver(loginSchema)
+    resolver: zodResolver(loginSchema)
   });
 
   const onSubmit = (data: LoginFormValues) => {

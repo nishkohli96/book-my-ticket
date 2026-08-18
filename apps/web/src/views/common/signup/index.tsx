@@ -2,17 +2,17 @@
 
 import { Grid, Link, Stack, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
+import { zodResolver } from '@hookform/resolvers/zod';
 import RHFCheckbox from '@nish1896/rhf-mui-components/mui/checkbox';
 import { GradientButton, SignInWithGoogleButton, StyledRHFTextField, StyledRHFPasswordInput } from '@/components';
-import { signUpSchema, type SignUpFormValues } from './schema';
+import { signUpSchema, type SignUpFormSchema } from './schema';
 
 export default function SignUpForm() {
-  const { control, handleSubmit } = useForm<SignUpFormValues>({
-    resolver: joiResolver(signUpSchema)
+  const { control, handleSubmit } = useForm<SignUpFormSchema>({
+    resolver: zodResolver(signUpSchema)
   });
 
-  const onSubmit = (data: SignUpFormValues) => {
+  const onSubmit = (data: SignUpFormSchema) => {
     console.log(data);
   };
 
@@ -27,28 +27,28 @@ export default function SignUpForm() {
           <StyledRHFTextField
             fieldName="firstName"
             control={control}
-            label="First name"
+            label={"First name".toUpperCase()}
           />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
           <StyledRHFTextField
             fieldName="lastName"
             control={control}
-            label="Last name"
+            label={"Last name".toUpperCase()}
           />
         </Grid>
         <Grid size={12}>
           <StyledRHFTextField
             fieldName="email"
             control={control}
-            label="Email"
+            label={"Email".toUpperCase()}
           />
         </Grid>
         <Grid size={12}>
           <StyledRHFPasswordInput
             fieldName="password"
             control={control}
-            label="Password"
+            label={"Password".toUpperCase()}
           />
         </Grid>
         <Grid size={12}>

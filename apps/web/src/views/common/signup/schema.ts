@@ -1,20 +1,12 @@
-import Joi from 'joi';
+import { z } from 'zod';
+import { emailPattern } from '@/constants/regex';
 
-export type SignUpFormValues = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  agreeTnC: boolean;
-};
-
-export const signUpSchema = Joi.object<SignUpFormValues>({
-  firstName: Joi.string().trim().min(1).max(50).required(),
-  lastName: Joi.string().trim().min(1).max(50).required(),
-  email: Joi.string()
-    .trim()
-    .email({ tlds: { allow: false } })
-    .required(),
-  password: Joi.string().min(8).max(72).required(),
-  agreeTnC: Joi.boolean().valid(true).required()
+export const signUpSchema = z.object({
+  firstName: z.string().trim().min(1).max(30),
+  lastName: z.string().trim().min(1).max(30),
+  email: z.string().trim().regex(emailPattern, { message: 'Invalid email address' }),
+  password: z.string().min(8).max(20),
+  agreeTnC: z.literal(true)
 });
+
+export type SignUpFormSchema = z.infer<typeof signUpSchema>;
