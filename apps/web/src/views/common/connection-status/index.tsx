@@ -52,84 +52,86 @@ export default function ConnectionStatus({ children }: ConnectionStatusProps) {
 
   return (
     <>
-      {isOnline ? (
-        children
-      ) : (
-        <Box
-          component="main"
-          sx={{
-            minHeight: '100dvh',
-            display: 'grid',
-            placeItems: 'center',
-            px: { xs: 3, md: 4 },
-            py: 6,
-            color: 'text.primary',
-            background: 'var(--mui-palette-background-default)'
-          }}
-        >
+      {isOnline
+        ? (
+          children
+        )
+        : (
           <Box
+            component="main"
             sx={{
-              width: '100%',
-              maxWidth: 420,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              textAlign: 'center',
+              minHeight: '100dvh',
+              display: 'grid',
+              placeItems: 'center',
+              px: { xs: 3, md: 4 },
+              py: 6,
+              color: 'text.primary',
+              background: 'var(--mui-palette-background-default)'
             }}
           >
             <Box
               sx={{
-                width: { xs: 88, md: 104 },
-                height: { xs: 88, md: 104 },
-                mb: 3,
-                borderRadius: 5,
-                display: 'grid',
-                placeItems: 'center',
-                backgroundColor: 'var(--mui-palette-background-paper)',
-                border: `1px solid var(--mui-palette-divider)`,
-                backdropFilter: 'blur(16px)',
+                width: '100%',
+                maxWidth: 420,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
               }}
             >
-              <Image
-                src="/icons/connection-lost.svg"
-                alt=""
-                aria-hidden
-                width={56}
-                height={56}
-                priority
-              />
+              <Box
+                sx={{
+                  width: { xs: 88, md: 104 },
+                  height: { xs: 88, md: 104 },
+                  mb: 3,
+                  borderRadius: 5,
+                  display: 'grid',
+                  placeItems: 'center',
+                  backgroundColor: 'var(--mui-palette-background-paper)',
+                  border: '1px solid var(--mui-palette-divider)',
+                  backdropFilter: 'blur(16px)',
+                }}
+              >
+                <Image
+                  src="/icons/connection-lost.svg"
+                  alt=""
+                  aria-hidden
+                  width={56}
+                  height={56}
+                  priority
+                />
+              </Box>
+              <Typography
+                variant="h3"
+                component="h1"
+                sx={{
+                  mb: 1.5,
+                  fontWeight: 800,
+                  fontSize: { xs: 32, md: 44 },
+                  lineHeight: 1.08,
+                }}
+              >
+                Connection lost
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  maxWidth: 360,
+                  mb: 3,
+                  color: 'text.secondary',
+                  fontWeight: 600,
+                  lineHeight: 1.7,
+                }}
+              >
+                Check your internet connection. We will bring BookMyTicket back
+                as soon as you are online.
+              </Typography>
+              <GradientButton sx={{ minWidth: 140, borderRadius: 2 }} onClick={handleRetry}>
+                Retry
+              </GradientButton>
             </Box>
-            <Typography
-              variant="h3"
-              component="h1"
-              sx={{
-                mb: 1.5,
-                fontWeight: 800,
-                fontSize: { xs: 32, md: 44 },
-                lineHeight: 1.08,
-              }}
-            >
-              Connection lost
-            </Typography>
-            <Typography
-              variant="body1"
-              sx={{
-                maxWidth: 360,
-                mb: 3,
-                color: 'text.secondary',
-                fontWeight: 600,
-                lineHeight: 1.7,
-              }}
-            >
-              Check your internet connection. We will bring BookMyTicket back
-              as soon as you are online.
-            </Typography>
-            <GradientButton sx={{ minWidth: 140, borderRadius: 2 }} onClick={handleRetry}>
-              Retry
-            </GradientButton>
           </Box>
-        </Box>
-      )}
+        )}
       <Snackbar
         open={showReconnectToast}
         autoHideDuration={3200}

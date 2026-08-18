@@ -24,6 +24,6 @@
   "devDependencies": {
     "turbo": "2.10.0"
   },
-  "packageManager": "pnpm@11.9.0",
+  "packageManager": "pnpm@11.20.0",
   "license": "MIT"
 }

@@ -1,6 +1,6 @@
 # === Define reusable versions ===
 ARG NODE_VERSION=24-bookworm-slim
-ARG PNPM_VERSION=11.9.0
+ARG PNPM_VERSION=11.20.0
 
 # === Base Image (Builder) ===
 FROM node:${NODE_VERSION} AS builder

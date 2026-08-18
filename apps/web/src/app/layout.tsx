@@ -44,7 +44,9 @@ export default function RootLayout({
         />
         <AppRouterCacheProvider options={{ key: 'mui' }}>
           <AppThemeProvider>
-            <ConnectionStatus>{children}</ConnectionStatus>
+            <ConnectionStatus>
+              {children}
+            </ConnectionStatus>
           </AppThemeProvider>
         </AppRouterCacheProvider>
       </body>
