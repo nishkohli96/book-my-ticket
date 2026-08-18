@@ -4,14 +4,14 @@ import { Divider, Stack, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { GradientButton, SecondaryText, SignInWithGoogleButton, StyledRHFTextField, StyledRHFPasswordInput } from '@/components';
-import { loginSchema, type LoginFormValues } from './schema';
+import { loginSchema, type LoginFormData } from './schema';
 
 export default function LoginForm() {
-  const { control, handleSubmit } = useForm<LoginFormValues>({
+  const { control, handleSubmit } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema)
   });
 
-  const onSubmit = (data: LoginFormValues) => {
+  const onSubmit = (data: LoginFormData) => {
     console.log(data);
   };
 

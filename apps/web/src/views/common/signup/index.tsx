@@ -12,14 +12,14 @@ import {
   StyledRHFPasswordInput,
   StyledRHFCheckbox
 } from '@/components';
-import { signUpSchema, type SignUpFormSchema } from './schema';
+import { signUpSchema, type SignUpFormData } from './schema';
 
 export default function SignUpForm() {
-  const { control, handleSubmit } = useForm<SignUpFormSchema>({
+  const { control, handleSubmit } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema)
   });
 
-  const onSubmit = (data: SignUpFormSchema) => {
+  const onSubmit = (data: SignUpFormData) => {
     console.log(data);
   };
 

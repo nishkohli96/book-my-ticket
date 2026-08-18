@@ -42,9 +42,9 @@ const CheckedIcon = (
 const StyledRHFCheckbox = <T extends FieldValues>(
   props: StyledRHFCheckboxProps<T>
 ) => {
-  const { renderError, ...rest } = props;
   return (
     <RHFCheckbox
+      {...props}
       renderError={error => (
         <StyledErrorMsg errorMessage={error?.message} />
       )}
@@ -52,7 +52,6 @@ const StyledRHFCheckbox = <T extends FieldValues>(
       checkedIcon={CheckedIcon}
       sx={{ pl: 0 }}
       formControlLabelProps={{ sx: { ml: 0 } }}
-      {...rest}
     />
   );
 };

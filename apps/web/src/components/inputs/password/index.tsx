@@ -6,15 +6,15 @@ import StyledErrorMsg from '../StyledErrorMsg';
 
 type StyledRHFPasswordInputProps<T extends FieldValues> = Omit<
   RHFPasswordInputProps<T>,
-  'variant' | 'showLabelAboveFormField'
+  'variant' | 'showLabelAboveFormField' | 'renderError'
 >;
 
 const StyledRHFPasswordInput = <T extends FieldValues>(
   props: StyledRHFPasswordInputProps<T>
 ) => {
-  const { renderError, ...rest } = props;
   return (
     <RHFPasswordInput
+      {...props}
       renderError={error => (
         <StyledErrorMsg errorMessage={error?.message} />
       )}
@@ -35,7 +35,6 @@ const StyledRHFPasswordInput = <T extends FieldValues>(
           borderRadius: '12px',
         },
       }}
-      {...rest}
     />
   );
 };

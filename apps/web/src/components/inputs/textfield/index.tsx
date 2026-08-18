@@ -6,15 +6,15 @@ import StyledErrorMsg from '../StyledErrorMsg';
 
 type StyledRHFTextFieldProps<T extends FieldValues> = Omit<
   RHFTextFieldProps<T>,
-  'variant' | 'showLabelAboveFormField'
+  'variant' | 'showLabelAboveFormField' | 'renderError'
 >;
 
 const StyledRHFTextField = <T extends FieldValues>(
   props: StyledRHFTextFieldProps<T>
 ) => {
-  const { renderError, ...rest } = props;
   return (
     <RHFTextField
+      {...props}
       renderError={error => (
         <StyledErrorMsg errorMessage={error?.message} />
       )}
@@ -35,7 +35,6 @@ const StyledRHFTextField = <T extends FieldValues>(
           borderRadius: '12px',
         },
       }}
-      {...rest}
     />
   );
 };

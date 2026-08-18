@@ -13,12 +13,12 @@ export default function SignInWithGoogleButton({
   sx: btnSx,
   ...btnProps
 }: SignInWithGoogleButtonProps) {
+
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     if (onClick) {
       onClick(event);
       return;
     }
-
     void signIn('google');
   };
 

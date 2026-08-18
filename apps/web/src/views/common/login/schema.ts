@@ -1,9 +1,9 @@
-import { z } from 'zod';
-import { emailPattern } from '@/constants/regex';
+import { type z } from 'zod';
+import { signUpSchema } from '../signup/schema';
 
-export const loginSchema = z.object({
-  email: z.string().trim().regex(emailPattern, { message: 'Invalid email address' }),
-  password: z.string().min(8).max(72)
+export const loginSchema = signUpSchema.pick({
+  email: true,
+  password: true
 });
 
-export type LoginFormValues = z.infer<typeof loginSchema>;
+export type LoginFormData = z.infer<typeof loginSchema>;
