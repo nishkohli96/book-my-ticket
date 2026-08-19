@@ -12,7 +12,7 @@ importers:
         specifier: 2.10.0
         version: 2.10.0
 
-  apps/backend:
+  apps/user-service:
     dependencies:
       cors:
         specifier: ^2.8.6
