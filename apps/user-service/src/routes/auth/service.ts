@@ -4,7 +4,11 @@ import { eq } from 'drizzle-orm';
 import { signUpSchema, type SignUpFormData } from '@book-my-ticket/common';
 import { postgresDatabase } from '@/db';
 import { usersSchema } from '@/db/schema';
-import { hashPassword, sendErrorResponse } from '@/utils';
+import {
+  hashPassword,
+  sendSuccessResponse,
+  sendErrorResponse
+} from '@/utils';
 
 class AuthService {
   async signupUser(res: Response, body: SignUpFormData) {
@@ -13,7 +17,8 @@ class AuthService {
       return sendErrorResponse(res, {
         statusCode: 400,
         message: 'Invalid signup details',
-        error: parsedBody.error.issues.map(issue => issue.message).join(', '),
+        error: 'Validation failed',
+        validationErrors: parsedBody.error.issues.map(issue => issue.message),
       });
     }
 
@@ -51,9 +56,14 @@ class AuthService {
           email: usersSchema.email,
         });
 
-      return res.status(201).json({
-        success: true,
-        user: newUser,
+      /**
+       * 201 Created is the correct convention for an endpoint that
+       * creates a new resource.
+       */
+      return sendSuccessResponse(res, {
+        statusCode: 201,
+        message: 'User successfully registered.',
+        data: newUser
       });
     } catch (error) {
       return sendErrorResponse(res, { error });

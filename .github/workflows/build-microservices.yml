@@ -1,4 +1,4 @@
-name: build-apps
+name: build-microservices
 
 on:
   push:
@@ -33,5 +33,5 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: 🛠️ Build shared packages (common, types)
         run: pnpm lib
-      - name: 🛠️ Build Web
-        run: pnpm web:build
+      - name: 🛠️ Build User Service
+        run: pnpm -F @book-my-ticket/user-service run build

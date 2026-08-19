@@ -1,13 +1,24 @@
 import type { Response } from 'express';
 import { isProductionEnv } from '@/constants';
 import { winstonLogger } from '@/middleware';
+import { type SuccessResponseOptions, type ErrorResponseOptions } from '@/types';
 import { printObject } from './printObject';
 
-type ErrorResponseOptions = {
-  error: unknown;
-  message?: string;
-  statusCode?: number;
-};
+export function sendSuccessResponse(
+  res: Response,
+  {
+    statusCode = 200,
+    message = 'Success',
+    data,
+  }: SuccessResponseOptions
+) {
+  return res.status(statusCode).json({
+    success: true,
+    status: statusCode,
+    message,
+    data
+  });
+}
 
 function stringifyError(error: unknown): string {
   if (error instanceof Error) {
@@ -22,9 +33,10 @@ function stringifyError(error: unknown): string {
 export function sendErrorResponse(
   res: Response,
   {
-    error,
-    message = 'Internal Server Error',
     statusCode = 500,
+    message = 'Internal Server Error',
+    error,
+    validationErrors,
   }: ErrorResponseOptions
 ) {
   const errorMessage = stringifyError(error);
@@ -39,5 +51,6 @@ export function sendErrorResponse(
      * never leak it to clients in production.
      */
     ...(isProductionEnv ? {} : { error: errorMessage }),
+    ...(validationErrors ? { validationErrors } : {}),
   });
 }
