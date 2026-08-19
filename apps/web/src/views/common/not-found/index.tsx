@@ -7,10 +7,10 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import {
-	AppBar,
-	BackButton,
-	GradientButton,
-	OutlinedButton
+  AppBar,
+  BackButton,
+  GradientButton,
+  OutlinedButton
 } from '@/components';
 
 export default function NotFoundPage() {
@@ -28,7 +28,7 @@ export default function NotFoundPage() {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-					pb: 5
+          pb: 5
         }}
       >
         <Container
@@ -64,7 +64,7 @@ export default function NotFoundPage() {
               maxWidth: 420
             }}
           >
-            {"We couldn't find that event, venue, or page. It may have sold out, ended, or the link's just wrong."}
+            {'We couldn\'t find that event, venue, or page. It may have sold out, ended, or the link\'s just wrong.'}
           </Typography>
           <Stack
             direction={{ xs: 'column', md: 'row' }}

@@ -3,6 +3,7 @@
 import { Box, Divider, Stack, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { loginSchema, type LoginFormData } from '@book-my-ticket/common';
 import {
   AppLink,
   GradientButton,
@@ -11,7 +12,6 @@ import {
   StyledRHFTextField,
   StyledRHFPasswordInput
 } from '@/components';
-import { loginSchema, type LoginFormData } from './schema';
 
 export default function LoginForm() {
   const { control, handleSubmit } = useForm<LoginFormData>({

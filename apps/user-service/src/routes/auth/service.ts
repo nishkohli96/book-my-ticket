@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import type { Response } from 'express';
 import { eq } from 'drizzle-orm';
-import { signUpSchema } from '@book-my-ticket/types/user';
+import { signUpSchema } from '@book-my-ticket/common';
 import { postgresDatabase } from '@/db';
 import { usersSchema } from '@/db/schema';
 import { hashPassword, sendErrorResponse } from '@/utils';

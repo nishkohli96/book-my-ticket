@@ -1,2 +1,2 @@
-export { z } from 'zod';
-export type * from './user';
+export type JSONObject = Record<string, any>;
+

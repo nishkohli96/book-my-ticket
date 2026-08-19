@@ -16,6 +16,8 @@
     "web:build": "pnpm -F @book-my-ticket/web build",
     "types": "pnpm -F @book-my-ticket/types lib:build",
     "types:lint": "pnpm -F @book-my-ticket/types lint",
+    "common": "pnpm -F @book-my-ticket/common lib:build",
+    "common:lint": "pnpm -F @book-my-ticket/common lint",
     "build": "turbo build",
     "lint": "turbo lint",
     "lint:fix": "turbo lint:fix",

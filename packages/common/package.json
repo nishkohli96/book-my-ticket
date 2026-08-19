@@ -1,7 +1,7 @@
 {
   "name": "@book-my-ticket/common",
   "version": "1.0.0",
-  "description": "Shared utilities for the BookMyTicket application",
+  "description": "Shared utilities between backend services and frontend for the BookMyTicket application.",
   "author": "Nishant Kohli",
   "license": "MIT",
   "scripts": {
@@ -10,6 +10,9 @@
   },
   "type": "module",
   "sideEffects": false,
+  "dependencies": {
+    "zod": "^4.4.3"
+  },
   "devDependencies": {
     "@nish1896/eslint-flat-config": "^3.1.5",
     "eslint": "^9.39.4",
@@ -21,12 +24,9 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "types": "./src/index.ts",
-      "import": "./dist/index.js"
-    },
-    "./user": {
-      "types": "./src/user/index.ts",
-      "import": "./dist/user/index.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
   "types": "./src/index.ts"

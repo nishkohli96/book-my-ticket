@@ -2,8 +2,7 @@ import { defineConfig } from 'tsdown'
 
 export default defineConfig({
   entry: [
-    'src/index.ts',
-    'src/user/index.ts'
+    'src/index.ts'
   ],
   outDir: 'dist',
   root: 'src',
@@ -27,7 +26,7 @@ export default defineConfig({
    * and improve build times.
    */
   deps: {
-    skipNodeModulesBundle: true,
+    neverBundle: true,
   },
   outExtensions({ format }) {
     return { js: format === 'cjs' ? '.cjs' : '.js' };

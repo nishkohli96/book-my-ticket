@@ -1,6 +1,5 @@
 import express, { type NextFunction, type Request, type Response } from 'express';
 import cors from 'cors';
-import type { UserDetails } from '@book-my-ticket/types';
 import { ENV_CONFIG } from '@/constants';
 import { requestLogger } from '@/middleware';
 import { routesList } from '@/routes';
@@ -8,10 +7,15 @@ import { sendErrorResponse } from '@/utils';
 
 const app = express();
 
+type ExampleUser = {
+  name: string;
+  email: string;
+};
+
 type HealthResponse = {
   env: string;
   message: string;
-  exampleUser?: UserDetails;
+  exampleUser?: ExampleUser;
 };
 
 app.use(express.json());
@@ -23,7 +27,7 @@ app.use(cors({
 app.use(requestLogger);
 
 app.get('/', (_, response: Response<HealthResponse>) => {
-  const user: UserDetails = {
+  const user: ExampleUser = {
     name: 'Test user pollym12',
     email: 'usw@example.com'
   };
