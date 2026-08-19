@@ -1,6 +1,6 @@
 {
   "name": "@book-my-ticket/types",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shared types for the BookMyTicket application",
   "author": "Nishant Kohli",
   "license": "MIT",

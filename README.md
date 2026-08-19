@@ -3,5 +3,5 @@
 ## Getting Started
 
 ```bash
-bash setup.sh
+bash scripts/setup.sh
 ```

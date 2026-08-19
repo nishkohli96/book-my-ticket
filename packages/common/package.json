@@ -1,6 +1,6 @@
 {
   "name": "@book-my-ticket/common",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shared utilities between backend services and frontend for the BookMyTicket application.",
   "author": "Nishant Kohli",
   "license": "MIT",
