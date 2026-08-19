@@ -29,6 +29,7 @@ class PostgresDatabase {
       password,
       database,
       port: Number(port),
+      ssl: true
     });
 
     const client = await this.pool.connect();

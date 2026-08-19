@@ -8,6 +8,18 @@ authRouter.get('/test', function printHello(_, res: Response) {
   return res.status(200).send('Hello World !!').end();
 });
 
+
+/* Register a new user */
+authRouter.post(
+  '/signup',
+  function signupUser(
+    req: AuthTypes.UserSignupRequest,
+    res: Response
+  ) {
+    return authService.signupUser(res, req.body);
+  }
+);
+
 /* Login user */
 authRouter.post(
   '/login',
