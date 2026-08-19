@@ -50,7 +50,11 @@ const StyledRHFCheckbox = <T extends FieldValues>(
       )}
       icon={UncheckedIcon}
       checkedIcon={CheckedIcon}
-      sx={{ pl: 0 }}
+      disableRipple
+      sx={{
+        pl: 0,
+        borderRadius: '7px',
+      }}
       formControlLabelProps={{ sx: { ml: 0 } }}
     />
   );

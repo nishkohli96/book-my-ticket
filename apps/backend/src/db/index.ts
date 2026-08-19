@@ -1,7 +1,7 @@
 import os from 'os';
 import { Pool } from 'pg';
 import { drizzle, type NodePgDatabase } from 'drizzle-orm/node-postgres';
-import { ENV_CONFIG, isProductionEnv } from '@/constants';
+import { ENV_CONFIG } from '@/constants';
 import { winstonLogger } from '@/middleware';
 
 const hostName = os.hostname();
@@ -56,6 +56,3 @@ class PostgresDatabase {
 }
 
 export const postgresDatabase = new PostgresDatabase();
-
-/* Alter tables should not be allowed in "production" env. */
-export const shouldAlterTable = !isProductionEnv;
