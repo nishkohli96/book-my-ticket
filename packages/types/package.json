@@ -10,6 +10,9 @@
   },
   "type": "module",
   "sideEffects": false,
+  "dependencies": {
+    "zod": "^4.4.3"
+  },
   "devDependencies": {
     "@nish1896/eslint-flat-config": "^3.1.5",
     "eslint": "^9.39.4",
@@ -22,11 +25,13 @@
     "./package.json": "./dist/package.json",
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./user": {
       "types": "./dist/user/index.d.ts",
-      "import": "./dist/user/index.js"
+      "import": "./dist/user/index.js",
+      "require": "./dist/user/index.cjs"
     }
   },
   "types": "./src/index.ts"

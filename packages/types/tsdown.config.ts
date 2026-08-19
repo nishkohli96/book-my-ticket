@@ -2,11 +2,16 @@ import { defineConfig } from 'tsdown'
 
 export default defineConfig({
   entry: [
-    'src/index.ts'
+    'src/index.ts',
+    'src/user/index.ts'
   ],
   outDir: 'dist',
   root: 'src',
-  format: ['esm'],
+  /**
+   * Consumers span both ESM (apps/web, Next.js) and CommonJS (apps/user-service,
+   * ts-node in CJS mode) - build both so runtime `import`/`require` both resolve.
+   */
+  format: ['esm', 'cjs'],
   target: ['es2024'],
   /* Removes outDir before building. */
   clean: true,
@@ -24,8 +29,8 @@ export default defineConfig({
   deps: {
     skipNodeModulesBundle: true,
   },
-  outExtensions() {
-    return { js: '.js' };
+  outExtensions({ format }) {
+    return { js: format === 'cjs' ? '.cjs' : '.js' };
   },
   outputOptions(options) {
     return {

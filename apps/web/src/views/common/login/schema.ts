@@ -6,8 +6,8 @@
  * });
  */
 
-import { z } from 'zod';
-import { formValidations as fv } from '@/constants/validation';
+import { z } from '@book-my-ticket/types';
+import { userValidation as fv } from '@book-my-ticket/types/user';
 
 export const loginSchema = z.object({
   email: z

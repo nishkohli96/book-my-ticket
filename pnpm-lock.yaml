@@ -14,6 +14,9 @@ importers:
 
   apps/user-service:
     dependencies:
+      '@book-my-ticket/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       bcryptjs:
         specifier: ^3.0.2
         version: 3.0.3
@@ -35,13 +38,7 @@ importers:
       winston:
         specifier: 3.19.0
         version: 3.19.0
-      zod:
-        specifier: ^4.4.3
-        version: 4.4.3
     devDependencies:
-      '@book-my-ticket/types':
-        specifier: workspace:*
-        version: link:../../packages/types
       '@nish1896/eslint-flat-config':
         specifier: ^3.1.5
         version: 3.1.6(@eslint/js@9.39.5)(eslint@9.39.5(jiti@2.7.0)(supports-color@5.5.0))(supports-color@5.5.0)(typescript@6.0.3)
@@ -129,9 +126,6 @@ importers:
       react-hook-form:
         specifier: ^7.85.0
         version: 7.85.0(react@19.2.8)
-      zod:
-        specifier: ^4.4.3
-        version: 4.4.3
     devDependencies:
       '@book-my-ticket/types':
         specifier: workspace:*
@@ -195,6 +189,10 @@ importers:
         version: 5.9.3
 
   packages/types:
+    dependencies:
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
     devDependencies:
       '@nish1896/eslint-flat-config':
         specifier: ^3.1.5

@@ -1,15 +1,15 @@
 import { randomUUID } from 'node:crypto';
 import type { Response } from 'express';
 import { eq } from 'drizzle-orm';
+import { signUpSchema } from '@book-my-ticket/types/user';
 import { postgresDatabase } from '@/db';
 import { usersSchema } from '@/db/schema';
 import { hashPassword, sendErrorResponse } from '@/utils';
-import { signupSchema } from './validation';
 import type { UserSignupBody } from './types';
 
 class AuthService {
   async signupUser(res: Response, body: UserSignupBody) {
-    const parsedBody = signupSchema.safeParse(body);
+    const parsedBody = signUpSchema.safeParse(body);
     if (!parsedBody.success) {
       return sendErrorResponse(res, {
         statusCode: 400,

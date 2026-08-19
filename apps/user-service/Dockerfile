@@ -37,13 +37,16 @@ WORKDIR /app
 
 RUN npm i -g pnpm@${PNPM_VERSION} pm2
 
-# Only the service's own manifest is needed — @book-my-ticket/types is a
-# devDependency (type-only import, erased at compile time by tsc).
+# @book-my-ticket/types is now a real runtime dependency (its zod schemas
+# are used at request time, not just types), so it needs its own manifest
+# and built dist/ in this stage too - not just the service's manifest.
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 COPY apps/user-service/package.json apps/user-service/package.json
+COPY packages/types/package.json packages/types/package.json
 
-RUN pnpm install --frozen-lockfile --prod --filter @book-my-ticket/user-service
+RUN pnpm install --frozen-lockfile --prod --filter @book-my-ticket/user-service...
 
+COPY --from=builder /app/packages/types/dist packages/types/dist
 COPY --from=builder /app/apps/user-service/dist apps/user-service/dist
 COPY --from=builder /app/apps/user-service/ecosystem.config.js apps/user-service/ecosystem.config.js
 
