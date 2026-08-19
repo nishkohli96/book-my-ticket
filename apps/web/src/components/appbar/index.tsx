@@ -13,6 +13,7 @@ const links = [
   { href: '/comedy', text: 'Comedy' },
 ];
 
+/* Natural (lg+) logo size — shrunk responsively at md via sx below. */
 const logoWidth = 270;
 const logoHeight = 54;
 
@@ -33,8 +34,8 @@ export default function AppBar() {
           component="nav"
           sx={{
             minHeight: { xs: 64, md: 72 },
-            gap: { xs: 2, md: 5 },
-            px: { xs: 2, md: 4 }
+            gap: { xs: 2, md: 1.5, lg: 5 },
+            px: { xs: 2, md: 2, lg: 4 }
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
@@ -50,13 +51,13 @@ export default function AppBar() {
               <Box
                 sx={{
                   position: 'relative',
-                  height: logoHeight,
-                  width: logoWidth,
+                  height: { xs: 36, md: 32, lg: logoHeight },
+                  width: { xs: 180, md: 160, lg: logoWidth },
                   '.logo-light, .logo-dark': {
                     position: 'absolute',
                     inset: 0,
-                    height: logoHeight,
-                    width: logoWidth,
+                    height: '100%',
+                    width: '100%',
                     objectFit: 'contain',
                   },
                   '.logo-light': {
@@ -81,8 +82,8 @@ export default function AppBar() {
                   height={logoHeight}
                   priority
                   style={{
-                    height: logoHeight,
-                    width: logoWidth
+                    height: '100%',
+                    width: '100%'
                   }}
                 />
                 <Image
@@ -94,8 +95,8 @@ export default function AppBar() {
                   height={logoHeight}
                   priority
                   style={{
-                    height: logoHeight,
-                    width: logoWidth
+                    height: '100%',
+                    width: '100%'
                   }}
                 />
               </Box>
@@ -105,7 +106,7 @@ export default function AppBar() {
             sx={{
               display: 'flex',
               alignItems: 'center',
-              gap: { xs: 2, md: 4 },
+              gap: { xs: 2, md: 1.5, lg: 4 },
               flexGrow: 1,
               minWidth: 0,
             }}
@@ -118,7 +119,7 @@ export default function AppBar() {
             sx={{
               display: 'flex',
               alignItems: 'center',
-              gap: { xs: 1, md: 2 },
+              gap: { xs: 1, md: 1, lg: 2 },
               flexShrink: 0,
             }}
           >
@@ -126,14 +127,14 @@ export default function AppBar() {
               component={Link}
               href="/login"
               variant="text"
-              sx={{ fontWeight: 700 }}
+              sx={{ fontWeight: 700, px: { md: 1, lg: 2 } }}
               color="primary"
             >
               Log in
             </Button>
             <GradientButton
               href="/signup"
-              sx={{ borderRadius: '12px' }}
+              sx={{ borderRadius: '12px', px: { md: 2, lg: 3.75 } }}
               LinkComponent={Link}
             >
               Sign Up

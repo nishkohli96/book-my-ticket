@@ -13,8 +13,8 @@ export default function Content() {
         display: 'flex',
         alignItems: 'center',
         overflow: 'hidden',
-        px: { md: 8, lg: 12 },
-        py: { md: 8, lg: 10 },
+        px: { md: 4, lg: 12 },
+        py: { md: 6, lg: 10 },
         background: `
           radial-gradient(circle at 82% 18%, rgba(219, 39, 119, 0.14), transparent 34%),
           radial-gradient(circle at 58% 30%, rgba(29, 78, 216, 0.10), transparent 28%),
@@ -26,9 +26,10 @@ export default function Content() {
         sx={{
           width: '100%',
           display: 'grid',
-          gridTemplateColumns: { md: 'minmax(0, 0.92fr) minmax(360px, 1fr)' },
+          gridTemplateColumns: { lg: 'minmax(0, 0.92fr) minmax(360px, 1fr)' },
           alignItems: 'center',
-          gap: { md: 8, lg: 12 },
+          justifyItems: { md: 'center', lg: 'stretch' },
+          gap: { md: 6, lg: 12 },
         }}
       >
         <Stack spacing={3} sx={{ maxWidth: 560 }}>
@@ -127,8 +128,9 @@ export default function Content() {
         </Stack>
         <Box
           sx={{
-            justifySelf: 'end',
-            width: { md: 360, lg: 420 },
+            justifySelf: { md: 'center', lg: 'end' },
+            width: { md: 420, lg: 420 },
+            maxWidth: '100%',
             borderRadius: 5,
             overflow: 'hidden',
             backgroundColor: 'var(--mui-palette-background-paper)',
