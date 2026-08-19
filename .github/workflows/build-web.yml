@@ -1,0 +1,37 @@
+name: build-apps
+
+on:
+  push:
+  pull_request:
+
+env:
+  HUSKY: 0
+  CI: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [24.14.0]
+        os: [ubuntu-latest]
+
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          run_install: false
+      - name: Setup Node env
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+
+      - name: 📁 Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 🛠️ Build shared packages (common, types)
+        run: pnpm lib
+      - name: 🛠️ Build Web
+        run: pnpm web:build

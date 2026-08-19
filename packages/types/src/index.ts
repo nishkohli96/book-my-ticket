@@ -1,1 +1,2 @@
-export type * from './user';
+export type JSONObject = Record<string, any>;
+

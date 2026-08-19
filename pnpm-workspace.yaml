@@ -2,11 +2,9 @@ packages:
   - packages/*
   - apps/*
 allowBuilds:
+  esbuild: true
   sharp: true
-  unrs-resolver: true
+  unrs-resolver: false
 onlyBuiltDependencies:
   - sharp
   - unrs-resolver
-minimumReleaseAgeExclude:
-  - '@types/node@26.1.0'
-

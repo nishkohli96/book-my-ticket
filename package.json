@@ -8,9 +8,17 @@
     "node": ">=24"
   },
   "scripts": {
-    "backend": "pnpm -F @book-my-ticket/backend dev",
+    "user-service": "pnpm -F @book-my-ticket/user-service dev",
+    "user-service:lint": "pnpm -F @book-my-ticket/user-service lint",
+    "user-service:build": "pnpm -F @book-my-ticket/user-service build",
     "web": "pnpm -F @book-my-ticket/web dev",
+    "web:lint": "pnpm -F @book-my-ticket/web lint",
+    "web:build": "pnpm -F @book-my-ticket/web build",
     "types": "pnpm -F @book-my-ticket/types lib:build",
+    "types:lint": "pnpm -F @book-my-ticket/types lint",
+    "common": "pnpm -F @book-my-ticket/common lib:build",
+    "common:lint": "pnpm -F @book-my-ticket/common lint",
+    "lib": "turbo lib:build",
     "build": "turbo build",
     "lint": "turbo lint",
     "lint:fix": "turbo lint:fix",
@@ -19,6 +27,6 @@
   "devDependencies": {
     "turbo": "2.10.0"
   },
-  "packageManager": "pnpm@11.9.0",
+  "packageManager": "pnpm@11.20.0",
   "license": "MIT"
 }

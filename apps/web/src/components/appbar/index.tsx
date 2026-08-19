@@ -1,29 +1,146 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { ThemeChangeButton } from '@/components';
+import { AppBar as MuiAppBar, Box, Button, Toolbar } from '@mui/material';
+import { GradientButton, ThemeChangeButton } from '@/components';
+import LinkText from './LinkText';
+
+const links = [
+  { href: '/about', text: 'Concerts' },
+  { href: '/contact', text: 'Sports' },
+  { href: '/theatre', text: 'Theatre' },
+  { href: '/comedy', text: 'Comedy' },
+];
+
+/* Natural (lg+) logo size — shrunk responsively at md via sx below. */
+const logoWidth = 270;
+const logoHeight = 54;
 
 export default function AppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <MuiAppBar position="static">
-        <Toolbar>
-          <Link href="/" style={{ marginRight: '10px' }}>
-            <Image src="/favicon.ico" alt="Logo" width={40} height={40} />
-          </Link>
-          <Box sx={{ flexGrow: 1 }}>
-            <Link href="/" passHref>
-              <Typography variant="h6" component="div">
-                Next.js App
-              </Typography>
+      <MuiAppBar
+        position="static"
+        color="transparent"
+        elevation={0}
+        sx={{
+          borderBottom: 1,
+          borderColor: 'divider',
+          backgroundColor: 'background.paper'
+        }}
+      >
+        <Toolbar
+          component="nav"
+          sx={{
+            minHeight: { xs: 64, md: 72 },
+            gap: { xs: 2, md: 1.5, lg: 5 },
+            px: { xs: 2, md: 2, lg: 4 }
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+            <Link
+              href="/"
+              aria-label="BookMyTicket home"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                flexShrink: 0
+              }}
+            >
+              <Box
+                sx={{
+                  position: 'relative',
+                  height: { xs: 36, md: 32, lg: logoHeight },
+                  width: { xs: 180, md: 160, lg: logoWidth },
+                  '.logo-light, .logo-dark': {
+                    position: 'absolute',
+                    inset: 0,
+                    height: '100%',
+                    width: '100%',
+                    objectFit: 'contain',
+                  },
+                  '.logo-light': {
+                    display: 'block',
+                  },
+                  '.logo-dark': {
+                    display: 'none',
+                  },
+                  'html[data-mui-color-scheme="dark"] & .logo-light': {
+                    display: 'none',
+                  },
+                  'html[data-mui-color-scheme="dark"] & .logo-dark': {
+                    display: 'block',
+                  },
+                }}
+              >
+                <Image
+                  className="logo-light"
+                  src="/logo-light.svg"
+                  alt="BookMyTicket"
+                  width={logoWidth}
+                  height={logoHeight}
+                  priority
+                  style={{
+                    height: '100%',
+                    width: '100%'
+                  }}
+                />
+                <Image
+                  className="logo-dark"
+                  src="/logo-dark.svg"
+                  alt="BookMyTicket"
+                  aria-hidden
+                  width={logoWidth}
+                  height={logoHeight}
+                  priority
+                  style={{
+                    height: '100%',
+                    width: '100%'
+                  }}
+                />
+              </Box>
             </Link>
           </Box>
-          <Typography variant="h6" component="div">
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: { xs: 2, md: 1.5, lg: 4 },
+              flexGrow: 1,
+              minWidth: 0,
+            }}
+          >
+            {links.map(link => (
+              <LinkText key={link.href} href={link.href} text={link.text} />
+            ))}
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: { xs: 1, md: 1, lg: 2 },
+              flexShrink: 0,
+            }}
+          >
+            <Button
+              component={Link}
+              href="/login"
+              variant="text"
+              sx={{ fontWeight: 700, px: { md: 1, lg: 2 } }}
+              color="primary"
+            >
+              Log in
+            </Button>
+            <GradientButton
+              href="/signup"
+              sx={{ borderRadius: '12px', px: { md: 2, lg: 3.75 } }}
+              LinkComponent={Link}
+            >
+              Sign Up
+            </GradientButton>
             <ThemeChangeButton />
-          </Typography>
+          </Box>
         </Toolbar>
       </MuiAppBar>
     </Box>

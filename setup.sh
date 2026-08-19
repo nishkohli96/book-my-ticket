@@ -3,7 +3,8 @@
 # Exit immediately if any command fails (i.e., returns a non-zero exit code).
 set -euo pipefail
 
-REQUIRED_PNPM_VERSION="11.9.0"
+REQUIRED_PNPM_VERSION="11.20.0"
+REQUIRED_TURBO_VERSION="2.10.0"
 
 echo "🏁 Initiating Setup..."
 echo "🔍 Checking for global dependencies..."
@@ -38,6 +39,15 @@ else
   echo "✅ pnpm@$REQUIRED_PNPM_VERSION already installed."
 fi
 
+# Check for Turbo
+echo "🔍 Checking for Turbo..."
+if [ "$(turbo --version 2>/dev/null || true)" != "$REQUIRED_TURBO_VERSION" ]; then
+  echo "📦 Installing turbo@$REQUIRED_TURBO_VERSION..."
+  npm install -g turbo@$REQUIRED_TURBO_VERSION
+else
+  echo "✅ turbo@$REQUIRED_TURBO_VERSION already installed."
+fi
+
 # Check for pm2
 if ! command -v pm2 &> /dev/null; then
   echo "🚀 pm2 not found. Installing..."
@@ -52,12 +62,12 @@ find . -name node_modules -type d -prune -exec rm -rf {} + 2>/dev/null || true
 
 # Install dependencies
 echo "📁 Installing project dependencies..."
-pnpm install --frozen-lockfile
+pnpm install
 
 echo "Linting workspace..."
 pnpm lint
 
-echo "🛠️  Building the apps!"
+echo "🛠️  Building the packages & apps!"
 turbo build
 
 echo "✅ Setup complete!"

@@ -6,7 +6,11 @@ export default defineConfig({
   ],
   outDir: 'dist',
   root: 'src',
-  format: ['esm'],
+  /**
+   * Consumers span both ESM (apps/web, Next.js) and CommonJS (apps/user-service,
+   * ts-node in CJS mode) - build both so runtime `import`/`require` both resolve.
+   */
+  format: ['esm', 'cjs'],
   target: ['es2024'],
   /* Removes outDir before building. */
   clean: true,
@@ -22,10 +26,10 @@ export default defineConfig({
    * and improve build times.
    */
   deps: {
-    skipNodeModulesBundle: true,
+    neverBundle: true,
   },
-  outExtensions() {
-    return { js: '.js' };
+  outExtensions({ format }) {
+    return { js: format === 'cjs' ? '.cjs' : '.js' };
   },
   outputOptions(options) {
     return {
