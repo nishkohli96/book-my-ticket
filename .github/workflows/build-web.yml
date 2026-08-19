@@ -29,7 +29,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
 
-      - name: 📁 Install Dependencies and build the app 🛠️
-        run: bash setup.sh
+      - name: 📁 Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 🛠️ Build shared packages (common, types)
+        run: pnpm lib
       - name: 🛠️ Build Web
         run: pnpm web:build

@@ -1,4 +1,8 @@
-import express, { type NextFunction, type Request, type Response } from 'express';
+import express, {
+  type NextFunction,
+  type Request,
+  type Response,
+} from 'express';
 import cors from 'cors';
 import { ENV_CONFIG } from '@/constants';
 import { requestLogger } from '@/middleware';
@@ -7,34 +11,25 @@ import { sendErrorResponse } from '@/utils';
 
 const app = express();
 
-type ExampleUser = {
-  name: string;
-  email: string;
-};
-
 type HealthResponse = {
   env: string;
   message: string;
-  exampleUser?: ExampleUser;
 };
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors({
-  origin: ENV_CONFIG.corsOrigin,
-}));
+app.use(
+  cors({
+    origin: ENV_CONFIG.corsOrigin,
+  })
+);
 app.use(requestLogger);
 
 app.get('/', (_, response: Response<HealthResponse>) => {
-  const user: ExampleUser = {
-    name: 'Test user pollym12',
-    email: 'usw@example.com'
-  };
   response.status(200).json({
     env: ENV_CONFIG.env,
     message: 'Api is up & running!!!',
-    exampleUser: user
   });
 });
 

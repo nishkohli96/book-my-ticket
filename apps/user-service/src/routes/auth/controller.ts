@@ -4,12 +4,10 @@ import type * as AuthTypes from './types';
 
 const authRouter = Router();
 
-authRouter.get('/test', function printHello(_, res: Response) {
-  return res.status(200).send('Hello World !!').end();
-});
-
-
-/* Register a new user */
+/**
+ * POST: /api/auth/signup
+ * Register a new user
+ */
 authRouter.post(
   '/signup',
   function signupUser(
@@ -20,7 +18,10 @@ authRouter.post(
   }
 );
 
-/* Login user */
+/**
+ * POST: /api/auth/signup
+ * Login existing user
+ */
 authRouter.post(
   '/login',
   function loginUser(

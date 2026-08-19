@@ -1,14 +1,13 @@
 import { randomUUID } from 'node:crypto';
 import type { Response } from 'express';
 import { eq } from 'drizzle-orm';
-import { signUpSchema } from '@book-my-ticket/common';
+import { signUpSchema, type SignUpFormData } from '@book-my-ticket/common';
 import { postgresDatabase } from '@/db';
 import { usersSchema } from '@/db/schema';
 import { hashPassword, sendErrorResponse } from '@/utils';
-import type { UserSignupBody } from './types';
 
 class AuthService {
-  async signupUser(res: Response, body: UserSignupBody) {
+  async signupUser(res: Response, body: SignUpFormData) {
     const parsedBody = signUpSchema.safeParse(body);
     if (!parsedBody.success) {
       return sendErrorResponse(res, {
