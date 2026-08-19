@@ -14,7 +14,7 @@ export default function HomePageMobile() {
           sx={{
             fontWeight: 800,
             lineHeight: 1.25,
-            mb: 1.5
+            my: 2,
           }}
         >
           <Box component="span" sx={{ display: 'block', whiteSpace: 'nowrap' }}>
@@ -33,7 +33,7 @@ export default function HomePageMobile() {
         </Typography>
         <GradientButton
           fullWidth
-          sx={{ mt: 4, mb: 2.5 }}
+          sx={{ mt: 5, mb: 3 }}
         >
           Sign up for free
         </GradientButton>

@@ -57,7 +57,7 @@ export default function SignInWithGoogleButton({
             ml: 0,
           },
         },
-        ...(Array.isArray(btnSx) ? btnSx : btnSx ? [btnSx] : []),
+        ...(Array.isArray(btnSx) ? btnSx : [btnSx]).filter(Boolean),
       ]}
     >
       {children}

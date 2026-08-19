@@ -11,9 +11,9 @@ export default function LoginPageDesktop() {
       subtitle="Log in to manage your bookings and grab tickets before they're gone."
       footer={(
         <>
-          New to BookMyTicket?
+          Don&apos;t have an account?
           {' '}
-          <AppLink href="/signup">Create an account</AppLink>
+          <AppLink href="/signup">Sign up free</AppLink>
         </>
       )}
     >

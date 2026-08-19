@@ -7,13 +7,17 @@ type AppLinkProps = Omit<MuiLinkProps, 'component' | 'href'> & {
   href: string;
 };
 
-export default function AppLink({ href, ...rest }: AppLinkProps) {
+export default function AppLink({ href, sx, ...rest }: AppLinkProps) {
   return (
     <MuiLink
       component={NextLink}
       href={href}
       color="primary"
-      underline="always"
+      sx={{
+        ...sx,
+        fontWeight: 600
+      }}
+      underline="hover"
       {...rest}
     />
   );

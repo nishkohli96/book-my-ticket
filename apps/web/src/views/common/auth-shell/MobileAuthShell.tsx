@@ -56,7 +56,7 @@ export default function MobileAuthShell({ title, subtitle, footer, children }: M
           {subtitle}
         </Typography>
       </Box>
-      <Box sx={{ p: 3 }}>
+      <Box sx={{ p: 3, pb: 5 }}>
         {children}
         <SecondaryText sx={{ textAlign: 'center', mt: 3 }}>
           {footer}

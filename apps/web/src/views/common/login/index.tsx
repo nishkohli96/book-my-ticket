@@ -1,14 +1,22 @@
 'use client';
 
-import { Divider, Stack, Typography } from '@mui/material';
+import { Box, Divider, Stack, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { GradientButton, SecondaryText, SignInWithGoogleButton, StyledRHFTextField, StyledRHFPasswordInput } from '@/components';
+import {
+  AppLink,
+  GradientButton,
+  SecondaryText,
+  SignInWithGoogleButton,
+  StyledRHFTextField,
+  StyledRHFPasswordInput
+} from '@/components';
 import { loginSchema, type LoginFormData } from './schema';
 
 export default function LoginForm() {
   const { control, handleSubmit } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema)
+    resolver: zodResolver(loginSchema),
+    mode: 'onBlur'
   });
 
   const onSubmit = (data: LoginFormData) => {
@@ -26,7 +34,7 @@ export default function LoginForm() {
           Welcome back
         </Typography>
         <SecondaryText>
-          Log in to manage your bookings
+          Log in to continue to your account
         </SecondaryText>
       </Stack>
 
@@ -42,12 +50,19 @@ export default function LoginForm() {
         fieldName="email"
         control={control}
         label="Email"
+        required
       />
       <StyledRHFPasswordInput
         fieldName="password"
         control={control}
         label="Password"
+        required
       />
+      <Box sx={{ textAlign: 'right', mt: -1.5 }}>
+        <AppLink href="/forgot-password" variant="body2">
+          Forgot password?
+        </AppLink>
+      </Box>
       <GradientButton type="submit" fullWidth>
         Log in
       </GradientButton>

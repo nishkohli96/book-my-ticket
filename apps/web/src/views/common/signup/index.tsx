@@ -16,7 +16,8 @@ import { signUpSchema, type SignUpFormData } from './schema';
 
 export default function SignUpForm() {
   const { control, handleSubmit } = useForm<SignUpFormData>({
-    resolver: zodResolver(signUpSchema)
+    resolver: zodResolver(signUpSchema),
+    mode: 'onBlur'
   });
 
   const onSubmit = (data: SignUpFormData) => {
@@ -52,6 +53,7 @@ export default function SignUpForm() {
             fieldName="firstName"
             control={control}
             label="First name"
+            required
           />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
@@ -59,6 +61,7 @@ export default function SignUpForm() {
             fieldName="lastName"
             control={control}
             label="Last name"
+            required
           />
         </Grid>
         <Grid size={12}>
@@ -66,6 +69,7 @@ export default function SignUpForm() {
             fieldName="email"
             control={control}
             label="Email"
+            required
           />
         </Grid>
         <Grid size={12}>
@@ -73,6 +77,7 @@ export default function SignUpForm() {
             fieldName="password"
             control={control}
             label="Password"
+            required
           />
         </Grid>
         <Grid size={12}>
