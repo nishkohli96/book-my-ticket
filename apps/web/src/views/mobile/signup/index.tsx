@@ -1,21 +1,19 @@
 'use client';
 
-import { AppLink } from '@/components';
-import { MobileAuthShell } from '@/views/common/auth-shell';
+import { Box } from '@mui/material';
+import { AppLink, BackButton, SecondaryText } from '@/components';
 import SignUpForm from '@/views/common/signup';
 
 export default function SignUpPageMobile() {
   return (
-    <MobileAuthShell
-      footer={(
-        <>
-          Already have an account?
-          {' '}
-          <AppLink href="/login">Log in</AppLink>
-        </>
-      )}
-    >
+    <Box sx={{ p: 3, pb: 5 }}>
+      <BackButton sx={{ mb: 2 }} />
       <SignUpForm />
-    </MobileAuthShell>
+      <SecondaryText sx={{ textAlign: 'center', mt: 3 }}>
+        Already have an account?
+        {' '}
+        <AppLink href="/login">Log in</AppLink>
+      </SecondaryText>
+    </Box>
   );
 }

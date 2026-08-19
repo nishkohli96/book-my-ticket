@@ -31,3 +31,5 @@ jobs:
 
       - name: 📁 Install Dependencies and build the app 🛠️
         run: bash setup.sh
+      - name: 🛠️ Build Web
+        run: pnpm web:build

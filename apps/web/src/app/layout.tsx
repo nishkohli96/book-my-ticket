@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: `%s | ${defaultTitle}`,
     default: defaultTitle,
   },
-  description: 'NextJS Template App'
+  description: 'BookMyTicket App'
 };
 
 export default function RootLayout({
@@ -28,9 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${fontVariables} antialiased`}
-      >
+      <body className={`${fontVariables} antialiased`}>
         {/*
           Runs as a blocking script BEFORE React hydrates.
           Reads localStorage → applies data-color-scheme on <html>.

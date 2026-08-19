@@ -6,9 +6,12 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBackIosNew';
 
 type BackButtonProps = Omit<IconButtonProps, 'children'>;
 
-export default function BackButton({ onClick, sx: btnSx, ...btnProps }: BackButtonProps) {
+export default function BackButton({
+  onClick,
+  sx: btnSx,
+  ...btnProps
+}: BackButtonProps) {
   const router = useRouter();
-
   return (
     <IconButton
       {...btnProps}
