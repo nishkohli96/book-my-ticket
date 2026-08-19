@@ -52,7 +52,7 @@ export const DarkThemePalette = {
   secondary: { main: '#F472B6' },
   success: { main: '#4ADE80' },
   warning: { main: '#FBBF24' },
-  error: { main: '#FBBF24' },
+  error: { main: '#F87171' },
   // info: { main: '#F87171' },
   divider: '#1E293B',
   background: {

@@ -7,8 +7,6 @@ import LoginForm from '@/views/common/login';
 export default function LoginPageMobile() {
   return (
     <MobileAuthShell
-      title="Welcome back"
-      subtitle="Log in to manage your bookings."
       footer={(
         <>
           New to BookMyTicket?
