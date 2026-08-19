@@ -1,8 +1,11 @@
+import path from 'node:path';
 import type { NextConfig } from 'next';
+
+const workspaceRoot = path.join(__dirname, '../..');
 
 /* Configure Next.js app */
 const nextConfig: NextConfig = {
-  outputFileTracingRoot: __dirname,
+  outputFileTracingRoot: workspaceRoot,
   /**
    * :path* = named param path, catches rest of path, zero
    *   or more segments.

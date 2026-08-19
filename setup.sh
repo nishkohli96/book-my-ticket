@@ -62,7 +62,7 @@ find . -name node_modules -type d -prune -exec rm -rf {} + 2>/dev/null || true
 
 # Install dependencies
 echo "📁 Installing project dependencies..."
-pnpm install --frozen-lockfile
+pnpm install
 
 echo "Linting workspace..."
 pnpm lint
