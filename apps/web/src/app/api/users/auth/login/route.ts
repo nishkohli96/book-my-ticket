@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server';
 import { loginSchema } from '@book-my-ticket/common';
 import { apiError, apiSuccess, withErrorHandling } from '@/lib/api-response';
 
-const USER_SERVICE_URL = process.env.USER_SERVICE_URL ?? 'http://localhost:8000';
+const USER_SERVICE_URL = process.env.USER_SERVICE_URL ?? 'http://localhost:8001';
 
 export const POST = withErrorHandling(async (request: NextRequest) => {
   const body: unknown = await request.json();

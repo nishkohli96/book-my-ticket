@@ -10,7 +10,7 @@ services:
     environment:
       # Overrides apps/web/.env's localhost value - inside this network,
       # containers reach each other by service name, not localhost.
-      - USER_SERVICE_URL=http://user-service:8000
+      - USER_SERVICE_URL=http://user-service:8001
     depends_on:
       - user-service
 
@@ -19,6 +19,6 @@ services:
       context: .
       dockerfile: apps/user-service/Dockerfile
     expose:
-      - '8000'
+      - '8001'
     env_file:
       - apps/user-service/.env

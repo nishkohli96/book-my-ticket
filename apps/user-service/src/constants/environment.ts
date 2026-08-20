@@ -16,7 +16,7 @@ function defEnvVariable(varName: string, defaultValue?: string): string {
 
 export const ENV_CONFIG = Object.freeze({
   env: defEnvVariable('NODE_ENV', 'development'),
-  port: defEnvVariable('PORT', '8000'),
+  port: defEnvVariable('PORT', '8001'),
   corsOrigin: defEnvVariable('CORS_ORIGIN', 'http://localhost:3000'),
   ticketMasterApiKey: defEnvVariable('TICKETMASTER_API_KEY'),
   postgres: {

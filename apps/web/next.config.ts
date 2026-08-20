@@ -20,8 +20,8 @@ const nextConfig: NextConfig = {
     /**
      * Destination host comes from an env var so the same config works
      * unchanged in every environment:
-     * - bare local dev: http://localhost:8000
-     * - docker compose (this app also containerized): http://user-service:8000
+     * - bare local dev: http://localhost:8001
+     * - docker compose (this app also containerized): http://user-service:8001
      * - production: wherever that service is actually deployed
      *
      * Destination also re-adds the "/api" prefix each backend service
@@ -29,7 +29,7 @@ const nextConfig: NextConfig = {
      * capture only contains what comes after /api/users, so it must be
      * added back here or every proxied request 404s on the backend.
      */
-    const userServiceUrl = process.env.USER_SERVICE_URL ?? 'http://localhost:8000';
+    const userServiceUrl = process.env.USER_SERVICE_URL ?? 'http://localhost:8001';
     const bookingServiceUrl = process.env.BOOKING_SERVICE_URL ?? 'http://localhost:8001';
 
     return [

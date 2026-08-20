@@ -53,7 +53,7 @@ COPY --from=builder /app/apps/user-service/ecosystem.config.js apps/user-service
 WORKDIR /app/apps/user-service
 
 # Expose the port (change if necessary)
-EXPOSE 8000
+EXPOSE 8001
 
 # Start the application
 CMD ["pnpm", "start"]
