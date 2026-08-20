@@ -1,4 +1,14 @@
 services:
+  traefik:
+    image: traefik:v3.1
+    command:
+      - '--providers.docker=true'
+      - '--providers.docker.exposedbydefault=false'
+      - '--entrypoints.web.address=:80'
+    # the one public port every backend service routes through
+    ports:
+      - '80:80'
+
   web:
     build:
       context: .
@@ -9,8 +19,8 @@ services:
       - apps/web/.env
     environment:
       # Overrides apps/web/.env's localhost value - inside this network,
-      # containers reach each other by service name, not localhost.
-      - USER_SERVICE_URL=http://user-service:8001
+      # the gateway is reached by service name, not localhost.
+      - GATEWAY_URL=http://traefik
     depends_on:
       - user-service
 
@@ -18,7 +28,14 @@ services:
     build:
       context: .
       dockerfile: apps/user-service/Dockerfile
-    expose:
-      - '8001'
     env_file:
       - apps/user-service/.env
+    labels:
+      - 'traefik.enable=true'
+      # Only service behind the gateway today, so a plain /api prefix is
+      # enough - once a second service exists, split into more specific
+      # prefixes (e.g. /api/users, /api/bookings) with per-router priority.
+      - 'traefik.http.routers.user-service.rule=PathPrefix(`/api`)'
+      - 'traefik.http.services.user-service.loadbalancer.server.port=8001'
+    # No "expose"/"ports" - only traefik reaches this container; nothing
+    # outside the compose network (including the host) can hit it directly.
