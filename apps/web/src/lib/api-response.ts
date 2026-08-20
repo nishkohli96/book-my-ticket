@@ -1,49 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-
-/**
- * Response shape mirrors the backend's sendSuccessResponse/sendErrorResponse
- * (apps/user-service/src/utils/response.ts) so API consumers see one
- * consistent contract regardless of which layer produced the response.
- */
-type ApiErrorOptions = {
-  message: string;
-  statusCode?: number;
-  error?: string;
-  validationErrors?: string[];
-};
-
-export function apiError({
-  message,
-  statusCode = 500,
-  error,
-  validationErrors,
-}: ApiErrorOptions) {
-  return NextResponse.json(
-    {
-      success: false,
-      status: statusCode,
-      message,
-      ...(error ? { error } : {}),
-      ...(validationErrors ? { validationErrors } : {}),
-    },
-    { status: statusCode }
-  );
-}
-
-type ApiSuccessOptions = {
-  message?: string;
-  statusCode?: number;
-};
-
-export function apiSuccess<T>(
-  data: T,
-  { message = 'Success', statusCode = 200 }: ApiSuccessOptions = {}
-) {
-  return NextResponse.json(
-    { success: true, status: statusCode, message, data },
-    { status: statusCode }
-  );
-}
+import type { ApiSuccessOptions, ApiErrorOptions } from '@/types';
 
 type RouteHandler = (request: NextRequest) => Promise<NextResponse>;
 
@@ -64,4 +20,32 @@ export function withErrorHandling(handler: RouteHandler): RouteHandler {
       });
     }
   };
+}
+
+export function apiSuccess<T>(
+  data: T,
+  { message = 'Success', statusCode = 200 }: ApiSuccessOptions = {}
+) {
+  return NextResponse.json(
+    { success: true, status: statusCode, message, data },
+    { status: statusCode }
+  );
+}
+
+export function apiError({
+  message,
+  statusCode = 500,
+  error,
+  validationErrors,
+}: ApiErrorOptions) {
+  return NextResponse.json(
+    {
+      success: false,
+      status: statusCode,
+      message,
+      ...(error ? { error } : {}),
+      ...(validationErrors ? { validationErrors } : {}),
+    },
+    { status: statusCode }
+  );
 }
