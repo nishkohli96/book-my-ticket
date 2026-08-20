@@ -55,6 +55,9 @@ class AuthService {
           name: `${firstName} ${lastName}`.trim(),
           email,
           phone: phoneNumber.phone,
+          phoneCountry: phoneNumber.country,
+          phoneDialCode: phoneNumber.dialCode,
+          phoneNo: phoneNumber.phoneNo,
           passwordHash,
         })
         .returning({
@@ -62,6 +65,9 @@ class AuthService {
           name: usersSchema.name,
           email: usersSchema.email,
           phone: usersSchema.phone,
+          phoneCountry: usersSchema.phoneCountry,
+          phoneDialCode: usersSchema.phoneDialCode,
+          phoneNo: usersSchema.phoneNo,
         });
 
       /**

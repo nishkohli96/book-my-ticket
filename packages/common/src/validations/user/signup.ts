@@ -5,6 +5,7 @@ export const userValidation = {
   lastName: { minLength: 1, maxLength: 50 },
   phoneNumber: {
     minLength: 6,
+    maxLength: 15,
     countryLength: 2,
     dialCodeMinLength: 2,
     dialCodeMaxLength: 4
@@ -23,7 +24,8 @@ export const phoneValueSchema = z.object({
   /** Full E.164-style phone value with dial code, e.g. "+15551234567". */
   phone: z
     .string('Phone number is required')
-    .min(userValidation.phoneNumber.minLength, 'Phone number is required'),
+    .min(userValidation.phoneNumber.minLength, 'Phone number is required')
+    .max(userValidation.phoneNumber.maxLength, 'Phone number is required'),
   /** Selected ISO 3166-1 alpha-2 country code, e.g. "us" or "ca". */
   country: z
     .string()
@@ -36,7 +38,8 @@ export const phoneValueSchema = z.object({
   /** National significant number with the dial code stripped. */
   phoneNo: z
     .string('Phone number is required')
-    .min(userValidation.phoneNumber.minLength, 'Phone number is required'),
+    .min(userValidation.phoneNumber.minLength, 'Phone number is required')
+    .max(userValidation.phoneNumber.maxLength, 'Phone number is required'),
 });
 
 export const signUpSchema = z.object({
