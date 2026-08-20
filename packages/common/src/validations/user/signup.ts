@@ -7,7 +7,7 @@ export const userValidation = {
     minLength: 6,
     maxLength: 15,
     countryLength: 2,
-    dialCodeMinLength: 2,
+    dialCodeMinLength: 1,
     dialCodeMaxLength: 4
   },
   email: {
@@ -20,27 +20,48 @@ export const userValidation = {
   }
 };
 
-export const phoneValueSchema = z.object({
-  /** Full E.164-style phone value with dial code, e.g. "+15551234567". */
-  phone: z
-    .string('Phone number is required')
-    .min(userValidation.phoneNumber.minLength, 'Phone number is required')
-    .max(userValidation.phoneNumber.maxLength, 'Phone number is required'),
-  /** Selected ISO 3166-1 alpha-2 country code, e.g. "us" or "ca". */
-  country: z
-    .string()
-    .length(userValidation.phoneNumber.countryLength, 'Country is required'),
-  /** Country calling code without the "+" prefix, e.g. "1". */
-  dialCode: z
-    .string()
-    .min(userValidation.phoneNumber.dialCodeMinLength, `Dial code must be atleast ${userValidation.phoneNumber.dialCodeMinLength} chars long.`)
-    .max(userValidation.phoneNumber.dialCodeMaxLength, `Dial code must not be greater than ${userValidation.phoneNumber.dialCodeMaxLength} chars.`),
-  /** National significant number with the dial code stripped. */
-  phoneNo: z
-    .string('Phone number is required')
-    .min(userValidation.phoneNumber.minLength, 'Phone number is required')
-    .max(userValidation.phoneNumber.maxLength, 'Phone number is required'),
-});
+/**
+ * Validated as one unit with a single root-level issue (not per sub-field)
+ * so `errors.phoneNumber` is a plain `{ message }` FieldError - matching
+ * every other field - instead of a nested `{ phone, country, ... }` errors
+ * object with no `.message` of its own.
+ */
+export const phoneValueSchema = z
+  .object({
+    /** Full E.164-style phone value with dial code, e.g. "+15551234567". */
+    phone: z.string(),
+    /** Selected ISO 3166-1 alpha-2 country code, e.g. "us" or "ca". */
+    country: z.string(),
+    /** Country calling code without the "+" prefix, e.g. "1". */
+    dialCode: z.string(),
+    /** National significant number with the dial code stripped. */
+    phoneNo: z.string(),
+  })
+  .superRefine((value, ctx) => {
+    const addIssue = (message: string) => ctx.addIssue({ code: 'custom', message, path: [] });
+
+    if (
+      value.phone.length < userValidation.phoneNumber.minLength
+      || value.phone.length > userValidation.phoneNumber.maxLength
+    ) {
+      return addIssue('Phone number is required');
+    }
+    if (value.country.length !== userValidation.phoneNumber.countryLength) {
+      return addIssue('Select a country');
+    }
+    if (
+      value.dialCode.length < userValidation.phoneNumber.dialCodeMinLength
+      || value.dialCode.length > userValidation.phoneNumber.dialCodeMaxLength
+    ) {
+      return addIssue('Select a valid country dial code');
+    }
+    if (
+      value.phoneNo.length < userValidation.phoneNumber.minLength
+      || value.phoneNo.length > userValidation.phoneNumber.maxLength
+    ) {
+      return addIssue('Phone number is required');
+    }
+  });
 
 export const signUpSchema = z.object({
   firstName: z

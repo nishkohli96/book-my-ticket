@@ -29,6 +29,7 @@
     "react-dom": "^19.2.8",
     "react-hook-form": "^7.85.0",
     "react-international-phone": "^4.8.0",
+    "react-toastify": "^11.1.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
