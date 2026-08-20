@@ -8,6 +8,11 @@ services:
     # the one public port every backend service routes through
     ports:
       - '80:80'
+    volumes:
+      # Traefik's Docker provider discovers containers/labels by querying
+      # the Docker API - without this mount it can't see anything, which
+      # is exactly the "Cannot connect to the Docker daemon" error.
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
   web:
     build:

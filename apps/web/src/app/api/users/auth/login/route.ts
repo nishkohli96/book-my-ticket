@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server';
 import { loginSchema } from '@book-my-ticket/common';
 import { apiError, apiSuccess, withErrorHandling } from '@/lib/api-response';
 
-const GATEWAY_URL = process.env.GATEWAY_URL ?? 'http://localhost:8000';
+const GATEWAY_URL = process.env.GATEWAY_URL ?? 'http://localhost:8001';
 
 export const POST = withErrorHandling(async (request: NextRequest) => {
   const body: unknown = await request.json();

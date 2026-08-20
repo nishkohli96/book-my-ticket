@@ -1,8 +1,8 @@
-import { name } from './package.json';
+import packageJson from './package.json' with { type: 'json' };
 
 export const apps = [
   {
-    name,
+    name: packageJson.name,
     script: 'dist/index.js',
     ignore_watch: ['logs'],
     env_file: '.env',

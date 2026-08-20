@@ -26,7 +26,7 @@ app.use(
 );
 app.use(requestLogger);
 
-app.get('/', (_, response: Response<HealthResponse>) => {
+app.get('/api/health', (_, response: Response<HealthResponse>) => {
   response.status(200).json({
     env: ENV_CONFIG.env,
     message: 'Api is up & running!!!',
