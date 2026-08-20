@@ -1,15 +1,24 @@
 services:
-  backend:
-    image: docker_username/express-server
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    ports:
-      - '8000:8000'
   web:
-    image: docker_username/express-server
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: apps/web/Dockerfile
     ports:
-      - '8000:8000'
+      - '3000:3000'
+    env_file:
+      - apps/web/.env
+    environment:
+      # Overrides apps/web/.env's localhost value - inside this network,
+      # containers reach each other by service name, not localhost.
+      - USER_SERVICE_URL=http://user-service:8000
+    depends_on:
+      - user-service
+
+  user-service:
+    build:
+      context: .
+      dockerfile: apps/user-service/Dockerfile
+    expose:
+      - '8000'
+    env_file:
+      - apps/user-service/.env
