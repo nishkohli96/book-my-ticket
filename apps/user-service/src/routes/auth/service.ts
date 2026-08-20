@@ -22,7 +22,13 @@ class AuthService {
       });
     }
 
-    const { firstName, lastName, email, password } = parsedBody.data;
+    const {
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      password
+    } = parsedBody.data;
 
     try {
       /* Check if user already exists */
@@ -48,12 +54,14 @@ class AuthService {
           id: randomUUID(),
           name: `${firstName} ${lastName}`.trim(),
           email,
+          phone: phoneNumber.phone,
           passwordHash,
         })
         .returning({
           id: usersSchema.id,
           name: usersSchema.name,
           email: usersSchema.email,
+          phone: usersSchema.phone,
         });
 
       /**
