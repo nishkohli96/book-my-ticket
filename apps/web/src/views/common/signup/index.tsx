@@ -10,6 +10,7 @@ import {
   SignInWithGoogleButton,
   StyledRHFTextField,
   StyledRHFPasswordInput,
+  StyledRHFPhoneInput,
   StyledRHFCheckbox
 } from '@/components';
 import { signUpSchema, type SignUpFormData } from './schema';
@@ -52,7 +53,6 @@ export default function SignUpForm() {
           <StyledRHFTextField
             fieldName="firstName"
             control={control}
-            label="First name"
             required
           />
         </Grid>
@@ -60,7 +60,13 @@ export default function SignUpForm() {
           <StyledRHFTextField
             fieldName="lastName"
             control={control}
-            label="Last name"
+            required
+          />
+        </Grid>
+        <Grid size={12}>
+          <StyledRHFPhoneInput
+            fieldName="phoneNumber"
+            control={control}
             required
           />
         </Grid>
@@ -68,7 +74,6 @@ export default function SignUpForm() {
           <StyledRHFTextField
             fieldName="email"
             control={control}
-            label="Email"
             required
           />
         </Grid>
@@ -76,7 +81,6 @@ export default function SignUpForm() {
           <StyledRHFPasswordInput
             fieldName="password"
             control={control}
-            label="Password"
             required
           />
         </Grid>
