@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
+import { useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { toast } from 'react-toastify';
 import {
   Avatar,
   Box,
@@ -12,7 +13,6 @@ import {
   ListItemText,
   Paper,
   Stack,
-  TextField,
   Typography
 } from '@mui/material';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
@@ -20,35 +20,12 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CreditCardIcon from '@mui/icons-material/CreditCardOutlined';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import type { EditProfileFormData } from '@book-my-ticket/common';
 import { GradientButton, OutlinedButton } from '@/components';
 import { getUserInitials } from '@/utils';
+import EditProfileForm from '@/views/common/edit-profile';
 
-function ProfileField({
-  label,
-  value,
-  onChange
-}: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-}): ReactNode {
-  return (
-    <Stack spacing={0.75}>
-      <Typography
-        variant="caption"
-        sx={{ fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase', color: 'text.secondary' }}
-      >
-        {label}
-      </Typography>
-      <TextField
-        fullWidth
-        value={value}
-        onChange={event => onChange(event.target.value)}
-        size="medium"
-      />
-    </Stack>
-  );
-}
+const editProfileFormId = 'edit-profile-form';
 
 const navItems = [
   { key: 'profile', label: 'Profile', icon: <PersonOutlineIcon /> },
@@ -62,12 +39,17 @@ export default function AccountPageDesktop() {
   const [activeTab, setActiveTab] = useState<(typeof navItems)[number]['key']>('profile');
   const initials = getUserInitials(session?.user?.firstName, session?.user?.lastName);
 
-  const [fullName, setFullName] = useState(
-    [session?.user?.firstName, session?.user?.lastName].filter(Boolean).join(' ')
-  );
-  const [email, setEmail] = useState(session?.user?.email ?? '');
-  const [phone, setPhone] = useState('');
-  const [city, setCity] = useState('');
+  const defaultValues: EditProfileFormData = {
+    firstName: session?.user?.firstName ?? '',
+    lastName: session?.user?.lastName ?? '',
+    email: session?.user?.email ?? '',
+    phoneNumber: { phone: '', country: '', dialCode: '', phoneNo: '' },
+  };
+
+  const onSubmit = (data: EditProfileFormData) => {
+    // TODO: wire up to a real update-profile endpoint once it exists.
+    toast.success('Profile updated');
+  };
 
   return (
     <Box sx={{ maxWidth: 1200, mx: 'auto', px: 4, py: 5 }}>
@@ -171,36 +153,11 @@ export default function AccountPageDesktop() {
               </Stack>
             </Stack>
 
-            <Grid container spacing={2.5}>
-              <Grid size={6}>
-                <ProfileField
-                  label="Full name"
-                  value={fullName}
-                  onChange={setFullName}
-                />
-              </Grid>
-              <Grid size={6}>
-                <ProfileField
-                  label="Email"
-                  value={email}
-                  onChange={setEmail}
-                />
-              </Grid>
-              <Grid size={6}>
-                <ProfileField
-                  label="Phone"
-                  value={phone}
-                  onChange={setPhone}
-                />
-              </Grid>
-              <Grid size={6}>
-                <ProfileField
-                  label="City"
-                  value={city}
-                  onChange={setCity}
-                />
-              </Grid>
-            </Grid>
+            <EditProfileForm
+              formId={editProfileFormId}
+              defaultValues={defaultValues}
+              onSubmit={onSubmit}
+            />
 
             <Stack
               direction="row"
@@ -214,7 +171,10 @@ export default function AccountPageDesktop() {
               }}
             >
               <Stack direction="row" spacing={1.5}>
-                <GradientButton sx={{ height: 44, px: 3 }}>
+                <GradientButton
+                  type="submit"
+                  sx={{ height: 44, px: 3 }}
+                >
                   Save changes
                 </GradientButton>
                 <OutlinedButton sx={{ height: 44, px: 3 }}>

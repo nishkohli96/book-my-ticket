@@ -88,3 +88,12 @@ export const signUpSchema = z.object({
 });
 
 export type SignUpFormData = z.infer<typeof signUpSchema>;
+
+export const editProfileSchema = signUpSchema.pick({
+  firstName: true,
+  lastName: true,
+  phoneNumber: true,
+  email: true,
+});
+
+export type EditProfileFormData = z.infer<typeof editProfileSchema>;
