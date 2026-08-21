@@ -9,6 +9,7 @@ import {
   fontVariables,
   modeStorageKey
 } from '@/theme';
+import { SessionProvider } from '@/components';
 import ConnectionStatus from '@/views/common/connection-status';
 import './globals.css';
 
@@ -42,18 +43,20 @@ export default function RootLayout({
           modeStorageKey={modeStorageKey}
         />
         <AppRouterCacheProvider options={{ key: 'mui' }}>
-          <AppThemeProvider>
-            <ConnectionStatus>
-              {children}
-              <ToastContainer
-                autoClose={3000}
-                limit={2}
-                stacked
-                closeButton
-                style={{ fontSize: '1rem' }}
-              />
-            </ConnectionStatus>
-          </AppThemeProvider>
+          <SessionProvider>
+            <AppThemeProvider>
+              <ConnectionStatus>
+                {children}
+                <ToastContainer
+                  autoClose={3000}
+                  limit={2}
+                  stacked
+                  closeButton
+                  style={{ fontSize: '1rem' }}
+                />
+              </ConnectionStatus>
+            </AppThemeProvider>
+          </SessionProvider>
         </AppRouterCacheProvider>
       </body>
     </html>

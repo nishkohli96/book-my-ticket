@@ -2,6 +2,13 @@
  * Next-Auth Docs:
  * - Credentials: https://next-auth.js.org/providers/credentials
  * - Google: https://next-auth.js.org/providers/google
+ *
+ * import Google from 'next-auth/providers/google';
+ * providers: [Google]
+ *
+ * Reads AUTH_GOOGLE_ID / AUTH_GOOGLE_SECRET automatically, but only for
+ * the specific AUTH_<PROVIDER>_ID / AUTH_<PROVIDER>_SECRET names,
+ * and only when you call the provider as a bare reference, not invoked with config.
  */
 
 import NextAuth from 'next-auth';
@@ -46,12 +53,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.firstName = user.firstName;
+        token.lastName = user.lastName;
       }
       return token;
     },
     session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
+        session.user.firstName = token.firstName as string;
+        session.user.lastName = token.lastName as string;
       }
       return session;
     }

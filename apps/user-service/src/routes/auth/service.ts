@@ -4,7 +4,8 @@ import { eq } from 'drizzle-orm';
 import {
   signUpSchema,
   loginSchema,
-  type SignUpFormData
+  type SignUpFormData,
+  type UserLoginDetails
 } from '@book-my-ticket/common';
 import { postgresDatabase } from '@/db';
 import { usersSchema } from '@/db/schema';
@@ -57,7 +58,8 @@ class AuthService {
         .insert(usersSchema)
         .values({
           id: randomUUID(),
-          name: `${firstName} ${lastName}`.trim(),
+          firstName,
+          lastName,
           email,
           phone: phoneNumber.phone,
           phoneCountry: phoneNumber.country,
@@ -67,7 +69,8 @@ class AuthService {
         })
         .returning({
           id: usersSchema.id,
-          name: usersSchema.name,
+          firstName: usersSchema.firstName,
+          lastName: usersSchema.lastName,
           email: usersSchema.email,
           phone: usersSchema.phone,
           phoneCountry: usersSchema.phoneCountry,
@@ -110,7 +113,8 @@ class AuthService {
       const [user] = await postgresDatabase.db
         .select({
           id: usersSchema.id,
-          name: usersSchema.name,
+          firstName: usersSchema.firstName,
+          lastName: usersSchema.lastName,
           email: usersSchema.email,
           passwordHash: usersSchema.passwordHash,
         })
@@ -130,13 +134,16 @@ class AuthService {
         });
       }
 
+      const loginDetails: UserLoginDetails = {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email
+      };
+
       return sendSuccessResponse(res, {
         message: 'Login successful.',
-        data: {
-          id: user.id,
-          name: user.name,
-          email: user.email
-        },
+        data: loginDetails,
       });
     } catch (error) {
       return sendErrorResponse(res, { error });

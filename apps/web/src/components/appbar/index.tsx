@@ -2,9 +2,14 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { AppBar as MuiAppBar, Box, Button, Toolbar } from '@mui/material';
+import { useSession } from 'next-auth/react';
+import { AppBar as MuiAppBar, Avatar, Box, Button, Toolbar } from '@mui/material';
 import { GradientButton, ThemeChangeButton } from '@/components';
 import LinkText from './LinkText';
+
+function getInitials(firstName?: string | null, lastName?: string | null): string {
+  return `${firstName?.[0] ?? ''}${lastName?.[0] ?? ''}`.toUpperCase();
+}
 
 const links = [
   { href: '/about', text: 'Concerts' },
@@ -18,6 +23,8 @@ const logoWidth = 270;
 const logoHeight = 54;
 
 export default function AppBar() {
+  const { data: session } = useSession();
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <MuiAppBar
@@ -123,22 +130,38 @@ export default function AppBar() {
               flexShrink: 0,
             }}
           >
-            <Button
-              component={Link}
-              href="/login"
-              variant="text"
-              sx={{ fontWeight: 700, px: { md: 1, lg: 2 } }}
-              color="primary"
-            >
-              Log in
-            </Button>
-            <GradientButton
-              href="/signup"
-              sx={{ borderRadius: '12px', px: { md: 2, lg: 3.75 } }}
-              LinkComponent={Link}
-            >
-              Sign Up
-            </GradientButton>
+            {session?.user
+              ? (
+                <Avatar
+                  sx={{
+                    background: theme => theme.palette.gradients.brandPrimary,
+                    color: 'white',
+                    fontWeight: 700,
+                  }}
+                >
+                  {getInitials(session.user.firstName, session.user.lastName)}
+                </Avatar>
+              )
+              : (
+                <>
+                  <Button
+                    component={Link}
+                    href="/login"
+                    variant="text"
+                    sx={{ fontWeight: 700, px: { md: 1, lg: 2 } }}
+                    color="primary"
+                  >
+                    Log in
+                  </Button>
+                  <GradientButton
+                    href="/signup"
+                    sx={{ borderRadius: '12px', px: { md: 2, lg: 3.75 } }}
+                    LinkComponent={Link}
+                  >
+                    Sign Up
+                  </GradientButton>
+                </>
+              )}
             <ThemeChangeButton />
           </Box>
         </Toolbar>
