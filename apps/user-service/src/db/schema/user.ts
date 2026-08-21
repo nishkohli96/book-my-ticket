@@ -24,23 +24,23 @@ export const usersSchema = pgTable(
     email: text('email').notNull(),
     // emailVerified: timestamp('email_verified', { mode: 'date' }),
     // avatar: text('image'),
-    passwordHash: text('password_hash'),
+    passwordHash: text('password_hash').notNull(),
     /** Full E.164-style phone value with dial code, e.g. "+15551234567". */
     phone: varchar('phone', {
       length: userValidation.phoneNumber.maxLength,
-    }),
+    }).notNull(),
     /** Selected ISO 3166-1 alpha-2 country code, e.g. "us" or "ca". */
     phoneCountry: varchar('phone_country', {
       length: userValidation.phoneNumber.countryLength,
-    }),
+    }).notNull(),
     /** Country calling code without the "+" prefix, e.g. "1". */
     phoneDialCode: varchar('phone_dial_code', {
       length: userValidation.phoneNumber.dialCodeMaxLength,
-    }),
+    }).notNull(),
     /** National significant number with the dial code stripped. */
     phoneNo: varchar('phone_no', {
       length: userValidation.phoneNumber.maxLength,
-    }),
+    }).notNull(),
     createdAt: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
     updatedAt: timestamp('updated_at', { mode: 'date' })
       .notNull()

@@ -1,5 +1,6 @@
 import { type Router } from 'express';
 import { authRouter } from './auth/controller';
+import { profileRouter } from './profile/controller';
 
 type RouteInfo = {
   path: string;
@@ -14,6 +15,10 @@ const routesList: RouteInfo[] = [
   {
     path: generatePrefix('/auth'),
     router: authRouter
+  },
+  {
+    path: generatePrefix('/profile'),
+    router: profileRouter
   }
 ];
 

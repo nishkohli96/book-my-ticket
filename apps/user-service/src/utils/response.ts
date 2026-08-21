@@ -35,6 +35,7 @@ export function sendErrorResponse(
   {
     statusCode = 500,
     message = 'Internal Server Error',
+    data = null,
     error,
     validationErrors,
   }: ErrorResponseOptions
@@ -46,6 +47,7 @@ export function sendErrorResponse(
     success: false,
     status: statusCode,
     message,
+    data,
     /**
      * Full error detail is only useful for debugging,
      * never leak it to clients in production.

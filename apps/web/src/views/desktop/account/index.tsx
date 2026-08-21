@@ -35,7 +35,10 @@ const navItems = [
 ] as const;
 
 export default function AccountPageDesktop() {
-  const { data: session } = useSession();
+  const {
+    data: session,
+    update: updateSession
+  } = useSession();
   const [activeTab, setActiveTab] = useState<(typeof navItems)[number]['key']>('profile');
   const initials = getUserInitials(session?.user?.firstName, session?.user?.lastName);
 
@@ -46,8 +49,23 @@ export default function AccountPageDesktop() {
     phoneNumber: { phone: '', country: '', dialCode: '', phoneNo: '' },
   };
 
-  const onSubmit = (data: EditProfileFormData) => {
-    // TODO: wire up to a real update-profile endpoint once it exists.
+  const onSubmit = async (data: EditProfileFormData) => {
+    const response = await fetch('/api/users/profile', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+      toast.error(result.message ?? 'Something went wrong. Please try again.');
+      return;
+    }
+
+    await updateSession({
+      firstName: result.data.firstName,
+      lastName: result.data.lastName
+    });
     toast.success('Profile updated');
   };
 
