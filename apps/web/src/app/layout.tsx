@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 import type { Metadata } from 'next';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter';
+import { ToastContainer } from 'react-toastify';
 import {
   AppThemeProvider,
   colorSchemeAttribute,
@@ -44,6 +45,13 @@ export default function RootLayout({
           <AppThemeProvider>
             <ConnectionStatus>
               {children}
+              <ToastContainer
+                autoClose={3000}
+                limit={2}
+                stacked
+                closeButton
+                style={{ fontSize: '1rem' }}
+              />
             </ConnectionStatus>
           </AppThemeProvider>
         </AppRouterCacheProvider>

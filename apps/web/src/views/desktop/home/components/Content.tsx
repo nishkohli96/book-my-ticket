@@ -116,15 +116,6 @@ export default function Content() {
               Browse events as guest
             </OutlinedButton>
           </Stack>
-          <Typography
-            variant="body2"
-            sx={{
-              color: 'var(--mui-palette-text-disabled)',
-              fontWeight: 600,
-            }}
-          >
-            No account needed to explore — sign in only when you check out.
-          </Typography>
         </Stack>
         <Box
           sx={{

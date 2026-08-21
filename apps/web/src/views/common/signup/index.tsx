@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Divider, Grid, Stack, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -20,8 +19,6 @@ import { signUpSchema, type SignUpFormData } from './schema';
 
 export default function SignUpForm() {
   const router = useRouter();
-  const [submitError, setSubmitError] = useState<string | null>(null);
-
   const {
     control,
     handleSubmit,
@@ -32,8 +29,6 @@ export default function SignUpForm() {
   });
 
   const onSubmit = async (data: SignUpFormData) => {
-    setSubmitError(null);
-
     const response = await fetch('/api/users/auth/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -42,7 +37,6 @@ export default function SignUpForm() {
 
     const result = await response.json();
     if (!response.ok) {
-      setSubmitError(result.message ?? 'Something went wrong. Please try again.');
       toast.error(result.message ?? 'Something went wrong. Please try again.');
       return;
     }
@@ -71,12 +65,6 @@ export default function SignUpForm() {
       <Divider sx={{ color: 'text.secondary', fontSize: 12, fontWeight: 700 }}>
         OR
       </Divider>
-
-      {submitError && (
-        <Typography variant="body2" sx={{ color: 'error.main' }}>
-          {submitError}
-        </Typography>
-      )}
 
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 6 }}>
