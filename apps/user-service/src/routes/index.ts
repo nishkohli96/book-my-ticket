@@ -7,7 +7,7 @@ type RouteInfo = {
 };
 
 function generatePrefix(routeName: string) {
-  return `/api${routeName}`;
+  return `/api/user${routeName}`;
 }
 
 const routesList: RouteInfo[] = [

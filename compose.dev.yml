@@ -20,6 +20,10 @@ services:
       - apps/web/.env
     environment:
       - GATEWAY_URL=http://traefik
+      # Bind-mounted node_modules triggers pnpm's dependency-state check
+      # on every `pnpm dev`; without a TTY it can't prompt to confirm a
+      # purge and aborts. CI=true makes pnpm skip that prompt.
+      - CI=true
     depends_on:
       - user-service
     volumes:
@@ -43,6 +47,8 @@ services:
       - 'traefik.enable=true'
       - 'traefik.http.routers.user-service.rule=PathPrefix(`/api`)'
       - 'traefik.http.services.user-service.loadbalancer.server.port=8001'
+    environment:
+      - CI=true
     volumes:
       - .:/app
       - /app/node_modules
