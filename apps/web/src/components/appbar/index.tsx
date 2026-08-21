@@ -35,7 +35,6 @@ const logoHeight = 54;
 
 export default function AppBar() {
   const { data: session, status } = useSession();
-  const isAuthenticated = status === 'authenticated';
 
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
 
@@ -152,56 +151,56 @@ export default function AppBar() {
               flexShrink: 0,
             }}
           >
-            {session?.user && isAuthenticated
-              ? (
-                <>
-                  <Avatar
-                    onClick={openUserMenu}
-                    sx={{
-                      background: theme => theme.palette.gradients.brandPrimary,
-                      color: 'white',
-                      fontWeight: 700,
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {getInitials(session.user.firstName, session.user.lastName)}
-                  </Avatar>
-                  <Menu
-                    anchorEl={menuAnchor}
-                    open={Boolean(menuAnchor)}
-                    onClose={closeUserMenu}
-                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                  >
-                    <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>
-                      <ListItemIcon sx={{ color: 'error.main' }}>
-                        <LogoutIcon fontSize="small" />
-                      </ListItemIcon>
-                      Sign out
-                    </MenuItem>
-                  </Menu>
-                </>
-              )
-              : (
-                <>
-                  <Button
-                    component={Link}
-                    href="/login"
-                    variant="text"
-                    sx={{ fontWeight: 700, px: { md: 1, lg: 2 } }}
-                    color="primary"
-                  >
-                    Log in
-                  </Button>
-                  <GradientButton
-                    href="/signup"
-                    sx={{ borderRadius: '12px', px: { md: 2, lg: 3.75 } }}
-                    LinkComponent={Link}
-                  >
-                    Sign Up
-                  </GradientButton>
-                </>
-              )}
+            {status === 'loading' && <Avatar sx={{ visibility: 'hidden' }} />}
+            {status === 'authenticated' && session.user && (
+              <>
+                <Avatar
+                  onClick={openUserMenu}
+                  sx={{
+                    background: theme => theme.palette.gradients.brandPrimary,
+                    color: 'white',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {getInitials(session.user.firstName, session.user.lastName)}
+                </Avatar>
+                <Menu
+                  anchorEl={menuAnchor}
+                  open={Boolean(menuAnchor)}
+                  onClose={closeUserMenu}
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                >
+                  <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>
+                    <ListItemIcon sx={{ color: 'error.main' }}>
+                      <LogoutIcon fontSize="small" />
+                    </ListItemIcon>
+                    Sign out
+                  </MenuItem>
+                </Menu>
+              </>
+            )}
+            {status === 'unauthenticated' && (
+              <>
+                <Button
+                  component={Link}
+                  href="/login"
+                  variant="text"
+                  sx={{ fontWeight: 700, px: { md: 1, lg: 2 } }}
+                  color="primary"
+                >
+                  Log in
+                </Button>
+                <GradientButton
+                  href="/signup"
+                  sx={{ borderRadius: '12px', px: { md: 2, lg: 3.75 } }}
+                  LinkComponent={Link}
+                >
+                  Sign Up
+                </GradientButton>
+              </>
+            )}
             <ThemeChangeButton />
           </Box>
         </Toolbar>
