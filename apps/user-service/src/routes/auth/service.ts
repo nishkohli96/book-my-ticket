@@ -1,11 +1,16 @@
 import { randomUUID } from 'node:crypto';
 import type { Response } from 'express';
 import { eq } from 'drizzle-orm';
-import { signUpSchema, type SignUpFormData } from '@book-my-ticket/common';
+import {
+  signUpSchema,
+  loginSchema,
+  type SignUpFormData
+} from '@book-my-ticket/common';
 import { postgresDatabase } from '@/db';
 import { usersSchema } from '@/db/schema';
 import {
   hashPassword,
+  comparePassword,
   sendSuccessResponse,
   sendErrorResponse
 } from '@/utils';
@@ -84,15 +89,55 @@ class AuthService {
     }
   }
 
-  loginUser(res: Response, email: string, password: string) {
+  async loginUser(res: Response, body: unknown) {
+    const parsedBody = loginSchema.safeParse(body);
+    if (!parsedBody.success) {
+      return sendErrorResponse(res, {
+        statusCode: 400,
+        message: 'Invalid login details',
+        error: 'Validation failed',
+        validationErrors: parsedBody.error.issues.map(issue => issue.message),
+      });
+    }
+
+    const { email, password } = parsedBody.data;
+
     try {
-      return res
-        .status(200)
-        .send({
-          email,
-          password
+      /**
+       * db.select().limit(1) returns an array — [user] destructures the first row;
+       * if no match, array is empty.
+       */
+      const [user] = await postgresDatabase.db
+        .select({
+          id: usersSchema.id,
+          name: usersSchema.name,
+          email: usersSchema.email,
+          passwordHash: usersSchema.passwordHash,
         })
-        .end();
+        .from(usersSchema)
+        .where(eq(usersSchema.email, email))
+        .limit(1);
+
+      /**
+       * Distinguishing "user doesn't exist" vs "wrong password" is a classic user-enumeration
+       * vulnerability. It lets attackers brute-force which emails are registered.
+       */
+      if (!user?.passwordHash || !(await comparePassword(password, user.passwordHash))) {
+        return sendErrorResponse(res, {
+          statusCode: 401,
+          message: 'Invalid email or password',
+          error: 'Authentication failed',
+        });
+      }
+
+      return sendSuccessResponse(res, {
+        message: 'Login successful.',
+        data: {
+          id: user.id,
+          name: user.name,
+          email: user.email
+        },
+      });
     } catch (error) {
       return sendErrorResponse(res, { error });
     }

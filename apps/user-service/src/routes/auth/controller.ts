@@ -28,8 +28,7 @@ authRouter.post(
     req: AuthTypes.UserLoginRequest,
     res: Response
   ) {
-    const { email, password } = req.body;
-    return authService.loginUser(res, email, password);
+    return authService.loginUser(res, req.body);
   }
 );
 

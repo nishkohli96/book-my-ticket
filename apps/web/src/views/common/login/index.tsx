@@ -1,8 +1,11 @@
 'use client';
 
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Box, Divider, Stack, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { signIn } from 'next-auth/react';
+import { toast } from 'react-toastify';
 import { loginSchema, type LoginFormData } from '@book-my-ticket/common';
 import {
   AppLink,
@@ -14,13 +17,28 @@ import {
 } from '@/components';
 
 export default function LoginForm() {
-  const { control, handleSubmit } = useForm<LoginFormData>({
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting }
+  } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     mode: 'onBlur'
   });
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log(data);
+  const onSubmit = async (data: LoginFormData) => {
+    const result = await signIn('credentials', {
+      ...data,
+      redirect: false
+    });
+
+    if (result?.error) {
+      toast.error('Invalid email or password');
+      return;
+    }
+    router.push(searchParams.get('callbackUrl') ?? '/');
   };
 
   return (
@@ -63,8 +81,12 @@ export default function LoginForm() {
           Forgot password?
         </AppLink>
       </Box>
-      <GradientButton type="submit" fullWidth>
-        Log in
+      <GradientButton
+        type="submit"
+        fullWidth
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? 'Logging in…' : 'Log in'}
       </GradientButton>
     </Stack>
   );
