@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import {
   Avatar,
   Box,
+  CircularProgress,
   Grid,
   List,
   ListItemButton,
@@ -42,12 +43,14 @@ export default function AccountPageDesktop() {
   const [activeTab, setActiveTab] = useState<(typeof navItems)[number]['key']>('profile');
   const initials = getUserInitials(session?.user?.firstName, session?.user?.lastName);
 
-  const defaultValues: EditProfileFormData = {
-    firstName: session?.user?.firstName ?? '',
-    lastName: session?.user?.lastName ?? '',
-    email: session?.user?.email ?? '',
-    phoneNumber: { phone: '', country: '', dialCode: '', phoneNo: '' },
-  };
+  const [profile, setProfile] = useState<EditProfileFormData | null>(null);
+
+  useEffect(() => {
+    fetch('/api/users/profile')
+      .then(response => response.json())
+      .then(result => setProfile(result.data))
+      .catch(() => toast.error('Failed to load profile'));
+  }, []);
 
   const onSubmit = async (data: EditProfileFormData) => {
     const response = await fetch('/api/users/profile', {
@@ -171,11 +174,19 @@ export default function AccountPageDesktop() {
               </Stack>
             </Stack>
 
-            <EditProfileForm
-              formId={editProfileFormId}
-              defaultValues={defaultValues}
-              onSubmit={onSubmit}
-            />
+            {profile
+              ? (
+                <EditProfileForm
+                  formId={editProfileFormId}
+                  defaultValues={profile}
+                  onSubmit={onSubmit}
+                />
+              )
+              : (
+                <Stack sx={{ alignItems: 'center', py: 4 }}>
+                  <CircularProgress size={28} />
+                </Stack>
+              )}
 
             <Stack
               direction="row"
@@ -191,6 +202,8 @@ export default function AccountPageDesktop() {
               <Stack direction="row" spacing={1.5}>
                 <GradientButton
                   type="submit"
+                  form={editProfileFormId}
+                  disabled={!profile}
                   sx={{ height: 44, px: 3 }}
                 >
                   Save changes

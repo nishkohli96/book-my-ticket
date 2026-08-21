@@ -1,11 +1,57 @@
 import type { Response } from 'express';
 import { and, eq, ne } from 'drizzle-orm';
-import { editProfileSchema, type EditProfileFormData } from '@book-my-ticket/common';
+import {
+  editProfileSchema,
+  type EditProfileFormData,
+  type UserProfileDetails
+} from '@book-my-ticket/common';
 import { postgresDatabase } from '@/db';
 import { usersSchema } from '@/db/schema';
 import { sendSuccessResponse, sendErrorResponse } from '@/utils';
 
 class ProfileService {
+  async getProfile(res: Response, userId: string) {
+    try {
+      const [user] = await postgresDatabase.db
+        .select({
+          id: usersSchema.id,
+          firstName: usersSchema.firstName,
+          lastName: usersSchema.lastName,
+          email: usersSchema.email,
+          phoneNumber: {
+            phone: usersSchema.phone,
+            country: usersSchema.phoneCountry,
+            dialCode: usersSchema.phoneDialCode,
+            phoneNo: usersSchema.phoneNo,
+          }
+        })
+        .from(usersSchema)
+        .where(eq(usersSchema.id, userId))
+        .limit(1);
+
+      if (!user) {
+        return sendErrorResponse(res, {
+          statusCode: 404,
+          message: 'User not found',
+          error: 'No user with this id',
+        });
+      }
+
+      const profileDetails: UserProfileDetails = {
+        ...user,
+        phoneNumber: {
+          phone: user.phoneNumber.phone,
+          country: user.phoneNumber.country,
+          dialCode: user.phoneNumber.dialCode,
+          phoneNo: user.phoneNumber.phoneNo,
+        },
+      };
+      return sendSuccessResponse(res, { data: profileDetails });
+    } catch (error) {
+      return sendErrorResponse(res, { error });
+    }
+  }
+
   async updateProfile(
     res: Response,
     userId: string,
@@ -71,7 +117,15 @@ class ProfileService {
         });
       }
 
-      const profileDetails = updatedUser;
+      const profileDetails: UserProfileDetails = {
+        ...updatedUser,
+        phoneNumber: {
+          phone: updatedUser.phoneNumber.phone,
+          country: updatedUser.phoneNumber.country,
+          dialCode: updatedUser.phoneNumber.dialCode,
+          phoneNo: updatedUser.phoneNumber.phoneNo,
+        },
+      };
 
       return sendSuccessResponse(res, {
         message: 'Profile updated successfully.',

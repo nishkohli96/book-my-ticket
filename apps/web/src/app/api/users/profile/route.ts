@@ -4,6 +4,32 @@ import { auth } from '@/app/api/auth/[...nextauth]/route';
 import { apiServicesUrl } from '@/constants';
 import { apiError, apiSuccess, withErrorHandling } from '@/utils';
 
+export const GET = withErrorHandling(async () => {
+  const session = await auth();
+  if (!session?.user) {
+    return apiError({ statusCode: 401, message: 'Not authenticated' });
+  }
+
+  const response = await fetch(`${apiServicesUrl.user}/profile`, {
+    headers: { 'x-user-id': session.user.id },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    return apiError({
+      statusCode: response.status,
+      message: data.message ?? 'Failed to fetch profile',
+      error: data.error,
+    });
+  }
+
+  return apiSuccess(data.data, {
+    statusCode: response.status,
+    message: data.message
+  });
+});
+
 export const PATCH = withErrorHandling(async (request: NextRequest) => {
   const session = await auth();
   if (!session?.user) {
