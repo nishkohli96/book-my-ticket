@@ -1,12 +1,21 @@
+/**
+ * Next-Auth Docs:
+ * - Credentials: https://next-auth.js.org/providers/credentials
+ * - Google: https://next-auth.js.org/providers/google
+ */
+
 import NextAuth from 'next-auth';
-import Google from 'next-auth/providers/google';
+import GoogleProvider from 'next-auth/providers/google';
 import Credentials from 'next-auth/providers/credentials';
 import { loginSchema } from '@book-my-ticket/common';
-import { apiServicesUrl } from '@/constants';
+import { ENV_CONFIG, apiServicesUrl } from '@/constants';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
-    Google,
+    GoogleProvider({
+      clientId: ENV_CONFIG.google.clientId,
+      clientSecret: ENV_CONFIG.google.secret
+    }),
     Credentials({
       credentials: {
         email: {},
