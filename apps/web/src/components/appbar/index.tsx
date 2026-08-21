@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type MouseEvent } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
@@ -14,13 +15,11 @@ import {
   MenuItem,
   Toolbar
 } from '@mui/material';
+import AccountOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { GradientButton, ThemeChangeButton } from '@/components';
+import { getUserInitials } from '@/utils';
 import LinkText from './LinkText';
-
-function getInitials(firstName?: string | null, lastName?: string | null): string {
-  return `${firstName?.[0] ?? ''}${lastName?.[0] ?? ''}`.toUpperCase();
-}
 
 const links = [
   { href: '/about', text: 'Concerts' },
@@ -34,12 +33,17 @@ const logoWidth = 270;
 const logoHeight = 54;
 
 export default function AppBar() {
+  const router = useRouter();
   const { data: session, status } = useSession();
 
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
 
   const openUserMenu = (event: MouseEvent<HTMLElement>) => setMenuAnchor(event.currentTarget);
   const closeUserMenu = () => setMenuAnchor(null);
+
+  const navigateToMyAccount = () => {
+    router.push('/my-account');
+  };
 
   const handleLogout = () => {
     closeUserMenu();
@@ -163,7 +167,7 @@ export default function AppBar() {
                     cursor: 'pointer',
                   }}
                 >
-                  {getInitials(session.user.firstName, session.user.lastName)}
+                  {getUserInitials(session.user.firstName, session.user.lastName)}
                 </Avatar>
                 <Menu
                   anchorEl={menuAnchor}
@@ -172,6 +176,12 @@ export default function AppBar() {
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                   transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                 >
+                  <MenuItem onClick={navigateToMyAccount}>
+                    <ListItemIcon>
+                      <AccountOutlinedIcon fontSize="small" />
+                    </ListItemIcon>
+                    Account Settings
+                  </MenuItem>
                   <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>
                     <ListItemIcon sx={{ color: 'error.main' }}>
                       <LogoutIcon fontSize="small" />

@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server';
 import { signUpSchema } from '@book-my-ticket/common';
 import { apiServicesUrl } from '@/constants';
-import { apiError, apiSuccess, withErrorHandling } from '@/lib/api-response';
+import { apiError, apiSuccess, withErrorHandling } from '@/utils';
 
 export const POST = withErrorHandling(async (request: NextRequest) => {
   const body: unknown = await request.json();
