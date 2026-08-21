@@ -23,7 +23,8 @@ const logoWidth = 270;
 const logoHeight = 54;
 
 export default function AppBar() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const isAuthenticated = status === 'authenticated';
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -130,7 +131,7 @@ export default function AppBar() {
               flexShrink: 0,
             }}
           >
-            {session?.user
+            {session?.user && isAuthenticated
               ? (
                 <Avatar
                   sx={{

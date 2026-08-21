@@ -40,6 +40,7 @@ export default function SignUpForm() {
       toast.error(result.message ?? 'Something went wrong. Please try again.');
       return;
     }
+    toast.success('Account created successfully!');
     router.push('/login');
   };
 

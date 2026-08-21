@@ -38,7 +38,11 @@ export default function LoginForm() {
       toast.error('Invalid email or password');
       return;
     }
-    router.push(searchParams.get('callbackUrl') ?? '/');
+    const callbackUrl = searchParams.get('callbackUrl');
+    if(!callbackUrl) {
+      toast.success('Welcome back!');
+    }
+    router.push(callbackUrl ?? '/');
   };
 
   return (
