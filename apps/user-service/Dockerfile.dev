@@ -1,0 +1,31 @@
+# Build context must be the monorepo root:
+#   docker build -f apps/user-service/Dockerfile.dev .
+
+ARG NODE_VERSION=24-bookworm-slim
+ARG PNPM_VERSION=11.20.0
+
+FROM node:${NODE_VERSION}
+
+ARG PNPM_VERSION
+WORKDIR /app
+
+RUN npm i -g pnpm@${PNPM_VERSION}
+
+# Manifests first for dependency-layer caching; source comes in via bind
+# mount at runtime (see compose.dev.yml), not COPY.
+COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
+COPY apps/user-service/package.json apps/user-service/package.json
+COPY packages/common/package.json packages/common/package.json
+
+# --filter @book-my-ticket/user-service → install deps for that one package only.
+# ... (pnpm-specific suffix) → also include its workspace dependencies (packages/common etc).
+# Without it, pnpm skips linking @book-my-ticket/common since only web's own manifest
+# gets considered, and install fails resolving workspace:*.
+RUN pnpm install --frozen-lockfile --filter @book-my-ticket/user-service...
+
+EXPOSE 8001
+
+# packages/common must be built once before the service can resolve it
+# (its exports map points at dist/); common has no watch script, so its
+# changes need a manual rebuild inside the container, not live-reload.
+CMD ["sh", "-c", "pnpm --filter @book-my-ticket/common run lib:build && cd apps/user-service && pnpm dev"]

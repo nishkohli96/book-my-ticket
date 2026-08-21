@@ -1,0 +1,52 @@
+services:
+  traefik:
+    image: traefik:v3.1
+    command:
+      - '--providers.docker=true'
+      - '--providers.docker.exposedbydefault=false'
+      - '--entrypoints.web.address=:80'
+    ports:
+      - '80:80'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile.dev
+    ports:
+      - '3000:3000'
+    env_file:
+      - apps/web/.env
+    environment:
+      - GATEWAY_URL=http://traefik
+    depends_on:
+      - user-service
+    volumes:
+      # Bind-mount source for live reload; anonymous volumes on
+      # node_modules/dist so the image's Linux-built deps and build
+      # output aren't clobbered by the host mount.
+      - .:/app
+      - /app/node_modules
+      - /app/apps/web/node_modules
+      - /app/apps/web/.next
+      - /app/packages/common/node_modules
+      - /app/packages/common/dist
+
+  user-service:
+    build:
+      context: .
+      dockerfile: apps/user-service/Dockerfile.dev
+    env_file:
+      - apps/user-service/.env
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.user-service.rule=PathPrefix(`/api`)'
+      - 'traefik.http.services.user-service.loadbalancer.server.port=8001'
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/apps/user-service/node_modules
+      - /app/apps/user-service/dist
+      - /app/packages/common/node_modules
+      - /app/packages/common/dist

@@ -1,0 +1,27 @@
+# Build context must be the monorepo root:
+#   docker build -f apps/web/Dockerfile.dev .
+
+ARG NODE_VERSION=24-bookworm-slim
+ARG PNPM_VERSION=11.20.0
+
+FROM node:${NODE_VERSION}
+
+ARG PNPM_VERSION
+WORKDIR /app
+
+RUN npm i -g pnpm@${PNPM_VERSION}
+
+# Manifests first for dependency-layer caching; source comes in via bind
+# mount at runtime (see compose.dev.yml), not COPY.
+COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
+COPY apps/web/package.json apps/web/package.json
+COPY packages/common/package.json packages/common/package.json
+
+RUN pnpm install --frozen-lockfile --filter @book-my-ticket/web...
+
+EXPOSE 3000
+
+# packages/common must be built once before web can resolve it (its
+# exports map points at dist/); common has no watch script, so its
+# changes need a manual rebuild inside the container, not live-reload.
+CMD ["sh", "-c", "pnpm --filter @book-my-ticket/common run lib:build && cd apps/web && pnpm dev"]
