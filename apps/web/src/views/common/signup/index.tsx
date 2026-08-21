@@ -43,7 +43,7 @@ export default function SignUpForm() {
     const result = await response.json();
     if (!response.ok) {
       setSubmitError(result.message ?? 'Something went wrong. Please try again.');
-      toast.error(result.message ?? 'Something went wrong. Please try again.')
+      toast.error(result.message ?? 'Something went wrong. Please try again.');
       return;
     }
     router.push('/login');

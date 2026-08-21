@@ -1,18 +1,4 @@
-/**
- * Define all environment variables in this file and then
- * export across other modules.
- */
-
-function defEnvVariable(varName: string, defaultValue?: string): string {
-  const value = process.env[varName];
-  if (value) {
-    return value.trim();
-  }
-  if (defaultValue) {
-    return defaultValue.trim();
-  }
-  throw new Error(`Missing required environment variable: ${varName}`);
-}
+import { defEnvVariable } from '@book-my-ticket/common';
 
 export const ENV_CONFIG = Object.freeze({
   env: defEnvVariable('NODE_ENV', 'development'),

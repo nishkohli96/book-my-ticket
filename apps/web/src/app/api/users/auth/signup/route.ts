@@ -1,8 +1,7 @@
 import type { NextRequest } from 'next/server';
 import { signUpSchema } from '@book-my-ticket/common';
+import { apiServicesUrl } from '@/constants';
 import { apiError, apiSuccess, withErrorHandling } from '@/lib/api-response';
-
-const GATEWAY_URL = process.env.GATEWAY_URL ?? 'http://localhost:8001';
 
 export const POST = withErrorHandling(async (request: NextRequest) => {
   const body: unknown = await request.json();
@@ -23,7 +22,7 @@ export const POST = withErrorHandling(async (request: NextRequest) => {
     });
   }
 
-  const response = await fetch(`${GATEWAY_URL}/api/auth/signup`, {
+  const response = await fetch(`${apiServicesUrl.user}/auth/signup`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(parsedBody.data),

@@ -10,8 +10,8 @@ export type ApiSuccessOptions = {
 };
 
 export type ApiErrorOptions = {
-	message: string;
-	statusCode?: number;
-	error?: string;
-	validationErrors?: string[];
+  message: string;
+  statusCode?: number;
+  error?: string;
+  validationErrors?: string[];
 };

@@ -3,25 +3,6 @@ import type { ApiSuccessOptions, ApiErrorOptions } from '@/types';
 
 type RouteHandler = (request: NextRequest) => Promise<NextResponse>;
 
-/**
- * Wraps a route handler so any thrown/rejected error (JSON parse failure,
- * network error calling a backend service, etc.) is turned into the same
- * apiError shape instead of leaking a raw 500 HTML page or an unhandled
- * exception. Every route.ts's exported method should be wrapped in this.
- */
-export function withErrorHandling(handler: RouteHandler): RouteHandler {
-  return async request => {
-    try {
-      return await handler(request);
-    } catch (error) {
-      return apiError({
-        message: 'Internal Server Error',
-        error: error instanceof Error ? error.message : 'Unknown error',
-      });
-    }
-  };
-}
-
 export function apiSuccess<T>(
   data: T,
   { message = 'Success', statusCode = 200 }: ApiSuccessOptions = {}
@@ -48,4 +29,23 @@ export function apiError({
     },
     { status: statusCode }
   );
+}
+
+/**
+ * Wraps a route handler so any thrown/rejected error (JSON parse failure,
+ * network error calling a backend service, etc.) is turned into the same
+ * apiError shape instead of leaking a raw 500 HTML page or an unhandled
+ * exception. Every route.ts's exported method should be wrapped in this.
+ */
+export function withErrorHandling(handler: RouteHandler): RouteHandler {
+  return async request => {
+    try {
+      return await handler(request);
+    } catch (error) {
+      return apiError({
+        message: 'Internal Server Error',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+    }
+  };
 }
