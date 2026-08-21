@@ -1,9 +1,20 @@
 'use client';
 
+import { useState, type MouseEvent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
-import { AppBar as MuiAppBar, Avatar, Box, Button, Toolbar } from '@mui/material';
+import { signOut, useSession } from 'next-auth/react';
+import {
+  AppBar as MuiAppBar,
+  Avatar,
+  Box,
+  Button,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  Toolbar
+} from '@mui/material';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { GradientButton, ThemeChangeButton } from '@/components';
 import LinkText from './LinkText';
 
@@ -25,6 +36,16 @@ const logoHeight = 54;
 export default function AppBar() {
   const { data: session, status } = useSession();
   const isAuthenticated = status === 'authenticated';
+
+  const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
+
+  const openUserMenu = (event: MouseEvent<HTMLElement>) => setMenuAnchor(event.currentTarget);
+  const closeUserMenu = () => setMenuAnchor(null);
+
+  const handleLogout = () => {
+    closeUserMenu();
+    void signOut();
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -133,15 +154,33 @@ export default function AppBar() {
           >
             {session?.user && isAuthenticated
               ? (
-                <Avatar
-                  sx={{
-                    background: theme => theme.palette.gradients.brandPrimary,
-                    color: 'white',
-                    fontWeight: 700,
-                  }}
-                >
-                  {getInitials(session.user.firstName, session.user.lastName)}
-                </Avatar>
+                <>
+                  <Avatar
+                    onClick={openUserMenu}
+                    sx={{
+                      background: theme => theme.palette.gradients.brandPrimary,
+                      color: 'white',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {getInitials(session.user.firstName, session.user.lastName)}
+                  </Avatar>
+                  <Menu
+                    anchorEl={menuAnchor}
+                    open={Boolean(menuAnchor)}
+                    onClose={closeUserMenu}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                  >
+                    <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>
+                      <ListItemIcon sx={{ color: 'error.main' }}>
+                        <LogoutIcon fontSize="small" />
+                      </ListItemIcon>
+                      Sign out
+                    </MenuItem>
+                  </Menu>
+                </>
               )
               : (
                 <>

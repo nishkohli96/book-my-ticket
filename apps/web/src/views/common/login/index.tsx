@@ -39,9 +39,6 @@ export default function LoginForm() {
       return;
     }
     const callbackUrl = searchParams.get('callbackUrl');
-    if(!callbackUrl) {
-      toast.success('Welcome back!');
-    }
     router.push(callbackUrl ?? '/');
   };
 
