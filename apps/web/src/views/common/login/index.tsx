@@ -86,9 +86,9 @@ export default function LoginForm() {
       <GradientButton
         type="submit"
         fullWidth
-        disabled={isSubmitting}
+        loading={isSubmitting}
       >
-        {isSubmitting ? 'Logging in…' : 'Log in'}
+        Log in
       </GradientButton>
     </Stack>
   );

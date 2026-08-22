@@ -122,9 +122,9 @@ export default function SignUpForm() {
       <GradientButton
         type="submit"
         fullWidth
-        disabled={isSubmitting}
+        loading={isSubmitting}
       >
-        {isSubmitting ? 'Creating account…' : 'Create account'}
+        Create account
       </GradientButton>
     </Stack>
   );
