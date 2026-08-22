@@ -20,8 +20,9 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CreditCardIcon from '@mui/icons-material/CreditCardOutlined';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import WhatshotIcon from '@mui/icons-material/Whatshot';
 import type { EditProfileFormData, UserProfileDetails } from '@book-my-ticket/common';
-import { GradientButton, OutlinedButton } from '@/components';
+import { OutlinedButton } from '@/components';
 import { getUserInitials } from '@/utils';
 import EditProfileForm from '@/views/common/edit-profile';
 
@@ -181,37 +182,46 @@ export default function AccountPageDesktop({ initialProfile }: AccountPageDeskto
                   Failed to load profile. Please refresh the page.
                 </Typography>
               )}
+          </Paper>
 
+          <Paper
+            variant="outlined"
+            sx={{
+              mt: 3,
+              borderRadius: '16px',
+              borderColor: 'error.main',
+              p: 4,
+            }}
+          >
+            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+              <WhatshotIcon sx={{ color: 'error.main' }} />
+              <Typography variant="h6" sx={{ fontWeight: 800, color: 'error.main' }}>
+                Danger zone
+              </Typography>
+            </Stack>
             <Stack
               direction="row"
-              sx={{
-                mt: 4,
-                pt: 3,
-                borderTop: 1,
-                borderColor: 'divider',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
+              sx={{ mt: 2, alignItems: 'center', justifyContent: 'space-between' }}
             >
-              <Stack direction="row" spacing={1.5}>
-                <GradientButton
-                  type="submit"
-                  form={editProfileFormId}
-                  disabled={!initialProfile}
-                  sx={{ height: 44, px: 3 }}
-                >
-                  Save changes
-                </GradientButton>
-                <OutlinedButton sx={{ height: 44, px: 3 }}>
-                  Cancel
-                </OutlinedButton>
+              <Stack spacing={0.25}>
+                <Typography sx={{ fontWeight: 700 }}>
+                  Delete account
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Permanently remove your account and all of its data. This cannot be undone.
+                </Typography>
               </Stack>
-              <Typography
-                variant="body2"
-                sx={{ color: 'error.main', fontWeight: 700, cursor: 'pointer' }}
+              <OutlinedButton
+                sx={{
+                  height: 44,
+                  px: 3,
+                  color: 'error.main',
+                  borderColor: 'var(--mui-palette-error-main) !important',
+                  '&:hover': { backgroundColor: 'rgba(var(--mui-palette-error-mainChannel) / 0.04)' },
+                }}
               >
                 Delete account
-              </Typography>
+              </OutlinedButton>
             </Stack>
           </Paper>
         </Grid>

@@ -10,18 +10,25 @@
  */
 
 import Button, { type ButtonProps } from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 
-type OutlinedButtonProps = Omit<ButtonProps, 'variant'>;
+type OutlinedButtonProps = Omit<ButtonProps, 'variant'> & {
+  loading?: boolean;
+};
 
 export default function OutlinedButton({
   children,
+  loading = false,
+  disabled,
   sx: btnSx,
   ...btnProps
 }: OutlinedButtonProps) {
   return (
     <Button
       {...btnProps}
+      disabled={disabled || loading}
       variant="outlined"
+      startIcon={loading ? <CircularProgress size={16} color="inherit" /> : undefined}
       sx={[
         {
           borderWidth: '2px',

@@ -2,9 +2,9 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Grid } from '@mui/material';
+import { Grid, Stack } from '@mui/material';
 import { editProfileSchema, type EditProfileFormData } from '@book-my-ticket/common';
-import { StyledRHFTextField, StyledRHFPhoneInput } from '@/components';
+import { StyledRHFTextField, StyledRHFPhoneInput, GradientButton, OutlinedButton } from '@/components';
 
 type EditProfileFormProps = {
   formId: string;
@@ -19,7 +19,12 @@ export default function EditProfileForm({
   onSubmit,
   fieldColumnSize = { xs: 12, md: 6 }
 }: EditProfileFormProps) {
-  const { control, handleSubmit } = useForm<EditProfileFormData>({
+  const {
+    control,
+    formState: { dirtyFields, isSubmitting },
+    reset,
+    handleSubmit
+  } = useForm<EditProfileFormData>({
     resolver: zodResolver(editProfileSchema),
     mode: 'onBlur',
     defaultValues
@@ -60,6 +65,34 @@ export default function EditProfileForm({
           control={control}
           required
         />
+      </Grid>
+      <Grid size={12}>
+        <Stack
+          direction="row"
+          spacing={1.5}
+          sx={{
+            mt: 1.5,
+            pt: 3,
+            borderTop: 1,
+            borderColor: 'divider'
+          }}
+        >
+          <GradientButton
+            type="submit"
+            loading={isSubmitting}
+            sx={{ height: 44, px: 3 }}
+          >
+            Save changes
+          </GradientButton>
+          <OutlinedButton
+            type="button"
+            onClick={() => reset(defaultValues)}
+            disabled={!Object.keys(dirtyFields).length || isSubmitting}
+            sx={{ height: 44, px: 3 }}
+          >
+            Cancel
+          </OutlinedButton>
+        </Stack>
       </Grid>
     </Grid>
   );
