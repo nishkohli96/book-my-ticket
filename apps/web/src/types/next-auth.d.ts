@@ -9,6 +9,8 @@ declare module 'next-auth' {
      * Set for Google.
      */
     hasPhoneNumber?: boolean;
+    /** Set in the `signIn` callback right before it's read in `jwt`. */
+    sessionId?: string;
   }
 
   interface Session {
@@ -27,5 +29,6 @@ declare module 'next-auth/jwt' {
     firstName: string;
     lastName: string;
     hasPhoneNumber: boolean;
+    sessionId: string;
   }
 }

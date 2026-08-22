@@ -98,10 +98,14 @@ export const editProfileSchema = signUpSchema.pick({
 
 export type EditProfileFormData = z.infer<typeof editProfileSchema>;
 
-export const oauthSignInSchema = signUpSchema.pick({
-  firstName: true,
-  lastName: true,
-  email: true,
-});
+export const oauthProviders = ['google', 'apple'] as const;
+
+export const oauthSignInSchema = signUpSchema
+  .pick({ firstName: true, lastName: true, email: true })
+  .extend({
+    provider: z.enum(oauthProviders),
+    /** The provider's own account id (e.g. Google's `sub`). */
+    providerAccountId: z.string(),
+  });
 
 export type OAuthSignInData = z.infer<typeof oauthSignInSchema>;

@@ -60,37 +60,66 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: { signIn: '/login' },
   callbacks: {
     async signIn({ user, account }) {
-      if (account?.provider !== 'google') {
-        return true;
+      if (account?.provider === 'google') {
+        const parsedUser = oauthSignInSchema.safeParse({
+          provider: 'google',
+          providerAccountId: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+        });
+        if (!parsedUser.success) {
+          return false;
+        }
+
+        const oauthResponse = await fetch(`${apiServicesUrl.user}/auth/oauth`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(parsedUser.data)
+        });
+        if (!oauthResponse.ok) {
+          return false;
+        }
+
+        const { data } = await oauthResponse.json();
+        user.id = data.id;
+        user.firstName = data.firstName;
+        user.lastName = data.lastName;
+        user.hasPhoneNumber = data.hasPhoneNumber;
       }
 
-      const parsedUser = oauthSignInSchema.safeParse(user);
-      if (!parsedUser.success) {
-        return false;
-      }
-
-      const response = await fetch(`${apiServicesUrl.user}/auth/oauth`, {
+      /**
+       * Single-active-session enforcement: every sign-in (any provider)
+       * revokes the user's prior session and creates a new one. The
+       * session's id rides in the JWT as `sessionId` and gets checked
+       * against user-service on every subsequent request in `jwt` below.
+       */
+      const sessionResponse = await fetch(`${apiServicesUrl.user}/sessions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(parsedUser.data)
+        body: JSON.stringify({ userId: user.id })
       });
-      if (!response.ok) {
+      if (!sessionResponse.ok) {
         return false;
       }
 
-      const { data } = await response.json();
-      user.id = data.id;
-      user.firstName = data.firstName;
-      user.lastName = data.lastName;
-      user.hasPhoneNumber = data.hasPhoneNumber;
+      const { data: session } = await sessionResponse.json();
+      user.sessionId = session.id;
       return true;
     },
-    jwt({ token, user, trigger, session }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id;
         token.firstName = user.firstName;
         token.lastName = user.lastName;
         token.hasPhoneNumber = user.hasPhoneNumber ?? true;
+        token.sessionId = user.sessionId;
+      } else if (token.sessionId) {
+        const response = await fetch(`${apiServicesUrl.user}/sessions/${token.sessionId as string}`);
+        const { data } = await response.json();
+        if (!data?.active) {
+          return null;
+        }
       }
       if (trigger === 'update' && session) {
         token.firstName = session.firstName ?? token.firstName;
@@ -107,6 +136,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.hasPhoneNumber = token.hasPhoneNumber as boolean;
       }
       return session;
+    }
+  },
+  events: {
+    async signOut(message) {
+      const sessionId = 'token' in message ? message.token?.sessionId : undefined;
+      if (!sessionId) {
+        return;
+      }
+      await fetch(`${apiServicesUrl.user}/sessions/${sessionId as string}`, { method: 'DELETE' });
     }
   }
 });

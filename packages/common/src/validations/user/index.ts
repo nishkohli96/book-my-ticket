@@ -4,6 +4,7 @@ import {
   signUpSchema,
   editProfileSchema,
   oauthSignInSchema,
+  oauthProviders,
   type SignUpFormData,
   type EditProfileFormData,
   type OAuthSignInData
@@ -14,6 +15,7 @@ export {
   signUpSchema,
   editProfileSchema,
   oauthSignInSchema,
+  oauthProviders,
   loginSchema
 };
 
