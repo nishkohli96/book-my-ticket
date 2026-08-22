@@ -15,6 +15,7 @@ import {
   StyledRHFTextField,
   StyledRHFPasswordInput
 } from '@/components';
+import { queryParamNames } from '@/constants';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -38,7 +39,7 @@ export default function LoginForm() {
       toast.error('Invalid email or password');
       return;
     }
-    const callbackUrl = searchParams.get('callbackUrl');
+    const callbackUrl = searchParams.get(queryParamNames.callbackUrl);
     router.push(callbackUrl ?? '/');
   };
 

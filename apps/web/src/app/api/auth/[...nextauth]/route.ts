@@ -15,7 +15,7 @@ import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import Credentials from 'next-auth/providers/credentials';
 import { loginSchema } from '@book-my-ticket/common';
-import { ENV_CONFIG, apiServicesUrl } from '@/constants';
+import { ENV_CONFIG, apiServicesUrl } from '@/constants/environment';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [

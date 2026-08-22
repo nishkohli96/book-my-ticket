@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { signUpSchema } from '@book-my-ticket/common';
-import { apiServicesUrl } from '@/constants';
+import { apiServicesUrl } from '@/constants/environment';
 import { apiError, apiSuccess, withErrorHandling } from '@/utils';
 
 export const POST = withErrorHandling(async (request: NextRequest) => {

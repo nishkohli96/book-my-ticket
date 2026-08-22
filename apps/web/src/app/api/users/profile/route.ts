@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server';
 import { editProfileSchema, type EditProfileFormData } from '@book-my-ticket/common';
 import { auth } from '@/app/api/auth/[...nextauth]/route';
-import { apiServicesUrl } from '@/constants';
+import { apiServicesUrl } from '@/constants/environment';
 import { apiError, apiSuccess, withErrorHandling } from '@/utils';
 
 export const GET = withErrorHandling(async () => {
