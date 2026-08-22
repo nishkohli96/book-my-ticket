@@ -4,6 +4,11 @@ declare module 'next-auth' {
   interface User {
     firstName: string;
     lastName: string;
+    /**
+     * Absent for Credentials sign-in (schema requires phone at signup).
+     * Set for Google.
+     */
+    hasPhoneNumber?: boolean;
   }
 
   interface Session {
@@ -11,6 +16,7 @@ declare module 'next-auth' {
       id: string;
       firstName: string;
       lastName: string;
+      hasPhoneNumber: boolean;
     } & DefaultSession['user'];
   }
 }
@@ -20,5 +26,6 @@ declare module 'next-auth/jwt' {
     id: string;
     firstName: string;
     lastName: string;
+    hasPhoneNumber: boolean;
   }
 }

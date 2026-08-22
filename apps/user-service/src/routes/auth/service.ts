@@ -4,8 +4,10 @@ import { eq } from 'drizzle-orm';
 import {
   signUpSchema,
   loginSchema,
+  oauthSignInSchema,
   type SignUpFormData,
-  type UserLoginDetails
+  type UserLoginDetails,
+  type OAuthUserDetails
 } from '@book-my-ticket/common';
 import { postgresDatabase } from '@/db';
 import { usersSchema } from '@/db/schema';
@@ -144,6 +146,69 @@ class AuthService {
       return sendSuccessResponse(res, {
         message: 'Login successful.',
         data: loginDetails,
+      });
+    } catch (error) {
+      return sendErrorResponse(res, { error });
+    }
+  }
+
+  /**
+   * Find-or-create for OAuth providers (Google). There is no password or
+   * phone number at this point - an existing row is returned as-is, a new
+   * one is inserted with those columns left null.
+   */
+  async findOrCreateOAuthUser(res: Response, body: unknown) {
+    const parsedBody = oauthSignInSchema.safeParse(body);
+    if (!parsedBody.success) {
+      return sendErrorResponse(res, {
+        statusCode: 400,
+        message: 'Invalid sign-in details',
+        error: 'Validation failed',
+        validationErrors: parsedBody.error.issues.map(issue => issue.message),
+      });
+    }
+
+    const { firstName, lastName, email } = parsedBody.data;
+
+    try {
+      const [existingUser] = await postgresDatabase.db
+        .select({
+          id: usersSchema.id,
+          firstName: usersSchema.firstName,
+          lastName: usersSchema.lastName,
+          email: usersSchema.email,
+          phone: usersSchema.phone,
+        })
+        .from(usersSchema)
+        .where(eq(usersSchema.email, email))
+        .limit(1);
+
+      if (existingUser) {
+        const userDetails: OAuthUserDetails = {
+          id: existingUser.id,
+          firstName: existingUser.firstName,
+          lastName: existingUser.lastName,
+          email: existingUser.email,
+          hasPhoneNumber: Boolean(existingUser.phone),
+        };
+        return sendSuccessResponse(res, { data: userDetails });
+      }
+
+      const [newUser] = await postgresDatabase.db
+        .insert(usersSchema)
+        .values({ id: randomUUID(), firstName, lastName, email })
+        .returning({
+          id: usersSchema.id,
+          firstName: usersSchema.firstName,
+          lastName: usersSchema.lastName,
+          email: usersSchema.email,
+        });
+
+      const userDetails: OAuthUserDetails = { ...newUser, hasPhoneNumber: false };
+
+      return sendSuccessResponse(res, {
+        statusCode: 201,
+        data: userDetails,
       });
     } catch (error) {
       return sendErrorResponse(res, { error });

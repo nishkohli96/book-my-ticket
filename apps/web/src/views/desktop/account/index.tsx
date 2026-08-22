@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import {
+  Alert,
   Avatar,
   Box,
   Grid,
@@ -129,6 +130,11 @@ export default function AccountPageDesktop({ initialProfile }: AccountPageDeskto
         </Grid>
 
         <Grid size={9}>
+          {initialProfile && !initialProfile.phoneNumber.phone && (
+            <Alert severity="warning" sx={{ mb: 3, borderRadius: '12px' }}>
+              Add a phone number to your account so we can reach you about bookings.
+            </Alert>
+          )}
           <Paper variant="outlined" sx={{ borderRadius: '16px', p: 4 }}>
             <Typography variant="h6" sx={{ fontWeight: 800 }}>
               Profile

@@ -97,3 +97,11 @@ export const editProfileSchema = signUpSchema.pick({
 });
 
 export type EditProfileFormData = z.infer<typeof editProfileSchema>;
+
+export const oauthSignInSchema = signUpSchema.pick({
+  firstName: true,
+  lastName: true,
+  email: true,
+});
+
+export type OAuthSignInData = z.infer<typeof oauthSignInSchema>;

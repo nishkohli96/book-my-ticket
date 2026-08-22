@@ -14,14 +14,23 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import Credentials from 'next-auth/providers/credentials';
-import { loginSchema } from '@book-my-ticket/common';
+import { loginSchema, oauthSignInSchema } from '@book-my-ticket/common';
 import { ENV_CONFIG, apiServicesUrl } from '@/constants/environment';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     GoogleProvider({
       clientId: ENV_CONFIG.google.clientId,
-      clientSecret: ENV_CONFIG.google.secret
+      clientSecret: ENV_CONFIG.google.secret,
+      profile(profile) {
+        return {
+          id: profile.sub,
+          firstName: profile.given_name,
+          lastName: profile.family_name ?? '',
+          email: profile.email,
+          image: profile.picture,
+        };
+      }
     }),
     Credentials({
       credentials: {
@@ -50,15 +59,43 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: 'jwt' },
   pages: { signIn: '/login' },
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider !== 'google') {
+        return true;
+      }
+
+      const parsedUser = oauthSignInSchema.safeParse(user);
+      if (!parsedUser.success) {
+        return false;
+      }
+
+      const response = await fetch(`${apiServicesUrl.user}/auth/oauth`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(parsedUser.data)
+      });
+      if (!response.ok) {
+        return false;
+      }
+
+      const { data } = await response.json();
+      user.id = data.id;
+      user.firstName = data.firstName;
+      user.lastName = data.lastName;
+      user.hasPhoneNumber = data.hasPhoneNumber;
+      return true;
+    },
     jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id;
         token.firstName = user.firstName;
         token.lastName = user.lastName;
+        token.hasPhoneNumber = user.hasPhoneNumber ?? true;
       }
       if (trigger === 'update' && session) {
         token.firstName = session.firstName ?? token.firstName;
         token.lastName = session.lastName ?? token.lastName;
+        token.hasPhoneNumber = session.hasPhoneNumber ?? token.hasPhoneNumber;
       }
       return token;
     },
@@ -67,6 +104,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = token.id as string;
         session.user.firstName = token.firstName as string;
         session.user.lastName = token.lastName as string;
+        session.user.hasPhoneNumber = token.hasPhoneNumber as boolean;
       }
       return session;
     }

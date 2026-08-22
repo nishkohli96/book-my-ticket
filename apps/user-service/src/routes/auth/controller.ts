@@ -32,4 +32,18 @@ authRouter.post(
   }
 );
 
+/**
+ * POST: /api/auth/oauth
+ * Find-or-create a user for an OAuth sign-in (Google).
+ */
+authRouter.post(
+  '/oauth',
+  function oauthSignIn(
+    req: AuthTypes.OAuthSignInRequest,
+    res: Response
+  ) {
+    return authService.findOrCreateOAuthUser(res, req.body);
+  }
+);
+
 export { authRouter };

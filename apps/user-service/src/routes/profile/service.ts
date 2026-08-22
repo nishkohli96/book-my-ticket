@@ -40,10 +40,10 @@ class ProfileService {
       const profileDetails: UserProfileDetails = {
         ...user,
         phoneNumber: {
-          phone: user.phoneNumber.phone,
-          country: user.phoneNumber.country,
-          dialCode: user.phoneNumber.dialCode,
-          phoneNo: user.phoneNumber.phoneNo,
+          phone: user.phoneNumber.phone ?? '',
+          country: user.phoneNumber.country ?? '',
+          dialCode: user.phoneNumber.dialCode ?? '',
+          phoneNo: user.phoneNumber.phoneNo ?? '',
         },
       };
       return sendSuccessResponse(res, { data: profileDetails });
@@ -120,10 +120,10 @@ class ProfileService {
       const profileDetails: UserProfileDetails = {
         ...updatedUser,
         phoneNumber: {
-          phone: updatedUser.phoneNumber.phone,
-          country: updatedUser.phoneNumber.country,
-          dialCode: updatedUser.phoneNumber.dialCode,
-          phoneNo: updatedUser.phoneNumber.phoneNo,
+          phone: updatedUser.phoneNumber.phone ?? '',
+          country: updatedUser.phoneNumber.country ?? '',
+          dialCode: updatedUser.phoneNumber.dialCode ?? '',
+          phoneNo: updatedUser.phoneNumber.phoneNo ?? '',
         },
       };
 

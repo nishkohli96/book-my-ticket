@@ -19,7 +19,7 @@ export default function SignInWithGoogleButton({
       onClick(event);
       return;
     }
-    void signIn('google');
+    void signIn('google', { callbackUrl: '/my-account' });
   };
 
   return (
