@@ -10,14 +10,12 @@ type EditProfileFormProps = {
   formId: string;
   defaultValues: EditProfileFormData;
   onSubmit: (data: EditProfileFormData) => void | Promise<void>;
-  fieldColumnSize?: { xs: number; md?: number };
 };
 
 export default function EditProfileForm({
   formId,
   defaultValues,
   onSubmit,
-  fieldColumnSize = { xs: 12, md: 6 }
 }: EditProfileFormProps) {
   const {
     control,
@@ -38,28 +36,28 @@ export default function EditProfileForm({
       spacing={2.5}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Grid size={fieldColumnSize}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <StyledRHFTextField
           fieldName="firstName"
           control={control}
           required
         />
       </Grid>
-      <Grid size={fieldColumnSize}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <StyledRHFTextField
           fieldName="lastName"
           control={control}
           required
         />
       </Grid>
-      <Grid size={12}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <StyledRHFPhoneInput
           fieldName="phoneNumber"
           control={control}
           required
         />
       </Grid>
-      <Grid size={12}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <StyledRHFTextField
           fieldName="email"
           control={control}

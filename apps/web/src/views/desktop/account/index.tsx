@@ -68,7 +68,7 @@ export default function AccountPageDesktop({ initialProfile }: AccountPageDeskto
   };
 
   return (
-    <Box sx={{ maxWidth: 1200, mx: 'auto', px: 4, py: 5 }}>
+    <Box sx={{ mx: 'auto', px: 4, py: 5 }}>
       <Stack
         direction="row"
         sx={{ mb: 4, alignItems: 'center', justifyContent: 'space-between' }}
@@ -92,15 +92,6 @@ export default function AccountPageDesktop({ initialProfile }: AccountPageDeskto
             Account settings
           </Typography>
         </Stack>
-        <Avatar
-          sx={{
-            background: theme => theme.palette.gradients.brandPrimary,
-            color: 'white',
-            fontWeight: 700,
-          }}
-        >
-          {initials}
-        </Avatar>
       </Stack>
 
       <Grid container spacing={3}>

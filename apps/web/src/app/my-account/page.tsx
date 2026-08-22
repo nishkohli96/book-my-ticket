@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import type { UserProfileDetails } from '@book-my-ticket/common';
 import { auth } from '@/app/api/auth/[...nextauth]/route';
+import { AppBar } from '@/components';
 import { apiServicesUrl } from '@/constants/environment';
 import AccountPageDesktop from '@/views/desktop/account';
 
@@ -25,8 +26,11 @@ export default async function AccountPage() {
   const profile = await fetchUserProfile(session.user.id);
 
   return (
+    <>
+    <AppBar />
     <AccountPageDesktop
       initialProfile={profile}
     />
+    </>
   );
 }

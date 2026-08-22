@@ -108,7 +108,7 @@ export default function AppBar() {
               >
                 <Image
                   className="logo-light"
-                  src="/logo-light.svg"
+                  src="/logo.svg"
                   alt="BookMyTicket"
                   width={logoWidth}
                   height={logoHeight}
