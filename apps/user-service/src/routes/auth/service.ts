@@ -5,6 +5,7 @@ import {
   signUpSchema,
   loginSchema,
   oauthSignInSchema,
+  UserIdentityProvider,
   type SignUpFormData,
   type UserLoginDetails,
   type OAuthUserDetails
@@ -84,7 +85,7 @@ class AuthService {
         await tx.insert(userIdentitiesSchema).values({
           id: randomUUID(),
           userId: user.id,
-          provider: 'credentials',
+          provider: UserIdentityProvider.CREDENTIALS,
         });
 
         return user;
@@ -184,7 +185,7 @@ class AuthService {
       });
     }
 
-    const { firstName, lastName, email, provider, providerAccountId } = parsedBody.data;
+    const { firstName, lastName, email, provider, providerAccountId, avatar } = parsedBody.data;
 
     try {
       const [identity] = await postgresDatabase.db
@@ -208,6 +209,7 @@ class AuthService {
             lastName: usersSchema.lastName,
             email: usersSchema.email,
             phone: usersSchema.phone,
+            avatar: usersSchema.avatar,
           })
           .from(usersSchema)
           .where(eq(usersSchema.id, existingUserId))
@@ -219,6 +221,7 @@ class AuthService {
             lastName: usersSchema.lastName,
             email: usersSchema.email,
             phone: usersSchema.phone,
+            avatar: usersSchema.avatar,
           })
           .from(usersSchema)
           .where(eq(usersSchema.email, email))
@@ -234,12 +237,24 @@ class AuthService {
           });
         }
 
+        /* Keep the stored avatar synced with the provider's latest one. */
+        const currentAvatar = avatar && avatar !== existingUser.avatar
+          ? (
+            await postgresDatabase.db
+              .update(usersSchema)
+              .set({ avatar })
+              .where(eq(usersSchema.id, existingUser.id))
+              .returning({ avatar: usersSchema.avatar })
+          )[0].avatar
+          : existingUser.avatar;
+
         const userDetails: OAuthUserDetails = {
           id: existingUser.id,
           firstName: existingUser.firstName,
           lastName: existingUser.lastName,
           email: existingUser.email,
           hasPhoneNumber: Boolean(existingUser.phone),
+          avatar: currentAvatar,
         };
         return sendSuccessResponse(res, { data: userDetails });
       }
@@ -247,12 +262,19 @@ class AuthService {
       const newUser = await postgresDatabase.db.transaction(async tx => {
         const [user] = await tx
           .insert(usersSchema)
-          .values({ id: randomUUID(), firstName, lastName, email })
+          .values({
+            id: randomUUID(),
+            firstName,
+            lastName,
+            email,
+            avatar,
+          })
           .returning({
             id: usersSchema.id,
             firstName: usersSchema.firstName,
             lastName: usersSchema.lastName,
             email: usersSchema.email,
+            avatar: usersSchema.avatar,
           });
 
         await tx.insert(userIdentitiesSchema).values({

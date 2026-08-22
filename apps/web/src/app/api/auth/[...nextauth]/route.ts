@@ -14,7 +14,7 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import Credentials from 'next-auth/providers/credentials';
-import { loginSchema, oauthSignInSchema } from '@book-my-ticket/common';
+import { loginSchema, oauthSignInSchema, UserIdentityProvider } from '@book-my-ticket/common';
 import { ENV_CONFIG, apiServicesUrl } from '@/constants/environment';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -62,11 +62,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async signIn({ user, account }) {
       if (account?.provider === 'google') {
         const parsedUser = oauthSignInSchema.safeParse({
-          provider: 'google',
+          provider: UserIdentityProvider.GOOGLE,
           providerAccountId: user.id,
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
+          avatar: user.image,
         });
         if (!parsedUser.success) {
           return false;
@@ -86,6 +87,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         user.firstName = data.firstName;
         user.lastName = data.lastName;
         user.hasPhoneNumber = data.hasPhoneNumber;
+        user.image = data.avatar;
       }
 
       /**

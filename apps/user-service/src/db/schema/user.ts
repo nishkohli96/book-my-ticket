@@ -21,7 +21,7 @@ export const usersSchema = pgTable(
     lastName: text('last_name').notNull(),
     email: text('email').notNull(),
     // emailVerified: timestamp('email_verified', { mode: 'date' }),
-    // avatar: text('image'),
+    avatar: text('avatar'),
     /** Null for OAuth-only accounts (e.g. Google sign-in) with no password. */
     passwordHash: text('password_hash'),
     /**

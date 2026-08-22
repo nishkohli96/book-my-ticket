@@ -1,5 +1,15 @@
-import { index, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
+import {
+  index,
+  pgTable,
+  pgEnum,
+  text,
+  timestamp,
+  uniqueIndex
+} from 'drizzle-orm/pg-core';
+import { UserIdentityProvider } from '@book-my-ticket/common';
 import { usersSchema } from './user';
+
+export const identityProviderEnum = pgEnum('identity_provider', UserIdentityProvider);
 
 /**
  * One row per way a user can sign in - a password ('credentials') or an
@@ -15,8 +25,10 @@ export const userIdentitiesSchema = pgTable(
     userId: text('user_id')
       .notNull()
       .references(() => usersSchema.id, { onDelete: 'cascade' }),
-    /** 'credentials' | 'google' | 'apple' | ... */
-    provider: text('provider').notNull(),
+    /** 'credentials' | 'google' | ... */
+    provider: identityProviderEnum('provider')
+      .notNull()
+      .default(UserIdentityProvider.CREDENTIALS),
     /** The provider's own account id (e.g. Google's `sub`). Null for 'credentials'. */
     providerAccountId: text('provider_account_id'),
     createdAt: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),

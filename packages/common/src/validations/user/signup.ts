@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { UserIdentityProvider } from '@/types';
 
 export const userValidation = {
   firstName: { minLength: 2, maxLength: 40 },
@@ -98,7 +99,7 @@ export const editProfileSchema = signUpSchema.pick({
 
 export type EditProfileFormData = z.infer<typeof editProfileSchema>;
 
-export const oauthProviders = ['google', 'apple'] as const;
+export const oauthProviders = [UserIdentityProvider.GOOGLE];
 
 export const oauthSignInSchema = signUpSchema
   .pick({ firstName: true, lastName: true, email: true })
@@ -106,6 +107,8 @@ export const oauthSignInSchema = signUpSchema
     provider: z.enum(oauthProviders),
     /** The provider's own account id (e.g. Google's `sub`). */
     providerAccountId: z.string(),
+    /** Provider's avatar URL (e.g. Google's `picture`), synced on every sign-in. */
+    avatar: z.string().optional(),
   });
 
 export type OAuthSignInData = z.infer<typeof oauthSignInSchema>;

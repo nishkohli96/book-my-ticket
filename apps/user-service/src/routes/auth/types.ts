@@ -1,7 +1,7 @@
 import type {
-	SignUpFormData,
-	LoginFormData,
-	OAuthSignInData
+  SignUpFormData,
+  LoginFormData,
+  OAuthSignInData
 } from '@book-my-ticket/common';
 import { type Request } from 'express';
 

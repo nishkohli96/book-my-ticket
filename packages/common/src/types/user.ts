@@ -7,6 +7,9 @@ export type UserLoginDetails = Pick<
 
 export type UserProfileDetails = EditProfileFormData & { id: string };
 
-export type OAuthUserDetails = UserLoginDetails & { hasPhoneNumber: boolean };
+export type OAuthUserDetails = UserLoginDetails & {
+  hasPhoneNumber: boolean;
+  avatar: string | null;
+};
 
 export type UserSession = { id: string };

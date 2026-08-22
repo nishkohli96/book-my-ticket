@@ -27,10 +27,10 @@ export default async function AccountPage() {
 
   return (
     <>
-    <AppBar />
-    <AccountPageDesktop
-      initialProfile={profile}
-    />
+      <AppBar />
+      <AccountPageDesktop
+        initialProfile={profile}
+      />
     </>
   );
 }
