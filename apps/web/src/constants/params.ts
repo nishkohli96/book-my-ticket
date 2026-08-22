@@ -1,3 +1,3 @@
 export const queryParamNames = {
-	callbackUrl: 'callbackUrl'
-}
+  callbackUrl: 'callbackUrl'
+};

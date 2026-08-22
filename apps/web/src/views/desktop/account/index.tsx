@@ -1,12 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import {
   Avatar,
   Box,
-  CircularProgress,
   Grid,
   List,
   ListItemButton,
@@ -21,12 +20,16 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CreditCardIcon from '@mui/icons-material/CreditCardOutlined';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import type { EditProfileFormData } from '@book-my-ticket/common';
+import type { EditProfileFormData, UserProfileDetails } from '@book-my-ticket/common';
 import { GradientButton, OutlinedButton } from '@/components';
 import { getUserInitials } from '@/utils';
 import EditProfileForm from '@/views/common/edit-profile';
 
 const editProfileFormId = 'edit-profile-form';
+
+type AccountPageDesktopProps = {
+  initialProfile: UserProfileDetails | null;
+};
 
 const navItems = [
   { key: 'profile', label: 'Profile', icon: <PersonOutlineIcon /> },
@@ -35,22 +38,13 @@ const navItems = [
   { key: 'security', label: 'Security', icon: <LockOutlinedIcon /> },
 ] as const;
 
-export default function AccountPageDesktop() {
+export default function AccountPageDesktop({ initialProfile }: AccountPageDesktopProps) {
   const {
     data: session,
     update: updateSession
   } = useSession();
   const [activeTab, setActiveTab] = useState<(typeof navItems)[number]['key']>('profile');
   const initials = getUserInitials(session?.user?.firstName, session?.user?.lastName);
-
-  const [profile, setProfile] = useState<EditProfileFormData | null>(null);
-
-  useEffect(() => {
-    fetch('/api/users/profile')
-      .then(response => response.json())
-      .then(result => setProfile(result.data))
-      .catch(() => toast.error('Failed to load profile'));
-  }, []);
 
   const onSubmit = async (data: EditProfileFormData) => {
     const response = await fetch('/api/users/profile', {
@@ -174,18 +168,18 @@ export default function AccountPageDesktop() {
               </Stack>
             </Stack>
 
-            {profile
+            {initialProfile
               ? (
                 <EditProfileForm
                   formId={editProfileFormId}
-                  defaultValues={profile}
+                  defaultValues={initialProfile}
                   onSubmit={onSubmit}
                 />
               )
               : (
-                <Stack sx={{ alignItems: 'center', py: 4 }}>
-                  <CircularProgress size={28} />
-                </Stack>
+                <Typography color="error.main" sx={{ py: 4 }}>
+                  Failed to load profile. Please refresh the page.
+                </Typography>
               )}
 
             <Stack
@@ -203,7 +197,7 @@ export default function AccountPageDesktop() {
                 <GradientButton
                   type="submit"
                   form={editProfileFormId}
-                  disabled={!profile}
+                  disabled={!initialProfile}
                   sx={{ height: 44, px: 3 }}
                 >
                   Save changes
