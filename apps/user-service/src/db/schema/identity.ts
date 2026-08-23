@@ -1,9 +1,9 @@
 import {
-  index,
   pgTable,
   pgEnum,
   text,
   timestamp,
+  index,
   uniqueIndex
 } from 'drizzle-orm/pg-core';
 import { UserIdentityProvider } from '@book-my-ticket/common';
@@ -36,6 +36,12 @@ export const userIdentitiesSchema = pgTable(
       .defaultNow(),
   },
   table => [
+    /**
+     * For every credentials signup user gets a row like ('credentials', NULL).
+     * The unique index on (provider, providerAccountId) never rejects that, no
+     * matter how many users have it — each NULL counts as its own distinct value
+     * for uniqueness purposes.
+     */
     uniqueIndex('user_identities_provider_account_unique').on(
       table.provider,
       table.providerAccountId

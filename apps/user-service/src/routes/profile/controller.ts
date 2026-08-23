@@ -14,7 +14,7 @@ profileRouter.use(authenticate);
 profileRouter.get(
   '/',
   function getProfile(req: ProfileTypes.GetProfileRequest, res: Response) {
-    return profileService.getProfile(res, req.userId);
+    return profileService.getProfile(res, req.userId as string);
   }
 );
 
@@ -28,7 +28,7 @@ profileRouter.patch(
     req: ProfileTypes.UpdateProfileRequest,
     res: Response
   ) {
-    return profileService.updateProfile(res, req.userId, req.body);
+    return profileService.updateProfile(res, req.userId as string, req.body);
   }
 );
 

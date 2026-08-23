@@ -1,16 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 import { verifyAccessToken, sendErrorResponse } from '@/utils';
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace Express {
-    interface Request {
-      /** Set by `authenticate` after verifying the bearer access token. */
-      userId: string;
-    }
-  }
-}
-
 /**
  * Verifies the `Authorization: Bearer <accessToken>` header against the
  * signed JWT itself - no DB lookup per request, since the access token is

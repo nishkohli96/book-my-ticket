@@ -1,4 +1,10 @@
-import { index, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
+import {
+  pgTable,
+  text,
+  timestamp,
+  index,
+  uniqueIndex
+} from 'drizzle-orm/pg-core';
 import { usersSchema } from './user';
 
 /**
@@ -21,14 +27,18 @@ export const userSessionsSchema = pgTable(
       .notNull()
       .references(() => usersSchema.id, { onDelete: 'cascade' }),
     refreshTokenHash: text('refresh_token_hash').notNull(),
-    refreshTokenExpiresAt: timestamp('refresh_token_expires_at', { mode: 'date' }).notNull(),
+    refreshTokenExpiresAt: timestamp('refresh_token_expires_at', { mode: 'date' })
+      .notNull(),
     createdAt: timestamp('created_at', { mode: 'date' })
       .notNull()
       .defaultNow(),
     lastSeenAt: timestamp('last_seen_at', { mode: 'date' })
       .notNull()
       .defaultNow(),
-    /** Null while active; set when superseded by a newer sign-in, a refresh (rotation), or explicit logout. */
+    /**
+     * Null while active; set when superseded by a newer sign-in,
+     * a refresh (rotation), or explicit logout.
+     */
     revokedAt: timestamp('revoked_at', { mode: 'date' }),
   },
   table => [

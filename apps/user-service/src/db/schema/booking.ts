@@ -21,12 +21,16 @@ export const bookingsSchema = pgTable('bookings', {
   eventId: text('event_id').notNull().references(() => eventsSchema.id, {
     onDelete: 'restrict',
   }),
-  status: bookingStatusEnum('status').notNull().default('confirmed'),
+  status: bookingStatusEnum('status')
+    .notNull()
+    .default('confirmed'),
   subtotal: numeric('subtotal', { precision: 10, scale: 2 }).notNull(),
   serviceFees: numeric('service_fees', { precision: 10, scale: 2 }).notNull(),
   total: numeric('total', { precision: 10, scale: 2 }).notNull(),
   currency: varchar('currency', { length: 3 }).notNull().default('USD'),
-  createdAt: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
+  createdAt: timestamp('created_at', { mode: 'date' })
+    .notNull()
+    .defaultNow(),
   cancelledAt: timestamp('cancelled_at', { mode: 'date' }),
 }, table => [
   uniqueIndex('bookings_booking_code_unique').on(table.bookingCode),

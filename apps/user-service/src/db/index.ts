@@ -13,7 +13,7 @@ class PostgresDatabase {
 
   get db() {
     if (!this.drizzleDb) {
-      throw new Error('Postgres is not connected. Call connectPostgresDB first.');
+      throw new Error('Postgres is not connected. Call connectPostgresDB() first.');
     }
     return this.drizzleDb;
   }

@@ -4,12 +4,12 @@
  */
 
 import {
-  boolean,
   pgTable,
   text,
-  timestamp,
-  uniqueIndex,
   varchar,
+  boolean,
+  timestamp,
+  uniqueIndex
 } from 'drizzle-orm/pg-core';
 import { userValidation } from '@book-my-ticket/common';
 
