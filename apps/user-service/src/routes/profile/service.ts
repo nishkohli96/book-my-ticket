@@ -67,7 +67,12 @@ class ProfileService {
       });
     }
 
-    const { firstName, lastName, email, phoneNumber } = parsedBody.data;
+    const {
+      firstName,
+      lastName,
+      email,
+      phoneNumber
+    } = parsedBody.data;
 
     try {
       const [emailOwner] = await postgresDatabase.db

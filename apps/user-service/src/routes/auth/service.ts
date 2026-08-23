@@ -8,6 +8,7 @@ import {
   UserIdentityProvider,
   type SignUpFormData,
   type UserLoginDetails,
+  type OAuthSignInData,
   type OAuthUserDetails
 } from '@book-my-ticket/common';
 import { postgresDatabase } from '@/db';
@@ -136,8 +137,9 @@ class AuthService {
         .limit(1);
 
       /**
-       * Distinguishing "user doesn't exist" vs "wrong password" is a classic user-enumeration
-       * vulnerability. It lets attackers brute-force which emails are registered.
+       * Distinguishing "user doesn't exist" vs "wrong password" is a classic
+       * user-enumeration vulnerability. It lets attackers brute-force which
+       * emails are registered.
        */
       if (!user?.passwordHash || !(await comparePassword(password, user.passwordHash))) {
         return sendErrorResponse(res, {
@@ -174,7 +176,7 @@ class AuthService {
    * There is no password or phone number at this point for a brand new
    * user - those columns stay null until collected via the edit-profile flow.
    */
-  async findOrCreateOAuthUser(res: Response, body: unknown) {
+  async findOrCreateOAuthUser(res: Response, body: OAuthSignInData) {
     const parsedBody = oauthSignInSchema.safeParse(body);
     if (!parsedBody.success) {
       return sendErrorResponse(res, {
@@ -185,7 +187,14 @@ class AuthService {
       });
     }
 
-    const { firstName, lastName, email, provider, providerAccountId, avatar } = parsedBody.data;
+    const {
+      firstName,
+      lastName,
+      email,
+      provider,
+      providerAccountId,
+      avatar
+    } = parsedBody.data;
 
     try {
       const [identity] = await postgresDatabase.db
@@ -283,11 +292,13 @@ class AuthService {
           provider,
           providerAccountId,
         });
-
         return user;
       });
 
-      const userDetails: OAuthUserDetails = { ...newUser, hasPhoneNumber: false };
+      const userDetails: OAuthUserDetails = {
+        ...newUser,
+        hasPhoneNumber: false
+      };
 
       return sendSuccessResponse(res, {
         statusCode: 201,

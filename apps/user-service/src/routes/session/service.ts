@@ -14,6 +14,11 @@ import {
   hashToken
 } from '@/utils';
 
+type BuildTokenDetails = Omit<UserSession, 'refreshToken'> & {
+  refreshToken: string;
+  refreshTokenHash: string;
+};
+
 function refreshTokenExpiry(): Date {
   const expiresAt = new Date();
   expiresAt.setDate(expiresAt.getDate() + ENV_CONFIG.jwt.refreshTokenExpiryDays);
@@ -23,7 +28,7 @@ function refreshTokenExpiry(): Date {
 function buildTokenPair(
   userId: string,
   sessionId: string
-): Omit<UserSession, 'refreshToken'> & { refreshToken: string; refreshTokenHash: string } {
+): BuildTokenDetails {
   const accessToken = signAccessToken({ userId, sessionId });
   const { exp } = jwt.decode(accessToken) as { exp: number };
   const refreshToken = generateRefreshToken();
@@ -52,7 +57,12 @@ class SessionService {
         await tx
           .update(userSessionsSchema)
           .set({ revokedAt: new Date() })
-          .where(and(eq(userSessionsSchema.userId, userId), isNull(userSessionsSchema.revokedAt)));
+          .where(
+            and(
+              eq(userSessionsSchema.userId, userId),
+              isNull(userSessionsSchema.revokedAt)
+            )
+          );
 
         await tx.insert(userSessionsSchema).values({
           id: sessionId,
@@ -61,6 +71,17 @@ class SessionService {
           refreshTokenExpiresAt: refreshTokenExpiry(),
         });
       });
+
+      /**
+       * For implementing multi-session logins uncomment the below code,
+       * and comment the above code
+       */
+      // await postgresDatabase.db.insert(userSessionsSchema).values({
+      //   id: sessionId,
+      //   userId,
+      //   refreshTokenHash: tokens.refreshTokenHash,
+      //   refreshTokenExpiresAt: refreshTokenExpiry(),
+      // });
 
       const userSession: UserSession = {
         sessionId: tokens.sessionId,
@@ -86,7 +107,10 @@ class SessionService {
       const refreshTokenHash = hashToken(refreshToken);
 
       const [session] = await postgresDatabase.db
-        .select({ id: userSessionsSchema.id, userId: userSessionsSchema.userId })
+        .select({
+          id: userSessionsSchema.id,
+          userId: userSessionsSchema.userId
+        })
         .from(userSessionsSchema)
         .where(
           and(
