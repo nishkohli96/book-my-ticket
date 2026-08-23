@@ -1,6 +1,6 @@
 /**
  * Re-run the below command any time schema (or the DB itself) drifts from src/db/schema/
- * cd apps/user-service && npx drizzle-kit push
+ * cd apps/user-service && npx drizzle-kit push && cd ../../
  */
 
 import {
