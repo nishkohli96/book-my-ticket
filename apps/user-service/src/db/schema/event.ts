@@ -20,7 +20,9 @@ export const eventsSchema = pgTable('events', {
   slug: varchar('slug', { length: 200 }).notNull(),
   name: text('name').notNull(),
   category: eventCategoryEnum('category').notNull(),
-  status: eventStatusEnum('status').notNull().default('onsale'),
+  status: eventStatusEnum('status')
+    .notNull()
+    .default('onsale'),
   venueName: text('venue_name').notNull(),
   venueAddress: text('venue_address'),
   city: varchar('city', { length: 120 }).notNull(),
@@ -29,11 +31,17 @@ export const eventsSchema = pgTable('events', {
   description: text('description'),
   priceMin: numeric('price_min', { precision: 10, scale: 2 }),
   priceMax: numeric('price_max', { precision: 10, scale: 2 }),
-  currency: varchar('currency', { length: 3 }).notNull().default('USD'),
+  currency: varchar('currency', { length: 3 })
+    .notNull()
+    .default('USD'),
   imageUrl: text('image_url'),
-  seatCapacity: integer('seat_capacity').notNull().default(0),
+  seatCapacity: integer('seat_capacity')
+    .notNull()
+    .default(0),
   raw: jsonb('raw'),
-  fetchedAt: timestamp('fetched_at', { mode: 'date' }).notNull().defaultNow(),
+  fetchedAt: timestamp('fetched_at', { mode: 'date' })
+    .notNull()
+    .defaultNow(),
 }, table => [
   uniqueIndex('events_slug_unique').on(table.slug),
   index('events_city_start_date_idx').on(table.city, table.startDate),

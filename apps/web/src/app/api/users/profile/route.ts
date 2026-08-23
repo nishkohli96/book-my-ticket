@@ -11,7 +11,7 @@ export const GET = withErrorHandling(async () => {
   }
 
   const response = await fetch(`${apiServicesUrl.user}/profile`, {
-    headers: { 'x-user-id': session.user.id },
+    headers: { Authorization: `Bearer ${session.accessToken}` },
   });
 
   const data = await response.json();
@@ -52,7 +52,7 @@ export const PATCH = withErrorHandling(async (request: NextRequest) => {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      'x-user-id': session.user.id,
+      Authorization: `Bearer ${session.accessToken}`,
     },
     body: JSON.stringify(parsedBody.data),
   });

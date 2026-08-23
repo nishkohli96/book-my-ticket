@@ -1,26 +1,11 @@
-import { Router, type Request, type Response } from 'express';
-import { sendErrorResponse } from '@/utils';
+import { Router, type Response } from 'express';
+import { authenticate } from '@/middleware';
 import profileService from './service';
 import type * as ProfileTypes from './types';
 
 const profileRouter = Router();
 
-/**
- * Both routes trust the `x-user-id` header, set only by the Next.js BFF
- * after it verifies the caller's NextAuth session - neither is meant to
- * be called directly by untrusted clients.
- */
-function requireUserId(req: Pick<Request, 'header'>, res: Response): string | undefined {
-  const userId = req.header('x-user-id');
-  if (!userId) {
-    sendErrorResponse(res, {
-      statusCode: 401,
-      message: 'Missing user identity',
-      error: 'x-user-id header is required',
-    });
-  }
-  return userId;
-}
+profileRouter.use(authenticate);
 
 /**
  * GET: /api/user/profile
@@ -28,12 +13,8 @@ function requireUserId(req: Pick<Request, 'header'>, res: Response): string | un
  */
 profileRouter.get(
   '/',
-  function getProfile(req: Request, res: Response) {
-    const userId = requireUserId(req, res);
-    if (!userId) {
-      return;
-    }
-    return profileService.getProfile(res, userId);
+  function getProfile(req: ProfileTypes.GetProfileRequest, res: Response) {
+    return profileService.getProfile(res, req.userId);
   }
 );
 
@@ -47,11 +28,7 @@ profileRouter.patch(
     req: ProfileTypes.UpdateProfileRequest,
     res: Response
   ) {
-    const userId = requireUserId(req, res);
-    if (!userId) {
-      return;
-    }
-    return profileService.updateProfile(res, userId, req.body);
+    return profileService.updateProfile(res, req.userId, req.body);
   }
 );
 

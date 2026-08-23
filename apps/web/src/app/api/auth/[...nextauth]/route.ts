@@ -92,9 +92,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       /**
        * Single-active-session enforcement: every sign-in (any provider)
-       * revokes the user's prior session and creates a new one. The
-       * session's id rides in the JWT as `sessionId` and gets checked
-       * against user-service on every subsequent request in `jwt` below.
+       * revokes the user's prior session and mints a fresh access +
+       * refresh token pair. The access token is what BFF routes send to
+       * user-service as `Authorization: Bearer` - the refresh token is
+       * only ever used here in `jwt` below to get a new pair once the
+       * access token expires.
        */
       const sessionResponse = await fetch(`${apiServicesUrl.user}/sessions`, {
         method: 'POST',
@@ -106,7 +108,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
 
       const { data: session } = await sessionResponse.json();
-      user.sessionId = session.id;
+      user.sessionId = session.sessionId;
+      user.accessToken = session.accessToken;
+      user.accessTokenExpiresAt = session.accessTokenExpiresAt;
+      user.refreshToken = session.refreshToken;
       return true;
     },
     async jwt({ token, user, trigger, session }) {
@@ -115,13 +120,25 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.firstName = user.firstName;
         token.lastName = user.lastName;
         token.hasPhoneNumber = user.hasPhoneNumber ?? true;
-        token.sessionId = user.sessionId;
-      } else if (token.sessionId) {
-        const response = await fetch(`${apiServicesUrl.user}/sessions/${token.sessionId as string}`);
-        const { data } = await response.json();
-        if (!data?.active) {
+        token.sessionId = user.sessionId as string;
+        token.accessToken = user.accessToken as string;
+        token.accessTokenExpiresAt = user.accessTokenExpiresAt as number;
+        token.refreshToken = user.refreshToken as string;
+      } else if (Date.now() >= (token.accessTokenExpiresAt as number)) {
+        const response = await fetch(`${apiServicesUrl.user}/sessions/refresh`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ refreshToken: token.refreshToken })
+        });
+        if (!response.ok) {
           return null;
         }
+
+        const { data } = await response.json();
+        token.sessionId = data.sessionId;
+        token.accessToken = data.accessToken;
+        token.accessTokenExpiresAt = data.accessTokenExpiresAt;
+        token.refreshToken = data.refreshToken;
       }
       if (trigger === 'update' && session) {
         token.firstName = session.firstName ?? token.firstName;
@@ -137,6 +154,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.lastName = token.lastName as string;
         session.user.hasPhoneNumber = token.hasPhoneNumber as boolean;
       }
+      session.accessToken = token.accessToken as string;
       return session;
     }
   },

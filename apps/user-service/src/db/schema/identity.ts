@@ -31,7 +31,9 @@ export const userIdentitiesSchema = pgTable(
       .default(UserIdentityProvider.CREDENTIALS),
     /** The provider's own account id (e.g. Google's `sub`). Null for 'credentials'. */
     providerAccountId: text('provider_account_id'),
-    createdAt: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
+    createdAt: timestamp('created_at', { mode: 'date' })
+      .notNull()
+      .defaultNow(),
   },
   table => [
     uniqueIndex('user_identities_provider_account_unique').on(

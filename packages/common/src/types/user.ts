@@ -12,4 +12,10 @@ export type OAuthUserDetails = UserLoginDetails & {
   avatar: string | null;
 };
 
-export type UserSession = { id: string };
+export type UserSession = {
+  sessionId: string;
+  accessToken: string;
+  /** Short-lived access token's own expiry, as an epoch ms timestamp. */
+  accessTokenExpiresAt: number;
+  refreshToken: string;
+};

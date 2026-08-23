@@ -46,8 +46,12 @@ export const usersSchema = pgTable(
       length: userValidation.phoneNumber.maxLength,
     }),
     /** Soft-delete flag - set false instead of deleting the row. */
-    isActive: boolean('is_active').notNull().default(true),
-    createdAt: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
+    isActive: boolean('is_active')
+      .notNull()
+      .default(true),
+    createdAt: timestamp('created_at', { mode: 'date' })
+      .notNull()
+      .defaultNow(),
     updatedAt: timestamp('updated_at', { mode: 'date' })
       .notNull()
       .defaultNow()

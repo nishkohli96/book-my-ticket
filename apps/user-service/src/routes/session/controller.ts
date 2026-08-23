@@ -24,13 +24,17 @@ sessionRouter.post(
 );
 
 /**
- * GET: /api/user/sessions/:id
- * Check whether a session is still active (not superseded by a newer sign-in).
+ * POST: /api/user/sessions/refresh
+ * Trade a valid refresh token for a new access + refresh token pair.
+ * Rotates the refresh token - the one just used is revoked immediately.
  */
-sessionRouter.get(
-  '/:id',
-  function getSessionStatus(req, res: Response) {
-    return sessionService.isSessionActive(res, req.params.id);
+sessionRouter.post(
+  '/refresh',
+  function refreshSession(
+    req: SessionTypes.RefreshSessionRequest,
+    res: Response
+  ) {
+    return sessionService.refreshSession(res, req.body.refreshToken);
   }
 );
 
