@@ -6,7 +6,7 @@ export default function EventCard() {
       sx={{
         display: { xs: 'none', md: 'block' },
         width: '100%',
-        maxWidth: 420,
+        maxWidth: 400,
         borderRadius: 5,
         overflow: 'hidden',
         backgroundColor: 'var(--mui-palette-background-paper)',
