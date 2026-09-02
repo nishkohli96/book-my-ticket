@@ -28,16 +28,14 @@ export default function Features() {
   return (
     <Grid
       container
-      spacing={{ md: 2, lg: 3 }}
+      spacing={{ xs: 2, lg: 3 }}
       sx={{
-        px: { md: 8, lg: 12 },
-        pb: { md: 8, lg: 10 },
-        pt: { md: 2, lg: 3 },
+        pt: { xs: 2, sm: 4, md: 8 },
         backgroundColor: 'var(--mui-palette-background-default)'
       }}
     >
       {features.map((feature, index) => (
-        <Grid key={index} size={4}>
+        <Grid key={index} size={{ xs: 12, md: 4 }}>
           <Paper
             elevation={0}
             sx={{
@@ -70,7 +68,7 @@ export default function Features() {
             </Box>
             <PrimaryText
               sx={{
-                mb: 0.75,
+                mb: 1,
                 fontWeight: 800,
                 fontSize: 16,
                 lineHeight: 1.25
@@ -80,7 +78,6 @@ export default function Features() {
             </PrimaryText>
             <DisabledText
               sx={{
-                maxWidth: 320,
                 fontSize: 14,
                 lineHeight: 1.55
               }}

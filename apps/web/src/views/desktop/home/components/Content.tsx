@@ -14,8 +14,6 @@ export default function Content() {
         display: 'flex',
         alignItems: 'center',
         overflow: 'hidden',
-        px: { xs: 4, lg: 6 },
-        py: { xs: 4, lg: 6 },
         background: `
           radial-gradient(circle at 82% 18%, rgba(219, 39, 119, 0.14), transparent 34%),
           radial-gradient(circle at 58% 30%, rgba(29, 78, 216, 0.10), transparent 28%),
@@ -30,7 +28,6 @@ export default function Content() {
         <Grid size={12} sx={{ mb: 3 }}>
           <Box
             sx={{
-              alignSelf: 'flex-start',
               display: 'inline-flex',
               alignItems: 'center',
               gap: 1,
