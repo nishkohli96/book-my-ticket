@@ -13,12 +13,7 @@ export default function Content() {
         minHeight: { xs: 'calc(100vh - 72px)', sm: '100%' },
         display: 'flex',
         alignItems: 'center',
-        overflow: 'hidden',
-        background: `
-          radial-gradient(circle at 82% 18%, rgba(219, 39, 119, 0.14), transparent 34%),
-          radial-gradient(circle at 58% 30%, rgba(29, 78, 216, 0.10), transparent 28%),
-          var(--mui-palette-background-default)
-        `,
+        overflow: 'hidden'
       }}
     >
       <Grid
