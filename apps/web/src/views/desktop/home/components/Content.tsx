@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { Box, Stack, Typography } from '@mui/material';
 import { SecondaryText, GradientButton, OutlinedButton } from '@/components';
+import EventCard from './EventCard';
 
 export default function Content() {
   return (
@@ -13,8 +14,8 @@ export default function Content() {
         display: 'flex',
         alignItems: 'center',
         overflow: 'hidden',
-        px: { md: 4, lg: 12 },
-        py: { md: 6, lg: 10 },
+        px: { xs: 4, md: 4, lg: 12 },
+        py: { xs: 4, md: 6, lg: 10 },
         background: `
           radial-gradient(circle at 82% 18%, rgba(219, 39, 119, 0.14), transparent 34%),
           radial-gradient(circle at 58% 30%, rgba(29, 78, 216, 0.10), transparent 28%),
@@ -45,6 +46,7 @@ export default function Content() {
               color: 'var(--mui-palette-primary-main)',
               fontWeight: 800,
               fontSize: 12,
+              borderRadius: 2,
             }}
           >
             <Box
@@ -63,7 +65,7 @@ export default function Content() {
             sx={{
               maxWidth: 560,
               color: 'var(--mui-palette-text-primary)',
-              fontSize: { md: 56, lg: 68 },
+              fontSize: { xs: 40, sm: 48, md: 56, lg: 68 },
               fontWeight: 800,
               lineHeight: 0.98,
               letterSpacing: 0,
@@ -97,7 +99,10 @@ export default function Content() {
             hold them against a countdown, and get tickets to your phone in
             seconds.
           </SecondaryText>
-          <Stack direction="row" spacing={2}>
+          <Stack
+            direction={{ xs: 'column', md: 'row' }}
+            spacing={2}
+          >
             <GradientButton
               sx={{ px: 3.5 }}
               endIcon={(
@@ -117,80 +122,7 @@ export default function Content() {
             </OutlinedButton>
           </Stack>
         </Stack>
-        <Box
-          sx={{
-            justifySelf: { md: 'center', lg: 'end' },
-            width: { md: 420, lg: 420 },
-            maxWidth: '100%',
-            borderRadius: 5,
-            overflow: 'hidden',
-            backgroundColor: 'var(--mui-palette-background-paper)',
-            boxShadow: '0 28px 70px rgba(15, 23, 42, 0.18)',
-            border: '1px solid var(--mui-palette-divider)',
-          }}
-        >
-          <Box
-            sx={{
-              height: 190,
-              background: theme => theme.palette.gradients.cardConcert,
-              position: 'relative',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'common.white',
-            }}
-          >
-            <Box
-              sx={{
-                position: 'absolute',
-                top: 16,
-                left: 16,
-                px: 1.25,
-                py: 0.5,
-                borderRadius: 999,
-                backgroundColor: 'rgba(15, 23, 42, 0.35)',
-                fontSize: 12,
-                fontWeight: 700,
-              }}
-            >
-              Concert · Tonight
-            </Box>
-            <Typography sx={{ fontWeight: 800, opacity: 0.88 }}>
-              EVENT ARTWORK
-            </Typography>
-          </Box>
-          <Stack spacing={1.25} sx={{ p: 2.5 }}>
-            <Typography
-              variant="caption"
-              sx={{
-                color: 'var(--mui-palette-primary-main)',
-                fontWeight: 800,
-                letterSpacing: 0.6,
-              }}
-            >
-              SAT · MAR 15 · 8:00 PM
-            </Typography>
-            <Typography variant="h6" sx={{ fontWeight: 800 }}>
-              Midnight Echo — Arena Tour
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Barclays Center · Brooklyn
-            </Typography>
-            <Stack direction="row" spacing={0.75} sx={{ pt: 0.5 }}>
-              {['#4ADE80', '#60A5FA', '#FBBF24', '#334155', '#DB2777'].map(color => (
-                <Box
-                  key={color}
-                  sx={{
-                    height: 8,
-                    flex: 1,
-                    borderRadius: 999,
-                    backgroundColor: color,
-                  }}
-                />
-              ))}
-            </Stack>
-          </Stack>
-        </Box>
+        <EventCard />
       </Box>
     </Box>
   );
