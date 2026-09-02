@@ -10,12 +10,12 @@ export default function Content() {
     <Box
       component="section"
       sx={{
-        minHeight: 'calc(100vh - 72px)',
+        minHeight: { xs: '100%', md: 'calc(100vh - 72px)' },
         display: 'flex',
         alignItems: 'center',
         overflow: 'hidden',
-        px: { xs: 4, md: 4, lg: 12 },
-        py: { xs: 4, md: 6, lg: 10 },
+        px: { xs: 4, },//md: 4, lg: 12 },
+        py: { xs: 4, },//md: 6, lg: 10 },
         background: `
           radial-gradient(circle at 82% 18%, rgba(219, 39, 119, 0.14), transparent 34%),
           radial-gradient(circle at 58% 30%, rgba(29, 78, 216, 0.10), transparent 28%),

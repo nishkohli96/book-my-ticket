@@ -4,6 +4,7 @@ export default function EventCard() {
   return (
     <Box
       sx={{
+				display: { xs: 'none', md: 'block' },
         justifySelf: { md: 'center', lg: 'end' },
         width: { md: 420, lg: 420 },
         maxWidth: '100%',
