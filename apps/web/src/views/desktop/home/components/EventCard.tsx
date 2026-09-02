@@ -4,10 +4,9 @@ export default function EventCard() {
   return (
     <Box
       sx={{
-				display: { xs: 'none', md: 'block' },
-        justifySelf: { md: 'center', lg: 'end' },
-        width: { md: 420, lg: 420 },
-        maxWidth: '100%',
+        display: { xs: 'none', md: 'block' },
+        width: '100%',
+        maxWidth: 420,
         borderRadius: 5,
         overflow: 'hidden',
         backgroundColor: 'var(--mui-palette-background-paper)',
