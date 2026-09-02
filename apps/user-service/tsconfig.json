@@ -14,6 +14,16 @@
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"],
+  /**
+   * Without this, ts-node lazily loads only files reached via the
+   * require/import graph from src/index.ts - ambient .d.ts files like
+   * src/types/express.d.ts are never imported anywhere by design, so
+   * ts-node's language service never sees them, even though plain `tsc`
+   * (which builds its program from the "include" glob above) does.
+   */
+  "ts-node": {
+    "files": true
+  },
 	"tsc-alias": {
     "verbose": false,
     "resolveFullPaths": true,
