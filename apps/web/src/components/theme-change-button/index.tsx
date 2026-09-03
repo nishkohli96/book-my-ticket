@@ -13,7 +13,10 @@ const ThemeChangeButton = () => {
 
   return (
     <Tooltip title={toolTip}>
-      <IconButton onClick={toggleTheme}>
+      <IconButton
+        onClick={toggleTheme}
+        sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
+      >
         {isDarkTheme ? <DarkModeIcon /> : <LightModeIcon color="warning" />}
       </IconButton>
     </Tooltip>

@@ -24,7 +24,7 @@ export default function LinkText({ href, text }: LinkTextProps) {
           fontWeight: 600,
           lineHeight: 1,
           whiteSpace: 'nowrap',
-          fontSize: { xs: 16, md: 14, lg: 16 },
+          fontSize: { xs: 14, md: 16 },
           color: theme => theme.palette.text.secondary,
           '&:hover': {
             color: 'primary.main'

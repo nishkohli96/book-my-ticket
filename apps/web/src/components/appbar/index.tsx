@@ -28,9 +28,9 @@ const links = [
   { href: '/comedy', text: 'Comedy' },
 ];
 
-/* Natural (lg+) logo size — shrunk responsively at md via sx below. */
-const logoWidth = 270;
-const logoHeight = 54;
+/* Intrinsic SVG dimensions (logo.svg / logo-dark.svg viewBox) - real aspect ratio ~4.03:1. */
+const logoWidth = 290;
+const logoHeight = 72;
 
 export default function AppBar() {
   const router = useRouter();
@@ -83,8 +83,9 @@ export default function AppBar() {
               <Box
                 sx={{
                   position: 'relative',
-                  height: { xs: 36, md: 32, lg: logoHeight },
-                  width: { xs: 180, md: 160, lg: logoWidth },
+                  height: { xs: 36, md: 44, lg: 54 },
+                  aspectRatio: `${logoWidth} / ${logoHeight}`,
+                  width: 'auto',
                   '.logo-light, .logo-dark': {
                     position: 'absolute',
                     inset: 0,
@@ -144,16 +145,20 @@ export default function AppBar() {
             }}
           >
             {links.map(link => (
-              <LinkText key={link.href} href={link.href} text={link.text} />
+              <LinkText
+                key={link.href}
+                href={link.href}
+                text={link.text}
+              />
             ))}
           </Box>
           <Box sx={{ flexGrow: { xs: 1, sm: 0 } }} />
           <Box
             sx={{
               display: 'flex',
+              justifyContent: 'flex-end',
               alignItems: 'center',
               gap: { xs: 1, md: 1, lg: 2 },
-              flexShrink: 0,
             }}
           >
             {status === 'loading' && <Avatar sx={{ visibility: 'hidden' }} />}
@@ -198,7 +203,11 @@ export default function AppBar() {
                   component={Link}
                   href="/login"
                   variant="text"
-                  sx={{ fontWeight: 700, px: { xs: 1, lg: 2 } }}
+                  sx={{
+                    fontSize: { xs: 14, md: 16 },
+                    fontWeight: 700,
+                    px: { xs: 1, lg: 2 }
+                  }}
                   color="primary"
                 >
                   Log in
@@ -207,9 +216,9 @@ export default function AppBar() {
                   href="/signup"
                   sx={{
                     borderRadius: '12px',
-                    height: { xs: 36, md: 48 },
+                    height: { xs: 36, md: 40, lg: 45 },
                     px: { xs: 1.5, md: 2, lg: 3.75 },
-                    fontSize: { xs: 13, md: 14 },
+                    fontSize: { xs: 14, md: 16 }
                   }}
                   LinkComponent={Link}
                 >
