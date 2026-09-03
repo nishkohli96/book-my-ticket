@@ -152,7 +152,7 @@ export default function AppBar() {
               />
             ))}
           </Box>
-          <Box sx={{ flexGrow: { xs: 1, sm: 0 } }} />
+          <Box sx={{ flexGrow: { xs: 1, md: 0 } }} />
           <Box
             sx={{
               display: 'flex',
