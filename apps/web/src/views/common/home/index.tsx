@@ -13,8 +13,8 @@ export default function HomePageDesktop() {
           pb: { xs: 6, lg: 8 },
         }}
       >
-      <Content />
-      <Features />
+        <Content />
+        <Features />
       </Box>
     </>
   );

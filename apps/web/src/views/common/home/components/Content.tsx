@@ -115,7 +115,10 @@ export default function Content() {
           </Grid>
           <Grid
             size={{ xs: 12, md: 5 }}
-            sx={{ display: 'flex', justifyContent: 'flex-end' }}
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end'
+            }}
           >
             <EventCard />
           </Grid>
