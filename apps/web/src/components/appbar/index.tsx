@@ -51,7 +51,7 @@ export default function AppBar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+    <Box sx={{ flexGrow: 1, display: 'flex' }}>
       <MuiAppBar
         position="static"
         color="transparent"
@@ -136,7 +136,7 @@ export default function AppBar() {
           </Box>
           <Box
             sx={{
-              display: 'flex',
+              display: { xs: 'none', md: 'flex' },
               alignItems: 'center',
               gap: { xs: 2, md: 1.5, lg: 4 },
               flexGrow: 1,
@@ -147,6 +147,7 @@ export default function AppBar() {
               <LinkText key={link.href} href={link.href} text={link.text} />
             ))}
           </Box>
+          <Box sx={{ flexGrow: { xs: 1, sm: 0 } }} />
           <Box
             sx={{
               display: 'flex',
@@ -197,14 +198,19 @@ export default function AppBar() {
                   component={Link}
                   href="/login"
                   variant="text"
-                  sx={{ fontWeight: 700, px: { md: 1, lg: 2 } }}
+                  sx={{ fontWeight: 700, px: { xs: 1, lg: 2 } }}
                   color="primary"
                 >
                   Log in
                 </Button>
                 <GradientButton
                   href="/signup"
-                  sx={{ borderRadius: '12px', px: { md: 2, lg: 3.75 } }}
+                  sx={{
+                    borderRadius: '12px',
+                    height: { xs: 36, md: 48 },
+                    px: { xs: 1.5, md: 2, lg: 3.75 },
+                    fontSize: { xs: 13, md: 14 },
+                  }}
                   LinkComponent={Link}
                 >
                   Sign Up

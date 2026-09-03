@@ -10,7 +10,6 @@ export default function Content() {
     <Box
       component="section"
       sx={{
-        minHeight: { xs: 'calc(100vh - 72px)', sm: '100%' },
         display: 'flex',
         alignItems: 'center',
         overflow: 'hidden'
