@@ -1,7 +1,7 @@
 'use client';
 
 import { AppLink } from '@/components';
-import { DesktopAuthShell } from '@/views/common/auth-shell';
+import DesktopAuthShell from '@/views/desktop/auth-shell';
 import SignUpForm from '@/views/common/signup';
 
 export default function SignUpPageDesktop() {

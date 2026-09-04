@@ -1,3 +1,8 @@
+/**
+ * Common layout for authentication pages on desktop.
+ * Primary gradient on the left, form on the right.
+ */
+
 'use client';
 
 import { Box, Stack, Typography } from '@mui/material';
