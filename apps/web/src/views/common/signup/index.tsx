@@ -68,14 +68,14 @@ export default function SignUpForm() {
       </Divider>
 
       <Grid container spacing={2}>
-        <Grid size={{ xs: 12, md: 6 }}>
+        <Grid size={{ xs: 12, lg: 6 }}>
           <StyledRHFTextField
             fieldName="firstName"
             control={control}
             required
           />
         </Grid>
-        <Grid size={{ xs: 12, md: 6 }}>
+        <Grid size={{ xs: 12, lg: 6 }}>
           <StyledRHFTextField
             fieldName="lastName"
             control={control}
