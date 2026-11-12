@@ -170,6 +170,7 @@ export default function AppBar() {
                     background: theme => theme.palette.gradients.brandPrimary,
                     color: 'white',
                     fontWeight: 700,
+                    fontSize: 14,
                     cursor: 'pointer',
                   }}
                 >
@@ -181,6 +182,14 @@ export default function AppBar() {
                   onClose={closeUserMenu}
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                   transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                  slotProps={{
+                    paper: {
+                      sx: {
+                        borderRadius: '12px',
+                        boxShadow: theme => theme.shadows[3],
+                      }
+                    }
+                  }}
                 >
                   <MenuItem onClick={navigateToMyAccount}>
                     <ListItemIcon>

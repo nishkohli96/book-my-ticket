@@ -1,11 +1,15 @@
 'use client';
 
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import { SecondaryText, GradientButton, OutlinedButton } from '@/components';
 import EventCard from './EventCard';
 
 export default function Content() {
+  const { status } = useSession();
+  const isAuthenticated = status === 'authenticated';
+
   return (
     <Box
       component="section"
@@ -92,23 +96,44 @@ export default function Content() {
                 direction={{ xs: 'column', md: 'row' }}
                 spacing={2}
               >
-                <GradientButton
-                  sx={{ px: 3.5 }}
-                  endIcon={(
-                    <Image
-                      src="/icons/right-arrow.svg"
-                      alt=""
-                      aria-hidden
-                      width={18}
-                      height={18}
-                    />
+                {isAuthenticated
+                  ? (
+                    <GradientButton
+                      sx={{ px: 3.5 }}
+                      endIcon={(
+                        <Image
+                          src="/icons/right-arrow.svg"
+                          alt=""
+                          aria-hidden
+                          width={18}
+                          height={18}
+                        />
+                      )}
+                    >
+                      Browse events
+                    </GradientButton>
+                  )
+                  : (
+                    <>
+                      <GradientButton
+                        sx={{ px: 3.5 }}
+                        endIcon={(
+                          <Image
+                            src="/icons/right-arrow.svg"
+                            alt=""
+                            aria-hidden
+                            width={18}
+                            height={18}
+                          />
+                        )}
+                      >
+                        Sign up free
+                      </GradientButton>
+                      <OutlinedButton sx={{ px: 3.5 }}>
+                        Browse as guest
+                      </OutlinedButton>
+                    </>
                   )}
-                >
-                  Sign up free
-                </GradientButton>
-                <OutlinedButton sx={{ px: 3.5 }}>
-                  Browse as guest
-                </OutlinedButton>
               </Stack>
             </Stack>
           </Grid>

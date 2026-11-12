@@ -40,7 +40,9 @@ const navItems = [
   { key: 'security', label: 'Security', icon: <LockOutlinedIcon /> },
 ] as const;
 
-export default function AccountPageDesktop({ initialProfile }: AccountPageDesktopProps) {
+export default function AccountPageDesktop({
+  initialProfile
+}: AccountPageDesktopProps) {
   const {
     data: session,
     update: updateSession
