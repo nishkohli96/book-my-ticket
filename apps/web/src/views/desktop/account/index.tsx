@@ -71,7 +71,7 @@ export default function AccountPageDesktop({
   };
 
   return (
-    <Box sx={{ mx: 'auto', px: 4, py: 5 }}>
+    <Box sx={{ mx: 'auto', px: { xs: 2, md: 4 }, py: { xs: 3, md: 5 } }}>
       <Stack
         direction="row"
         sx={{ mb: 4, alignItems: 'center', justifyContent: 'space-between' }}
@@ -98,7 +98,7 @@ export default function AccountPageDesktop({
       </Stack>
 
       <Grid container spacing={3}>
-        <Grid size={3}>
+        <Grid size={{ xs: 12, md: 3 }}>
           <Paper variant="outlined" sx={{ borderRadius: '16px', p: 1.5 }}>
             <List disablePadding>
               {navItems.map(item => (
@@ -131,13 +131,13 @@ export default function AccountPageDesktop({
           </Paper>
         </Grid>
 
-        <Grid size={9}>
+        <Grid size={{ xs: 12, md: 9 }}>
           {initialProfile && !initialProfile.phoneNumber.phone && (
             <Alert severity="warning" sx={{ mb: 3, borderRadius: '12px' }}>
               Add a phone number to your account so we can reach you about bookings.
             </Alert>
           )}
-          <Paper variant="outlined" sx={{ borderRadius: '16px', p: 4 }}>
+          <Paper variant="outlined" sx={{ borderRadius: '16px', p: { xs: 2.5, md: 4 } }}>
             <Typography variant="h6" sx={{ fontWeight: 800 }}>
               Profile
             </Typography>
@@ -189,7 +189,7 @@ export default function AccountPageDesktop({
               mt: 3,
               borderRadius: '16px',
               borderColor: 'error.main',
-              p: 4,
+              p: { xs: 2.5, md: 4 },
             }}
           >
             <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
@@ -199,8 +199,9 @@ export default function AccountPageDesktop({
               </Typography>
             </Stack>
             <Stack
-              direction="row"
-              sx={{ mt: 2, alignItems: 'center', justifyContent: 'space-between' }}
+              direction={{ xs: 'column', sm: 'row' }}
+              spacing={2}
+              sx={{ mt: 2, alignItems: { sm: 'center' }, justifyContent: 'space-between' }}
             >
               <Stack spacing={0.25}>
                 <Typography sx={{ fontWeight: 700 }}>

@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import { SecondaryText, GradientButton, OutlinedButton } from '@/components';
@@ -99,6 +100,8 @@ export default function Content() {
                 {isAuthenticated
                   ? (
                     <GradientButton
+                      href="/events"
+                      LinkComponent={Link}
                       sx={{ px: 3.5 }}
                       endIcon={(
                         <Image
@@ -116,6 +119,8 @@ export default function Content() {
                   : (
                     <>
                       <GradientButton
+                        href="/signup"
+                        LinkComponent={Link}
                         sx={{ px: 3.5 }}
                         endIcon={(
                           <Image
@@ -129,7 +134,11 @@ export default function Content() {
                       >
                         Sign up free
                       </GradientButton>
-                      <OutlinedButton sx={{ px: 3.5 }}>
+                      <OutlinedButton
+                        href="/events"
+                        LinkComponent={Link}
+                        sx={{ px: 3.5 }}
+                      >
                         Browse as guest
                       </OutlinedButton>
                     </>

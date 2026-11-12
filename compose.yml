@@ -28,6 +28,8 @@ services:
       - GATEWAY_URL=http://traefik
     depends_on:
       - user-service
+      - event-service
+      - booking-service
 
   user-service:
     build:
@@ -37,10 +39,37 @@ services:
       - apps/user-service/.env
     labels:
       - 'traefik.enable=true'
-      # Only service behind the gateway today, so a plain /api prefix is
-      # enough - once a second service exists, split into more specific
-      # prefixes (e.g. /api/users, /api/bookings) with per-router priority.
-      - 'traefik.http.routers.user-service.rule=PathPrefix(`/api`)'
+      # Each service owns one public prefix; the gateway forwards nothing else.
+      - 'traefik.http.routers.user-service.rule=PathPrefix(`/api/user`)'
       - 'traefik.http.services.user-service.loadbalancer.server.port=8001'
     # No "expose"/"ports" - only traefik reaches this container; nothing
     # outside the compose network (including the host) can hit it directly.
+
+  event-service:
+    build:
+      context: .
+      dockerfile: apps/event-service/Dockerfile
+    env_file:
+      - apps/event-service/.env
+    labels:
+      - 'traefik.enable=true'
+      # Only /api/event is public. The /internal/seats routes booking-service
+      # calls are reachable on the compose network but never through the gateway.
+      - 'traefik.http.routers.event-service.rule=PathPrefix(`/api/event`)'
+      - 'traefik.http.services.event-service.loadbalancer.server.port=8002'
+
+  booking-service:
+    build:
+      context: .
+      dockerfile: apps/booking-service/Dockerfile
+    env_file:
+      - apps/booking-service/.env
+    environment:
+      # Talks to event-service directly by service name, not via the gateway.
+      - EVENT_SERVICE_URL=http://event-service:8002
+    depends_on:
+      - event-service
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.booking-service.rule=PathPrefix(`/api/booking`)'
+      - 'traefik.http.services.booking-service.loadbalancer.server.port=8003'

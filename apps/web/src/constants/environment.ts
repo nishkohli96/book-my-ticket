@@ -10,5 +10,7 @@ export const ENV_CONFIG = Object.freeze({
 });
 
 export const apiServicesUrl = Object.freeze({
-  user: `${ENV_CONFIG.apiUrl}/api/user`
+  user: `${ENV_CONFIG.apiUrl}/api/user`,
+  event: `${ENV_CONFIG.apiUrl}/api/event`,
+  booking: `${ENV_CONFIG.apiUrl}/api/booking`
 });

@@ -26,6 +26,8 @@ services:
       - CI=true
     depends_on:
       - user-service
+      - event-service
+      - booking-service
     volumes:
       # Bind-mount source for live reload; anonymous volumes on
       # node_modules/dist so the image's Linux-built deps and build
@@ -45,7 +47,7 @@ services:
       - apps/user-service/.env
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.user-service.rule=PathPrefix(`/api`)'
+      - 'traefik.http.routers.user-service.rule=PathPrefix(`/api/user`)'
       - 'traefik.http.services.user-service.loadbalancer.server.port=8001'
     environment:
       - CI=true
@@ -56,3 +58,50 @@ services:
       - /app/apps/user-service/dist
       - /app/packages/common/node_modules
       - /app/packages/common/dist
+
+  event-service:
+    build:
+      context: .
+      dockerfile: apps/event-service/Dockerfile.dev
+    env_file:
+      - apps/event-service/.env
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.event-service.rule=PathPrefix(`/api/event`)'
+      - 'traefik.http.services.event-service.loadbalancer.server.port=8002'
+    environment:
+      - CI=true
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/apps/event-service/node_modules
+      - /app/apps/event-service/dist
+      - /app/packages/common/node_modules
+      - /app/packages/common/dist
+      - /app/packages/service-kit/node_modules
+      - /app/packages/service-kit/dist
+
+  booking-service:
+    build:
+      context: .
+      dockerfile: apps/booking-service/Dockerfile.dev
+    env_file:
+      - apps/booking-service/.env
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.booking-service.rule=PathPrefix(`/api/booking`)'
+      - 'traefik.http.services.booking-service.loadbalancer.server.port=8003'
+    environment:
+      - CI=true
+      - EVENT_SERVICE_URL=http://event-service:8002
+    depends_on:
+      - event-service
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/apps/booking-service/node_modules
+      - /app/apps/booking-service/dist
+      - /app/packages/common/node_modules
+      - /app/packages/common/dist
+      - /app/packages/service-kit/node_modules
+      - /app/packages/service-kit/dist

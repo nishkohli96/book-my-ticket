@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { auth } from '@/app/api/auth/[...nextauth]/route';
 import { queryParamNames } from '@/constants';
 
-const protectedRoutes = ['/my-account'];
+const protectedRoutes = ['/my-account', '/my-bookings', '/checkout'];
 
 export default auth(request => {
   const isProtectedRoute = protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route));
@@ -15,5 +15,5 @@ export default auth(request => {
 });
 
 export const config = {
-  matcher: ['/my-account/:path*'],
+  matcher: ['/my-account/:path*', '/my-bookings/:path*', '/checkout/:path*'],
 };

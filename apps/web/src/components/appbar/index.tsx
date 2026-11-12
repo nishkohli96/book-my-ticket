@@ -16,17 +16,18 @@ import {
   Toolbar
 } from '@mui/material';
 import AccountOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import TicketIcon from '@mui/icons-material/ConfirmationNumberOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { GradientButton, ThemeChangeButton } from '@/components';
+import { eventCategories } from '@/constants';
 import { getUserInitials } from '@/utils';
 import LinkText from './LinkText';
 
-const links = [
-  { href: '/about', text: 'Concerts' },
-  { href: '/contact', text: 'Sports' },
-  { href: '/theatre', text: 'Theatre' },
-  { href: '/comedy', text: 'Comedy' },
-];
+/* Same list the browse page filters by, so the nav and the filters can't drift apart. */
+const links = eventCategories.map(category => ({
+  href: `/events?category=${category.value}`,
+  text: category.label
+}));
 
 /* Intrinsic SVG dimensions (logo.svg / logo-dark.svg viewBox) - real aspect ratio ~4.03:1. */
 const logoWidth = 290;
@@ -41,8 +42,9 @@ export default function AppBar() {
   const openUserMenu = (event: MouseEvent<HTMLElement>) => setMenuAnchor(event.currentTarget);
   const closeUserMenu = () => setMenuAnchor(null);
 
-  const navigateToMyAccount = () => {
-    router.push('/my-account');
+  const navigateTo = (path: string) => {
+    closeUserMenu();
+    router.push(path);
   };
 
   const handleLogout = () => {
@@ -191,7 +193,13 @@ export default function AppBar() {
                     }
                   }}
                 >
-                  <MenuItem onClick={navigateToMyAccount}>
+                  <MenuItem onClick={() => navigateTo('/my-bookings')}>
+                    <ListItemIcon>
+                      <TicketIcon fontSize="small" />
+                    </ListItemIcon>
+                    My Bookings
+                  </MenuItem>
+                  <MenuItem onClick={() => navigateTo('/my-account')}>
                     <ListItemIcon>
                       <AccountOutlinedIcon fontSize="small" />
                     </ListItemIcon>
